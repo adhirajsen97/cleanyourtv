@@ -51,12 +51,14 @@ if ($out -notmatch 'Success') { throw 'pm install failed (see above)' }
 # a dialog. On older Android the grant fails harmlessly, the permission came with the install.
 @(
     "pm grant $pkg android.permission.BLUETOOTH_ADVERTISE 2>/dev/null && echo 'BLUETOOTH_ADVERTISE granted' || echo 'BLUETOOTH_ADVERTISE: not a runtime permission on this Android, nothing to grant'",
-    "pm grant $pkg android.permission.BLUETOOTH_CONNECT 2>/dev/null && echo 'BLUETOOTH_CONNECT granted' || echo 'BLUETOOTH_CONNECT: not a runtime permission on this Android, nothing to grant'"
+    "pm grant $pkg android.permission.BLUETOOTH_CONNECT 2>/dev/null && echo 'BLUETOOTH_CONNECT granted' || echo 'BLUETOOTH_CONNECT: not a runtime permission on this Android, nothing to grant'",
+    "pm grant $pkg android.permission.BLUETOOTH_SCAN 2>/dev/null && echo 'BLUETOOTH_SCAN granted (Learn remote)' || echo 'BLUETOOTH_SCAN: not a runtime permission on this Android, nothing to grant'",
+    "pm grant $pkg android.permission.ACCESS_FINE_LOCATION 2>/dev/null && echo 'ACCESS_FINE_LOCATION granted (Learn remote on Android 11 and older)' || echo 'ACCESS_FINE_LOCATION: not needed on this Android'"
 ) -join "`n" | & $py -I ..\tools\tv.py --batch
 
 $start = & $py -I ..\tools\tv.py "am start -W -n $pkg/.MainActivity"
 Write-Host $start
 if ($start -notmatch 'Status: ok' -or $start -match '(?m)^Error') { throw 'Home Lights did not start (see above)' }
 Write-Host 'Installed. Home Lights is on screen: read the status line, then press On or Off on the remote.'
-Write-Host "Scripted check:  `$env:TV_HOST='$TvHost'; tools\venv\Scripts\python.exe -I tools\tv.py 'am start -n $pkg/.MainActivity -e light drawing-room -e state on'"
+Write-Host "Scripted check:  `$env:TV_HOST='$TvHost'; tools\venv\Scripts\python.exe -I tools\tv.py 'am start -n $pkg/.MainActivity -e light all -e command on'"
 Write-Host "Log:             tools\venv\Scripts\python.exe -I tools\tv.py 'logcat -d -s HomeLights'"

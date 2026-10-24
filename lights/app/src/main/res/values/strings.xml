@@ -3,6 +3,33 @@
     <string name="app_name">Home Lights</string>
     <string name="on">On</string>
     <string name="off">Off</string>
+    <string name="dimmer">Dimmer</string>
+    <string name="brighter">Brighter</string>
+    <string name="warmer">Warmer</string>
+    <string name="cooler">Cooler</string>
+    <string name="learn_remote">Learn remote</string>
+    <string name="row_no_packets">No packets yet. Learn remote records them, then they go into lights.json.</string>
+    <string name="status_unknown_command">%1$s has no command \"%2$s\" in lights.json.</string>
+
+    <!-- Learn the light remote -->
+    <string name="learn_title">Learn the light remote</string>
+    <string name="learn_step_counter">Step %1$d of %2$d</string>
+    <string name="learn_press_once">On the light remote, press %1$s once.</string>
+    <string name="learn_press_times">On the light remote, press %1$s %2$d times, about a second apart.</string>
+    <string name="learn_note_default">Then press Next. Nothing happening on the lights is fine; the TV only listens.</string>
+    <string name="learn_heard">Heard in this step: %1$d packets (%2$d copies). Other devices ignored: %3$d.</string>
+    <string name="learn_next">Next step</string>
+    <string name="learn_finish">Finish</string>
+    <string name="learn_close">Close</string>
+    <string name="learn_listening">Listening.</string>
+    <string name="learn_bluetooth_off">Bluetooth is off. Switch it on in the TV\'s settings and open Learn remote again.</string>
+    <string name="learn_no_scanner">This TV\'s Bluetooth cannot scan, so it cannot hear the remote.</string>
+    <string name="learn_scan_failed">Scanning failed: %1$s</string>
+    <string name="learn_permission_denied">Scanning needs the Nearby devices permission. Run lights/build-and-install.sh again, which grants it, or allow it under Settings › Apps › Home Lights.</string>
+    <string name="learn_done">Done: %1$d steps, %2$d distinct packets saved.</string>
+    <string name="learn_done_note">On the computer: TV_HOST=&lt;tv ip&gt; lights/pull-capture.sh, then share lights/capture.json.</string>
+    <string name="learn_save_failed">Could not write %1$s: %2$s</string>
+    <string name="learn_footer">Never press SETUP on the light remote: it pairs or unpairs the lights. The capture is saved after every step; Back keeps what is recorded so far.</string>
 
     <!-- Status line -->
     <string name="status_ready">Ready. Bluetooth LE advertising available.</string>

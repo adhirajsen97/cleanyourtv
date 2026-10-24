@@ -85,6 +85,8 @@ esac
 printf '%s\n' \
   "pm grant $PKG android.permission.BLUETOOTH_ADVERTISE 2>/dev/null && echo 'BLUETOOTH_ADVERTISE granted' || echo 'BLUETOOTH_ADVERTISE: not a runtime permission on this Android, nothing to grant'" \
   "pm grant $PKG android.permission.BLUETOOTH_CONNECT 2>/dev/null && echo 'BLUETOOTH_CONNECT granted' || echo 'BLUETOOTH_CONNECT: not a runtime permission on this Android, nothing to grant'" \
+  "pm grant $PKG android.permission.BLUETOOTH_SCAN 2>/dev/null && echo 'BLUETOOTH_SCAN granted (Learn remote)' || echo 'BLUETOOTH_SCAN: not a runtime permission on this Android, nothing to grant'" \
+  "pm grant $PKG android.permission.ACCESS_FINE_LOCATION 2>/dev/null && echo 'ACCESS_FINE_LOCATION granted (Learn remote on Android 11 and older)' || echo 'ACCESS_FINE_LOCATION: not needed on this Android'" \
   | "$PY" -I ../tools/tv.py --batch
 START_OUT=$("$PY" -I ../tools/tv.py "am start -W -n $PKG/.MainActivity")
 echo "$START_OUT"
@@ -93,5 +95,5 @@ if ! printf '%s' "$START_OUT" | grep -qF 'Status: ok' || printf '%s' "$START_OUT
   exit 1
 fi
 echo "Installed. Home Lights is on screen: read the status line, then press On or Off on the remote."
-echo "Scripted check:  TV_HOST=$TV_HOST tools/venv/bin/python -I tools/tv.py 'am start -n $PKG/.MainActivity -e light drawing-room -e state on'"
+echo "Scripted check:  TV_HOST=$TV_HOST tools/venv/bin/python -I tools/tv.py 'am start -n $PKG/.MainActivity -e light all -e command on'"
 echo "Log:             TV_HOST=$TV_HOST tools/venv/bin/python -I tools/tv.py 'logcat -d -s HomeLights'"

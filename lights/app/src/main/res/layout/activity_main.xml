@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- One row per light from lights.json, On and Off on the right, the status line at the bottom.
+<!-- One row per light from lights.json, a button per command, the status line at the bottom.
      48dp of padding keeps everything inside a TV's overscan area. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -7,22 +7,40 @@
     android:orientation="vertical"
     android:padding="48dp">
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        android:textColor="#FFF2C14E"
-        android:textSize="16sp"
-        android:letterSpacing="0.18"
-        android:textAllCaps="true"
-        android:fontFamily="sans-serif-medium" />
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/app_name"
+            android:textColor="#FFF2C14E"
+            android:textSize="16sp"
+            android:letterSpacing="0.18"
+            android:textAllCaps="true"
+            android:fontFamily="sans-serif-medium" />
+
+        <TextView
+            android:id="@+id/learn"
+            style="@style/CommandButton"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:paddingStart="18dp"
+            android:paddingEnd="18dp"
+            android:textSize="16sp"
+            android:text="@string/learn_remote" />
+    </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="20dp"
         android:scrollbars="none">
 
         <LinearLayout
@@ -36,7 +54,7 @@
         android:id="@+id/status"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
         android:textColor="#B3FFFFFF"
         android:textSize="17sp"
         android:fontFamily="sans-serif"

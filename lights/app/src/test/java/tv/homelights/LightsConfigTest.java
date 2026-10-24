@@ -15,6 +15,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 
 public class LightsConfigTest {
     /** Gradle runs unit tests from the module directory; the shipped file sits in src/main/assets. */
@@ -25,54 +26,73 @@ public class LightsConfigTest {
     }
 
     @Test
-    public void bundledFileParsesToTheDrawingRoomPackets() throws IOException {
+    public void bundledFileHasAllRowsWithOnOffAndThreeRowsWithoutPacketsYet() throws IOException {
         LightsConfig config = LightsConfig.parse(bundled());
         assertEquals(1500, config.burstMs);
-        assertEquals(1, config.lights.size());
-        Light light = config.find("drawing-room");
-        assertNotNull(light);
-        assertEquals("Drawing room", light.name);
-        assertEquals(1, light.on.size());
-        assertEquals(1, light.off.size());
-        Packet on = light.packets(true).get(0);
+        assertEquals(4, config.lights.size());
+        Light all = config.find("all");
+        assertNotNull(all);
+        assertEquals("All rows", all.name);
+        assertEquals(Arrays.asList("on", "off"), all.commands());
+        Packet on = all.packets("on").get(0);
         assertEquals(Packet.Kind.SERVICE_DATA, on.kind);
         assertEquals(0x08F0, on.id);
         assertTrue("format B goes out with the Flags record, as the phone sends it", on.connectable);
         assertEquals("1000B559C42541FDEF78E0E567050CC0555F4A1AE719D07D", Hex.encode(on.payload));
-        assertEquals("1000EA2D71611DCBAA79F270FE6376E486E88FD664E3AA48", Hex.encode(light.packets(false).get(0).payload));
+        assertEquals("1000EA2D71611DCBAA79F270FE6376E486E88FD664E3AA48", Hex.encode(all.packets("off").get(0).payload));
+        for (String row : new String[] {"row-1", "row-2", "row-3"}) {
+            Light light = config.find(row);
+            assertNotNull(row, light);
+            assertTrue(row + " has no packets yet", light.commands().isEmpty());
+            assertTrue(light.packets("on").isEmpty());
+        }
         assertNull(config.find("kitchen"));
     }
 
     @Test
-    public void manufacturerDataAndSeveralPacketsPerCommand() {
-        LightsConfig config = LightsConfig.parse("{\"lights\":[{\"id\":\"all\",\"on\":["
-                + "{\"service_data\":\"08F0\",\"data\":\"1000B559C42541FDEF78E0E567050CC0555F4A1AE719D07D\"},"
+    public void commandsInAnyNameKnownOnesFirstAndTheFirstFilesShapeStillParses() {
+        LightsConfig config = LightsConfig.parse("{\"lights\":[{\"id\":\"all\",\"commands\":{"
+                + "\"night\":[" + B + "],"
+                + "\"brighter\":[" + B + "],"
+                + "\"on\":[{\"service_data\":\"08F0\",\"data\":\"1000B559C42541FDEF78E0E567050CC0555F4A1AE719D07D\"},"
                 + "{\"manufacturer_data\":\"0x5556\",\"data\":\"188752B65F2B5E00FC3151D0699F0824CBA5FC16C46CB22F9F6057\"}],"
-                + "\"off\":[{\"manufacturer_data\":\"5556\",\"data\":\"18 87 52 B6\"}]}]}");
+                + "\"off\":[{\"manufacturer_data\":\"5556\",\"data\":\"18 87 52 B6\"}]}}]}");
         assertEquals(LightsConfig.DEFAULT_BURST_MS, config.burstMs);
         Light light = config.lights.get(0);
         assertEquals("all", light.name);   // name falls back to the id
-        assertEquals(2, light.on.size());
-        Packet a = light.on.get(1);
+        assertEquals(Arrays.asList("on", "off", "brighter", "night"), light.commands());
+        assertEquals(2, light.packets("on").size());
+        Packet a = light.packets("on").get(1);
         assertEquals(Packet.Kind.MANUFACTURER_DATA, a.kind);
         assertEquals(0x5556, a.id);
         assertEquals(27, a.payload.length);
         assertFalse("27 bytes leave no room for Flags", a.connectable);
-        assertTrue(light.on.get(0).connectable);
-        assertTrue(light.off.get(0).connectable);
-        assertEquals(4, light.off.get(0).payload.length);
+        assertTrue(light.packets("on").get(0).connectable);
+        assertTrue(light.packets("off").get(0).connectable);
+        assertEquals(4, light.packets("off").get(0).payload.length);
+
+        LightsConfig legacy = LightsConfig.parse("{\"lights\":[" + light("a") + "]}");
+        assertEquals(Arrays.asList("on", "off"), legacy.lights.get(0).commands());
     }
 
     @Test
     public void connectableCanBeSwitchedOffForAllOrPerPacket() {
         LightsConfig all = LightsConfig.parse("{\"connectable\":false,\"lights\":[" + light("a") + "]}");
-        assertFalse(all.lights.get(0).on.get(0).connectable);
-        assertFalse(all.lights.get(0).off.get(0).connectable);
+        assertFalse(all.lights.get(0).packets("on").get(0).connectable);
+        assertFalse(all.lights.get(0).packets("off").get(0).connectable);
         LightsConfig one = LightsConfig.parse("{\"connectable\":false,\"lights\":[{\"id\":\"a\","
                 + "\"on\":[{\"service_data\":\"08F0\",\"data\":\"1000EA2D\",\"connectable\":true}],"
                 + "\"off\":[" + B + "]}]}");
-        assertTrue(one.lights.get(0).on.get(0).connectable);
-        assertFalse(one.lights.get(0).off.get(0).connectable);
+        assertTrue(one.lights.get(0).packets("on").get(0).connectable);
+        assertFalse(one.lights.get(0).packets("off").get(0).connectable);
+    }
+
+    @Test
+    public void commandNamesAndEmptyCommandsAreChecked() {
+        assertMessage("light \"a\": command name \"Bright Up\" (use lower-case letters, digits and hyphens)",
+                "{\"lights\":[{\"id\":\"a\",\"commands\":{\"Bright Up\":[" + B + "]}}]}");
+        assertMessage("light \"a\": \"dimmer\" has no packets",
+                "{\"lights\":[{\"id\":\"a\",\"commands\":{\"dimmer\":[]}}]}");
     }
 
     @Test
@@ -89,7 +109,7 @@ public class LightsConfigTest {
         assertMessage("burst_ms must be 100 to 60000", "{\"burst_ms\":50,\"lights\":[]}");
         assertMessage("lights[0] has no \"id\"", "{\"lights\":[{\"name\":\"x\"}]}");
         assertMessage("two lights have the id \"a\"", "{\"lights\":[" + light("a") + "," + light("a") + "]}");
-        assertMessage("light \"a\" has no \"off\" packets", "{\"lights\":[{\"id\":\"a\",\"on\":[" + B + "]}]}");
+        assertMessage("light \"a\": \"off\" has no packets", "{\"lights\":[{\"id\":\"a\",\"on\":[" + B + "],\"off\":[]}]}");
         assertMessage("light \"a\", on[0]: needs service_data or manufacturer_data",
                 "{\"lights\":[{\"id\":\"a\",\"on\":[{\"data\":\"10\"}],\"off\":[" + B + "]}]}");
         assertMessage("light \"a\", on[0]: has both service_data and manufacturer_data",

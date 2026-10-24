@@ -15,18 +15,23 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
- * The screen: one row per light from lights.json with On and Off, and a status line underneath.
- * Also takes a scripted command from adb, for testing without the remote:
+ * The screen: one row per light from lights.json, a button for every command that has packets,
+ * and a status line underneath. Also takes a scripted command from adb, for testing without the
+ * remote:
  * <pre>
- *   am start -n tv.homelights/.MainActivity -e light drawing-room -e state on
+ *   am start -n tv.homelights/.MainActivity -e light all -e command off
  * </pre>
  * The outcome shows on the status line and in logcat under the tag HomeLights.
  */
 public final class MainActivity extends Activity {
     static final String EXTRA_LIGHT = "light";
+    static final String EXTRA_COMMAND = "command";
+    /** The first version's name for the on/off extra; still accepted. */
     static final String EXTRA_STATE = "state";
     private static final int REQUEST_PERMISSION = 1;
     private static final int REQUEST_ENABLE_BLUETOOTH = 2;
@@ -37,13 +42,14 @@ public final class MainActivity extends Activity {
     private final Map<String, View> rows = new HashMap<>();
     /** The command waiting for the permission dialog or the Bluetooth switch. */
     private Light pendingLight;
-    private boolean pendingOn;
+    private String pendingCommand;
 
     @Override
     protected void onCreate(Bundle state) {
         super.onCreate(state);
         setContentView(R.layout.activity_main);
         status = findViewById(R.id.status);
+        findViewById(R.id.learn).setOnClickListener(v -> startActivity(new Intent(this, LearnActivity.class)));
         advertiser = new Advertiser(this);
         String note = loadConfig();
         buildRows();
@@ -97,51 +103,79 @@ public final class MainActivity extends Activity {
         LinearLayout list = findViewById(R.id.rows);
         list.removeAllViews();
         rows.clear();
-        if (config == null) return;
-        for (Light light : config.lights) {
-            View row = getLayoutInflater().inflate(R.layout.item_light, list, false);
-            ((TextView) row.findViewById(R.id.name)).setText(light.name);
-            row.findViewById(R.id.on).setOnClickListener(v -> send(light, true, true));
-            row.findViewById(R.id.off).setOnClickListener(v -> send(light, false, true));
-            list.addView(row);
-            rows.put(light.id, row);
+        View firstButton = null;
+        if (config != null) {
+            for (Light light : config.lights) {
+                View row = getLayoutInflater().inflate(R.layout.item_light, list, false);
+                ((TextView) row.findViewById(R.id.name)).setText(light.name);
+                LinearLayout buttons = row.findViewById(R.id.buttons);
+                List<String> commands = light.commands();
+                if (commands.isEmpty()) row.findViewById(R.id.hint).setVisibility(View.VISIBLE);
+                for (String command : commands) {
+                    TextView button = (TextView) getLayoutInflater().inflate(R.layout.item_command, buttons, false);
+                    button.setText(label(command));
+                    button.setTag(command);
+                    button.setOnClickListener(v -> send(light, command, true));
+                    buttons.addView(button);
+                    if (firstButton == null) firstButton = button;
+                }
+                list.addView(row);
+                rows.put(light.id, row);
+            }
         }
-        if (list.getChildCount() > 0) list.getChildAt(0).findViewById(R.id.on).requestFocus();
+        View focus = firstButton != null ? firstButton : findViewById(R.id.learn);
+        focus.requestFocus();
     }
 
-    /** A command sent with adb: -e light <id> -e state on|off. */
+    /** The button text for a command: the known ones translated, any other name tidied up. */
+    private String label(String command) {
+        switch (command) {
+            case "on": return getString(R.string.on);
+            case "off": return getString(R.string.off);
+            case "dimmer": return getString(R.string.dimmer);
+            case "brighter": return getString(R.string.brighter);
+            case "warmer": return getString(R.string.warmer);
+            case "cooler": return getString(R.string.cooler);
+            default:
+                String words = command.replace('-', ' ');
+                return words.substring(0, 1).toUpperCase(Locale.ROOT) + words.substring(1);
+        }
+    }
+
+    /** A command sent with adb: -e light <id> -e command <name> (or the older -e state on|off). */
     private void handleIntent(Intent intent) {
         if (intent == null || !intent.hasExtra(EXTRA_LIGHT)) return;
         String id = intent.getStringExtra(EXTRA_LIGHT);
-        String state = intent.getStringExtra(EXTRA_STATE);
+        String command = intent.getStringExtra(EXTRA_COMMAND);
+        if (command == null) command = intent.getStringExtra(EXTRA_STATE);
         // Not replayed if the screen is rebuilt later.
         intent.removeExtra(EXTRA_LIGHT);
+        intent.removeExtra(EXTRA_COMMAND);
         intent.removeExtra(EXTRA_STATE);
         Light light = config == null || id == null ? null : config.find(id);
         if (light == null) {
             report(getString(R.string.status_unknown_light, String.valueOf(id)));
             return;
         }
-        boolean on = "on".equalsIgnoreCase(state);
-        if (!on && !"off".equalsIgnoreCase(state)) {
-            report(getString(R.string.status_bad_state, String.valueOf(state)));
+        if (command == null || !light.has(command.toLowerCase(Locale.ROOT))) {
+            report(getString(R.string.status_unknown_command, light.name, String.valueOf(command)));
             return;
         }
-        send(light, on, true);
+        send(light, command.toLowerCase(Locale.ROOT), true);
     }
 
-    /** Switches a light; with {@code mayPrompt}, asks for Bluetooth or the permission when missing. */
-    private void send(Light light, boolean on, boolean mayPrompt) {
+    /** Sends a command; with {@code mayPrompt}, asks for Bluetooth or the permission when missing. */
+    private void send(Light light, String command, boolean mayPrompt) {
         pendingLight = null;
         Advertiser.Blocker blocker = advertiser.blocker();
         if (blocker != null) {
-            unblock(blocker, light, on, mayPrompt);
+            unblock(blocker, light, command, mayPrompt);
             return;
         }
-        String what = light.name + " " + getString(on ? R.string.on : R.string.off);
-        markState(light, on);
+        String what = light.name + " " + label(command);
+        markState(light, command);
         Log.i(Advertiser.TAG, "sending " + what);
-        advertiser.send(light.packets(on), config.burstMs, new Advertiser.Listener() {
+        advertiser.send(light.packets(command), config.burstMs, new Advertiser.Listener() {
             @Override
             public void onProgress(int index, int count) {
                 report(getString(R.string.status_sending, what, index, count));
@@ -159,26 +193,31 @@ public final class MainActivity extends Activity {
         });
     }
 
-    /** The last command is shown as the selected button; the lights send nothing back. */
-    private void markState(Light light, boolean on) {
+    /** On and Off: the last one sent stays marked; the lights send nothing back. */
+    private void markState(Light light, String command) {
+        boolean on = "on".equals(command);
+        if (!on && !"off".equals(command)) return;
         View row = rows.get(light.id);
         if (row == null) return;
-        row.findViewById(R.id.on).setSelected(on);
-        row.findViewById(R.id.off).setSelected(!on);
+        LinearLayout buttons = row.findViewById(R.id.buttons);
+        View onButton = buttons.findViewWithTag("on");
+        View offButton = buttons.findViewWithTag("off");
+        if (onButton != null) onButton.setSelected(on);
+        if (offButton != null) offButton.setSelected(!on);
     }
 
-    private void unblock(Advertiser.Blocker blocker, Light light, boolean on, boolean mayPrompt) {
+    private void unblock(Advertiser.Blocker blocker, Light light, String command, boolean mayPrompt) {
         report(blockerText(blocker));
         if (!mayPrompt) return;
         switch (blocker) {
             case NO_PERMISSION:
                 pendingLight = light;
-                pendingOn = on;
+                pendingCommand = command;
                 requestPermissions(Advertiser.RUNTIME_PERMISSIONS, REQUEST_PERMISSION);
                 break;
             case BLUETOOTH_OFF:
                 pendingLight = light;
-                pendingOn = on;
+                pendingCommand = command;
                 try {
                     startActivityForResult(new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), REQUEST_ENABLE_BLUETOOTH);
                 } catch (SecurityException | ActivityNotFoundException e) {
@@ -226,7 +265,7 @@ public final class MainActivity extends Activity {
     private void resumePending() {
         Light light = pendingLight;
         pendingLight = null;
-        if (light != null) send(light, pendingOn, false);
+        if (light != null) send(light, pendingCommand, false);
         else showReadiness(null);
     }
 

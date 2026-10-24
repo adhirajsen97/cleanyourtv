@@ -4,8 +4,12 @@ A small Android TV app that switches the drawing-room lights from the TV remote.
 for Bluetooth LE advertisements, so the TV's own Bluetooth radio sends the same packets that nRF
 Connect's Advertiser sends from a phone. No hub, no network, no account.
 
-This is the first round: one row, **Drawing room**, with **On** and **Off**. New lights and new
-packets go into a JSON file that is pushed to the TV without a rebuild.
+The drawing room has three rows of ceiling lights, numbered 1 to 3 as on the light remote, and the
+remote also addresses them all at once. The screen shows a row per group, **All rows** first, with
+a button for every command whose packets are known: **On**, **Off**, **Dimmer**, **Brighter**,
+**Warmer**, **Cooler**. So far only All rows On and Off have packets; **Learn remote**, on the same
+screen, records the rest from the light remote (see below). New lights and new packets go into a
+JSON file that is pushed to the TV without a rebuild.
 
 ## How the lights are driven
 
@@ -57,8 +61,13 @@ Show to keep it ahead of the grid.
 
 ## Use
 
-Open Home Lights, read the status line at the bottom, then press **On** or **Off** on the remote.
-Left and Right move between On and Off, Up and Down between lights.
+Open Home Lights, read the status line at the bottom, then press **On** or **Off** on the TV
+remote. Left and Right move between the buttons of a row, Up and Down between rows; Up from the
+first row reaches **Learn remote**. A row without packets says so instead of showing buttons.
+
+The remote's logic carries over: the row you are on is the row you adjust. ON 1 on the light remote
+and then the brightness keys change row 1 only; on the TV, the Brighter button in row 1 does the
+same, once its packets are captured. All rows adjusts every row together.
 
 | Status line | Meaning |
 |---|---|
@@ -74,13 +83,14 @@ Left and Right move between On and Off, Up and Down between lights.
 No remote needed, and the same packet can be sent again and again:
 
 ```
-TV_HOST=192.168.1.26 tools/venv/bin/python -I tools/tv.py 'am start -n tv.homelights/.MainActivity -e light drawing-room -e state on'
-TV_HOST=192.168.1.26 tools/venv/bin/python -I tools/tv.py 'am start -n tv.homelights/.MainActivity -e light drawing-room -e state off'
+TV_HOST=192.168.1.26 tools/venv/bin/python -I tools/tv.py 'am start -n tv.homelights/.MainActivity -e light all -e command on'
+TV_HOST=192.168.1.26 tools/venv/bin/python -I tools/tv.py 'am start -n tv.homelights/.MainActivity -e light all -e command off'
 TV_HOST=192.168.1.26 tools/venv/bin/python -I tools/tv.py 'logcat -d -s HomeLights'
 ```
 
-`light` is the `id` from `lights.json`, `state` is `on` or `off`. The log shows every packet as it
-goes on air (`advertising service data 08F0, 24 bytes for 800 ms: 1B16F008...`) and the outcome.
+`light` is the `id` from `lights.json`, `command` one of its command names. The log shows every
+packet as it goes on air (`advertising service data 08F0, 24 bytes, with flags for 1500 ms: …`)
+and the outcome.
 
 ## Changing the packets: lights.json
 
@@ -92,11 +102,16 @@ The built-in list is [`app/src/main/assets/lights.json`](app/src/main/assets/lig
   "connectable": true,
   "lights": [
     {
-      "id": "drawing-room",
-      "name": "Drawing room",
-      "on":  [ { "service_data": "08F0", "data": "1000B559C42541FDEF78E0E567050CC0555F4A1AE719D07D" } ],
-      "off": [ { "service_data": "08F0", "data": "1000EA2D71611DCBAA79F270FE6376E486E88FD664E3AA48" } ]
-    }
+      "id": "all",
+      "name": "All rows",
+      "commands": {
+        "on":  [ { "service_data": "08F0", "data": "1000B559C42541FDEF78E0E567050CC0555F4A1AE719D07D" } ],
+        "off": [ { "service_data": "08F0", "data": "1000EA2D71611DCBAA79F270FE6376E486E88FD664E3AA48" } ]
+      }
+    },
+    { "id": "row-1", "name": "Row 1, over the sofas" },
+    { "id": "row-2", "name": "Row 2, fan and pendant" },
+    { "id": "row-3", "name": "Row 3, towards the dining table" }
   ]
 }
 ```
@@ -107,8 +122,11 @@ The built-in list is [`app/src/main/assets/lights.json`](app/src/main/assets/lig
   there is no room, so format A is unaffected either way.
 - `lights`: one entry per light or group, shown as a row in that order. `id` is what the scripted
   check names; `name` is the row's label (defaults to the id).
-- `on` and `off`: a list of packets, advertised one after another. A packet is an object with
-  `data` (the payload, hex; spaces, colons and a `0x` prefix are fine) and exactly one of:
+- `commands`: the row's buttons. `on`, `off`, `dimmer`, `brighter`, `warmer` and `cooler` have
+  fixed places and labels; any other name (lower-case letters, digits, hyphens, such as `night` or
+  `rgb`) gets a button after them. A row with no `commands` shows none, with a hint instead. Each
+  command is a list of packets, advertised one after another. A packet is an object with `data`
+  (the payload, hex; spaces, colons and a `0x` prefix are fine) and exactly one of:
   - `"service_data": "08F0"`: the 16-bit service UUID, as in nRF Connect's Service Data record;
   - `"manufacturer_data": "5556"`: the company ID, as in nRF Connect's Manufacturer Data record.
 
@@ -126,6 +144,46 @@ The pushed file lives at `/sdcard/Android/data/tv.homelights/files/lights.json`.
 says "Using lights.json pushed to the TV" while it is in use. A file with a mistake is ignored with
 the reason on the status line, and the built-in list stays in force. Once a packet is proven, put it
 in the built-in file and run `build-and-install.sh` again so it survives a reinstall.
+
+## Learning the remote
+
+The light remote sends the same kind of packets the app does, and the TV's Bluetooth can hear
+them. **Learn remote** on the main screen asks for one button at a time and files every packet it
+hears under that button, so the recording needs no clock-watching. The steps, in order:
+
+| Step | Light remote button | Presses | Why |
+|---|---|---|---|
+| 1, 2 | ALL ON, ALL OFF | 3 each | The packets the TV already sends; a check that the capture works |
+| 3 to 10 | ON 1, OFF 1, ON 2, OFF 2, ON 3, OFF 3, ON 4, OFF 4 | 2 each | Each row's own on and off |
+| 11 | ALL ON | 1 | Selects every row for the next four |
+| 12 to 15 | sun+, sun−, K+, K− | 3 each | Brightness and colour temperature for all rows |
+| 16 to 20 | ON 1, then sun+, sun−, K+, K− | 1, then 3 each | The same for row 1 |
+| 21 to 25 | ON 2, then the four | 1, then 3 each | Row 2 |
+| 26 to 30 | ON 3, then the four | 1, then 3 each | Row 3 |
+| 31 to 34 | K (round, top left), moon, RGB, Aid | 2 each | Whatever they do; note it |
+
+Never press **SETUP**: it pairs or unpairs the lights. Press the buttons about a second apart;
+when the screen's count has gone up, press **Next step** on the TV remote. **Finish** or Back stops
+early and keeps what is recorded. The capture is saved after every step as
+`/sdcard/Android/data/tv.homelights/files/capture.json`. Fetch it:
+
+```
+TV_HOST=192.168.1.26 lights/pull-capture.sh        # writes lights/capture.json and prints a summary
+```
+
+Then commit `lights/capture.json` or paste it. For each step it lists every distinct packet, how
+many copies came, when, its signal strength and the sender's address, with the records separated
+(`02 01 02 | 1B 16 F0 08 …`). That is enough to see which bytes name the row and the command, and
+whether the four adjustment sets differ per selected row (the row travels in the packet) or not
+(the lights remember the last row addressed, and the app will send the row's On first).
+
+Two checks on the Learn screen: "Heard in this step" must go up when you press the light remote;
+if it stays at 0 while "Other devices ignored" climbs, the remote's packets are in a format the
+filter does not know. Open the screen with everything recorded, press one button, and send the
+file: `am start -n tv.homelights/.LearnActivity -e filter none` over `tools/tv.py`.
+
+If you prefer the phone, the same sequence works with nRF Connect's Scanner, noting the time of
+each step; the TV route is simply less to keep track of.
 
 ## Troubleshooting
 
@@ -155,11 +213,11 @@ in the built-in file and run `build-and-install.sh` again so it survives a reins
 
 ## Next steps
 
+- **Fill the rows.** Run Learn remote, pull `capture.json`, and the captured packets go into
+  `lights.json` under each row's commands; the buttons appear by themselves.
 - **Generate packets on the TV.** The encoder (`encode.py`, `mydecode.py`, `pk.txt` and its README)
-  lives outside this repository for now. Copy those files into `lights/protocol/` and the next round
-  ports the encoder to Java, so On, Off and every later command are built in the app instead of
-  pasted into JSON.
-- **More lights.** One entry per light or group in `lights.json`; the screen lists them.
+  lives outside this repository for now. Copy those files into `lights/protocol/` and a later round
+  ports the encoder to Java, so every command is built in the app instead of pasted into JSON.
 - **The room.** A drawn plan of the drawing room with each light as a focusable spot. A flat or
   isometric drawing on a Canvas suits a 1 GB TV; a 3D engine does not.
 - **Colour and brightness**, once those packets exist, as extra commands per light.
@@ -170,6 +228,8 @@ in the built-in file and run `build-and-install.sh` again so it survives a reins
 cd lights && ./gradlew testReleaseUnitTest lintRelease assembleRelease
 ```
 
-The JVM tests cover the hex codec, the record layout (format A is exactly 31 bytes, format B 28) and
-the `lights.json` parser, including the built-in file. Everything that touches Bluetooth is in
-`Advertiser.java`; the screen is `MainActivity.java`. CI builds this project on every pull request.
+The JVM tests cover the hex codec, the record layout (format A is exactly 31 bytes, format B 28),
+the `lights.json` parser including the built-in file, the learn-step list, the raw advertisement
+reader and the capture file. Everything that sends is in `Advertiser.java`, everything that listens
+in `LearnActivity.java`; the main screen is `MainActivity.java`. CI builds this project on every
+pull request.
