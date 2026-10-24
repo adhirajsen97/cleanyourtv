@@ -5,6 +5,10 @@ launcher/.gradle/
 launcher/build/
 launcher/app/build/
 launcher/local.properties
+lights/.gradle/
+lights/build/
+lights/app/build/
+lights/local.properties
 # your own TV's dumps (serial, android_id, device names) stay local
 backup/
 .DS_Store

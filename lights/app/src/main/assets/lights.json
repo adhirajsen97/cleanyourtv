@@ -1,0 +1,15 @@
+{
+  "burst_ms": 800,
+  "lights": [
+    {
+      "id": "drawing-room",
+      "name": "Drawing room",
+      "on": [
+        { "service_data": "08F0", "data": "1000B559C42541FDEF78E0E567050CC0555F4A1AE719D07D" }
+      ],
+      "off": [
+        { "service_data": "08F0", "data": "1000EA2D71611DCBAA79F270FE6376E486E88FD664E3AA48" }
+      ]
+    }
+  ]
+}
