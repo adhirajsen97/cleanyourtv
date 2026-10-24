@@ -29,6 +29,7 @@
         android:layout_marginEnd="68dp"
         android:layout_gravity="right"
         android:gravity="right"
+        android:maxWidth="760dp"
         android:alpha="0"
         android:textColor="#FFFFFFFF"
         android:textSize="48sp"
@@ -36,7 +37,41 @@
         android:fontVariationSettings="'wght' 300"
         android:letterSpacing="-0.02"
         android:includeFontPadding="false"
-        android:singleLine="true" />
+        android:singleLine="true"
+        android:ellipsize="end" />
+
+    <!-- "Continue watching": caption and row, right-aligned like the other texts here; the row starts
+         on the right like the dock (ContinueRow). -->
+    <TextView
+        android:id="@+id/continueLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="68dp"
+        android:layout_gravity="right"
+        android:gravity="right"
+        android:alpha="0"
+        android:visibility="gone"
+        android:text="@string/continue_watching"
+        android:singleLine="true"
+        android:textColor="#8CFFFFFF"
+        android:textSize="12sp"
+        android:fontFamily="@font/outfit"
+        android:fontVariationSettings="'wght' 500"
+        android:letterSpacing="0.22"
+        android:textAllCaps="true" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/continueRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:alpha="0"
+        android:visibility="gone"
+        android:focusable="false"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        android:descendantFocusability="afterDescendants" />
 
     <LinearLayout
         android:layout_width="match_parent"

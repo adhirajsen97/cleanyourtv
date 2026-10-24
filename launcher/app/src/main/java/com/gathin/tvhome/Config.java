@@ -68,6 +68,8 @@ final class Config {
     final boolean overlayApplied;
     /** Festive skin from a theme (festival, festival_until, greeting, accent_color); {@link Festival#NONE} if none. */
     final Festival festival;
+    /** The "Continue watching" row and the recording behind it (config.xml, last_played). */
+    final boolean lastPlayed;
 
     private Config(List<String> dockApps, boolean fillDock, List<String> hiddenApps, String liveTvPackage,
                    String liveTvAction, String sourcePanelService, String sourcePanelAction, String inputAction,
@@ -75,7 +77,7 @@ final class Config {
                    boolean shamsiDate, boolean moduleCards, boolean reducedMotion, String vpnApp,
                    boolean showHomeSettingsShortcut, int backgroundColor, int skyIntensity,
                    int[] settingsKeycodes, boolean settingsKeyPanel, File wallpaper, boolean overlayApplied,
-                   Festival festival) {
+                   Festival festival, boolean lastPlayed) {
         this.dockApps = Collections.unmodifiableList(dockApps);
         this.fillDock = fillDock;
         this.hiddenApps = Collections.unmodifiableList(hiddenApps);
@@ -100,6 +102,7 @@ final class Config {
         this.wallpaper = wallpaper;
         this.overlayApplied = overlayApplied;
         this.festival = festival;
+        this.lastPlayed = lastPlayed;
     }
 
     /** The folder the theme tools push into; null when external storage is unavailable. */
@@ -130,6 +133,7 @@ final class Config {
         int skyIntensity = res.getInteger(R.integer.sky_intensity);
         int[] settingsKeycodes = res.getIntArray(R.array.settings_key_keycodes);
         boolean settingsKeyPanel = res.getBoolean(R.bool.settings_key_panel);
+        boolean lastPlayed = res.getBoolean(R.bool.last_played);
         boolean applied = false;
 
         File dir = dir(ctx);
@@ -158,6 +162,7 @@ final class Config {
             skyIntensity = integer(json, "sky_intensity", skyIntensity, 0, 100);
             settingsKeycodes = intArray(json, "settings_key_keycodes", settingsKeycodes);
             settingsKeyPanel = bool(json, "settings_key_panel", settingsKeyPanel);
+            lastPlayed = bool(json, "last_played", lastPlayed);
         }
         // A theme push or reset invalidates choices made on the TV. On first use, remember the
         // current theme without clearing choices from an older launcher version.
@@ -179,7 +184,7 @@ final class Config {
                 Math.max(1, columns), Math.max(0, rowsBelow), animations, advancedEffects,
                 shamsi, moduleCards, reducedMotion, vpn, homeSettings, background,
                 Math.max(0, Math.min(100, skyIntensity)), settingsKeycodes, settingsKeyPanel, wallpaper, applied,
-                festival);
+                festival, lastPlayed);
     }
 
     private static void syncThemeChoices(SharedPreferences choices, File dir, File config) {

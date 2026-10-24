@@ -1,0 +1,216 @@
+{
+ "result": [
+  [
+   {
+    "target": "autoLocalDimming",
+    "currentValue": "medium",
+    "isAvailable": true,
+    "candidate": [
+     {
+      "value": "high"
+     },
+     {
+      "value": "medium"
+     },
+     {
+      "value": "low"
+     },
+     {
+      "value": "off"
+     }
+    ]
+   },
+   {
+    "target": "autoPictureMode",
+    "currentValue": "off",
+    "isAvailable": true,
+    "candidate": [
+     {
+      "value": "auto"
+     },
+     {
+      "value": "auto24p"
+     },
+     {
+      "value": "off"
+     }
+    ]
+   },
+   {
+    "target": "brightness",
+    "currentValue": "50",
+    "isAvailable": true,
+    "candidate": [
+     {
+      "max": 50,
+      "min": 0,
+      "step": 1
+     }
+    ]
+   },
+   {
+    "target": "color",
+    "currentValue": "50",
+    "isAvailable": true,
+    "candidate": [
+     {
+      "max": 100,
+      "min": 0,
+      "step": 1
+     }
+    ]
+   },
+   {
+    "target": "colorSpace",
+    "currentValue": "auto",
+    "isAvailable": false,
+    "candidate": [
+     {
+      "value": "auto"
+     },
+     {
+      "value": "sRgb/bt709"
+     },
+     {
+      "value": "dci"
+     },
+     {
+      "value": "adobeRgb"
+     },
+     {
+      "value": "bt2020"
+     }
+    ]
+   },
+   {
+    "target": "colorTemperature",
+    "currentValue": "expert1",
+    "isAvailable": true,
+    "candidate": [
+     {
+      "value": "cool"
+     },
+     {
+      "value": "neutral"
+     },
+     {
+      "value": "warm"
+     },
+     {
+      "value": "expert1"
+     },
+     {
+      "value": "expert2"
+     }
+    ]
+   },
+   {
+    "target": "contrast",
+    "currentValue": "100",
+    "isAvailable": true,
+    "candidate": [
+     {
+      "max": 100,
+      "min": 0,
+      "step": 1
+     }
+    ]
+   },
+   {
+    "target": "hdrMode",
+    "currentValue": "auto",
+    "isAvailable": false,
+    "candidate": [
+     {
+      "value": "auto"
+     },
+     {
+      "value": "hdr10"
+     },
+     {
+      "value": "hlg"
+     },
+     {
+      "value": "off"
+     }
+    ]
+   },
+   {
+    "target": "hue",
+    "currentValue": "0",
+    "isAvailable": true,
+    "candidate": [
+     {
+      "max": 50,
+      "min": -50,
+      "step": 1
+     }
+    ]
+   },
+   {
+    "target": "lightSensor",
+    "currentValue": "on",
+    "isAvailable": false,
+    "candidate": [
+     {
+      "value": "on"
+     },
+     {
+      "value": "off"
+     }
+    ]
+   },
+   {
+    "target": "pictureMode",
+    "currentValue": "calibrated",
+    "isAvailable": false,
+    "candidate": [
+     {
+      "value": "dvDark"
+     },
+     {
+      "value": "dvBright"
+     },
+     {
+      "value": "dvVivid"
+     },
+     {
+      "value": "calibrated"
+     }
+    ]
+   },
+   {
+    "target": "sharpness",
+    "currentValue": "50",
+    "isAvailable": true,
+    "candidate": [
+     {
+      "max": 100,
+      "min": 0,
+      "step": 1
+     }
+    ]
+   },
+   {
+    "target": "xtendedDynamicRange",
+    "currentValue": "high",
+    "isAvailable": true,
+    "candidate": [
+     {
+      "value": "high"
+     },
+     {
+      "value": "medium"
+     },
+     {
+      "value": "low"
+     },
+     {
+      "value": "off"
+     }
+    ]
+   }
+  ]
+ ],
+ "id": 1
+}

@@ -221,6 +221,9 @@ tools/disable.sh examples/xiaomi-mi-tv-4a/debloat.txt        # apply a debloat l
 tools/restore.sh examples/xiaomi-mi-tv-4a/debloat.txt        # undo it, stock launcher back
 TV_HOST=192.168.1.50 launcher/build-and-install.sh           # build the launcher and make it Home
 tools/theme.sh themes/aurora                                 # push a theme; --reset removes it
+tools/screensaver.sh google --after 5                        # Google's Ambient mode after 5 idle minutes
+tools/venv/bin/python -I tools/bravia.py status              # Sony: picture settings over the TV's REST API
+tools/venv/bin/python -I tools/sonyui.py read                # Sony: every row of the Picture menu
 ```
 
 | Tool | What it does |
@@ -230,13 +233,17 @@ tools/theme.sh themes/aurora                                 # push a theme; --r
 | [`tools/disable.sh`](tools/disable.sh), [`restore.sh`](tools/restore.sh) | Apply or undo a debloat list, the undo from the state recorded before the change. |
 | [`tools/recovery.py`](tools/recovery.py) | Writes the record `disable.sh` needs to undo itself, and prints the restore batch. |
 | [`tools/theme.sh`](tools/theme.sh) | Push a folder from [`themes/`](themes/) to the launcher and restart Home. |
+| [`tools/screensaver.sh`](tools/screensaver.sh) | Shows or sets the screensaver and the idle time before it starts (`google`, `clock` or any dream), re-enables its package if a debloat list disabled it, prints and logs an undo block, and `--test` starts it once to check. |
+| [`tools/bravia.py`](tools/bravia.py) | Sony BRAVIA's local REST API: reads every picture setting with no pairing; with a PIN pairing or pre-shared key, applies and restores a picture profile. |
+| [`tools/sonyui.py`](tools/sonyui.py) | Drives a Sony BRAVIA Picture menu with D-pad keys, checking a UI dump before every key, for the settings REST does not reach; records what it changes and restores it. See [`docs/sony-picture.md`](docs/sony-picture.md). |
 | [`launcher/build-and-install.sh`](launcher/build-and-install.sh) | Builds a shrunk release (about 300 KB), installs it, switches Home, and rolls back if Home does not land on it. |
 
 Debloat list paths passed to `disable.sh` and `restore.sh` are relative to the directory you run
 from, so your own lists can live outside the repository. Absolute paths also work.
 
-Every script has a PowerShell twin next to it. On Windows with Android Studio installed nothing
-else is needed:
+The scripts that change packages and Home have a PowerShell twin next to them (`screensaver.sh` is
+bash only; the Python tools run anywhere). On Windows with Android Studio installed nothing else is
+needed:
 
 ```powershell
 python -m venv tools\venv; tools\venv\Scripts\python.exe -m pip install -r tools\requirements.txt
@@ -252,7 +259,8 @@ The install scripts ask the TV which launcher owns Home and only disable one the
 
 A small native Android TV app (`com.gathin.tvhome`, about 300 KB installed) in plain Java with
 AndroidX RecyclerView and nothing heavier. Built for sets with 1 GB of RAM: no blur, no video, no
-network, no background services. It needs JDK 17 and Android SDK platform 34 to build; on macOS,
+network, and no background service of its own beyond an optional notification listener for the
+Continue watching row, which does nothing until you grant it. It needs JDK 17 and Android SDK platform 34 to build; on macOS,
 `brew install openjdk@17 android-commandlinetools` and `sdkmanager "platforms;android-34" "build-tools;34.0.0"`. On Linux
 the install script finds `~/Android/Sdk` and the `java` on your PATH.
 
@@ -264,8 +272,9 @@ the install script finds `~/Android/Sdk` and the `java` on your PATH.
   Hebrew places the menu buttons on the left and the date and clock on the right, with the greeting above the clock. The Clock screensaver right-aligns its date and time, and Hebrew dates include the month prefix ב (for example, 19 באוקטובר). Hebrew dock and app-grid rows start on the right, with matching left/right remote navigation. The Hebrew input selector places icons and labels on the right, status on the left, and aligns the dropdown with the Inputs button’s right edge. Other languages keep their original layouts.
   Russian includes the module-card approval and management screens and the VPN-off badge.
 - **Module cards** let any TV app declare its own tile (label, caption, glow). The launcher asks you once per app, Keep hidden by default, and remembers the answer for that app's signing key and card name. Hold OK on Settings and choose Module cards to change your mind. How to make one: [`docs/modules.md`](docs/modules.md); the contract: [`docs/specs/card.md`](docs/specs/card.md).
-- **Clock screensaver**: a drifting clock over the glow, so nothing burns in. Pick "Clock" in the TV's screensaver settings, or over ADB:
-  `tools/tv.py 'settings put secure screensaver_components com.gathin.tvhome/.ClockDream; settings put secure screensaver_enabled 1'`
+- **Clock screensaver**: a drifting clock over the glow, so nothing burns in. Pick "Clock" in the TV's screensaver settings, or over ADB with
+  `tools/screensaver.sh clock --after 10` (minutes of idle time before it starts; Android's `screen_off_timeout`). `tools/screensaver.sh google` puts Google TV's Ambient mode photos back instead; on some Google TV sets it shows "Unable to load content" once the stock launcher is disabled ([troubleshooting](docs/TROUBLESHOOTING.md)).
+- **Continue watching**: a row of up to four tiles above the dock with what each app last played, taken from the media sessions apps publish (title, position and the artwork bitmap the app hands to Android; nothing is downloaded). OK resumes in that app. It needs a one-time `cmd notification allow_listener com.gathin.tvhome/.PlaybackListener`, which the install script runs; turn it off with `"last_played": false` in a theme or `disallow_listener`. The row only appears once something has played, and only while a dock or row tile has focus.
 - **Remote keys**: an optional accessibility service keeps the remote's Input button working on Google TV (`INPUT_KEY_SERVICE=1` at install), another fixes sticks whose Home key sends ALL_APPS and opens Settings from the remote's gear button, even one Android does not map (`HOME_KEY_SERVICE=1`, scancodes or keycodes in `config.xml`). With `settings_key_panel` the gear opens a [small quick settings panel](docs/quick-settings-panel.jpg) instead, over Home or any app: TV settings, Display, Network, Apps and Launcher settings.
 - **Navigation** is deliberate: Up and Down move one row, the top buttons never fall through to tiles and Down from them returns to the dock tile you came from, the last focused app is remembered, and installing or removing an app refreshes the tiles while Home is open.
 - **Artwork**: app banners load at xhdpi or better, so low-density TV UIs do not downsample them before the focus zoom.

@@ -108,6 +108,19 @@
             </intent-filter>
         </service>
 
+        <!-- "Continue watching" (config.xml, last_played): follows the TV's media sessions to remember what
+             each app last played; it never reads a notification. Granted once over adb (build-and-install
+             does it): cmd notification allow_listener com.gathin.tvhome/.PlaybackListener -->
+        <service
+            android:name=".PlaybackListener"
+            android:label="@string/continue_watching"
+            android:exported="true"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
+        </service>
+
         <!-- The remote's Input button (KEYCODE_TV) opens the input switcher; see InputKeyService. -->
         <service
             android:name=".InputKeyService"

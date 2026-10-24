@@ -161,7 +161,7 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.Holder> {
             ComponentName component = new ComponentName(pkg, ri.activityInfo.name);
             Cards.Card card = cardByPkg.get(pkg);
             if (card != null && !card.component.equals(component)) continue;   // the card stands in for this tile
-            Drawable banner = loadBanner(pm, ri);
+            Drawable banner = loadBanner(ctx, pm, ri);
             Drawable icon = ri.loadIcon(pm);
             if (card != null) {
                 fresh.add(new Entry(Entry.CARD, card.label, component, banner, icon, card.caption, card.accent));
@@ -202,7 +202,15 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.Holder> {
         notifyDataSetChanged();
     }
 
-    private Drawable loadBanner(PackageManager pm, ResolveInfo ri) {
+    /** The leanback banner of the app's TV launcher activity, or null when it has neither banner nor activity. */
+    static Drawable bannerFor(Context ctx, String pkg) {
+        PackageManager pm = ctx.getPackageManager();
+        Intent probe = new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LEANBACK_LAUNCHER).setPackage(pkg);
+        List<ResolveInfo> found = pm.queryIntentActivities(probe, 0);
+        return found.isEmpty() || found.get(0).activityInfo == null ? null : loadBanner(ctx, pm, found.get(0));
+    }
+
+    private static Drawable loadBanner(Context ctx, PackageManager pm, ResolveInfo ri) {
         int id = ri.activityInfo.banner;
         if (id == 0) id = ri.activityInfo.applicationInfo.banner;
         if (id != 0) {
@@ -325,6 +333,15 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.Holder> {
         return position >= 0 && position < items.size() ? items.get(position).component.flattenToShortString() : null;
     }
 
+    /** Position of the first tile for this package (the app or its card), or -1 when it has none. */
+    int positionOfPackage(String pkg) {
+        for (int i = 0; i < items.size(); i++) {
+            Entry e = items.get(i);
+            if ((e.kind == Entry.APP || e.kind == Entry.CARD) && e.pkg.equals(pkg)) return i;
+        }
+        return -1;
+    }
+
     /** Position of the app with this key, or -1 when it is gone. */
     int positionOf(String key) {
         if (key == null) return -1;
@@ -360,7 +377,7 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.Holder> {
         return e.ambient;
     }
 
-    private static int vividColor(Drawable live) {
+    static int vividColor(Drawable live) {
         if (live == null) return 0xFF444444;
         // Draw a private copy: changing the bounds of the drawable an ImageView shows would blank the tile.
         Drawable d = live.getConstantState() != null ? live.getConstantState().newDrawable().mutate() : live;
@@ -413,6 +430,8 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.Holder> {
         final ImageView icon;
         final TextView label;
         final TextView name;
+        /** The Continue watching row's progress bar; GONE on app tiles. */
+        final View progress;
         final boolean animations;
         final boolean advancedEffects;
         final boolean reducedMotion;
@@ -425,6 +444,7 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.Holder> {
             icon = v.findViewById(R.id.icon);
             label = v.findViewById(R.id.label);
             name = v.findViewById(R.id.name);
+            progress = v.findViewById(R.id.progress);
             this.animations = animations;
             this.advancedEffects = advancedEffects;
             this.reducedMotion = reducedMotion;

@@ -106,6 +106,16 @@ Things that bit us or contributors, so they don't bite you. Commands use `tools/
   package that also claims HOME (PatchWall on Xiaomi) makes Android drop the default. The install
   script now picks the known stock launcher among the candidates by itself; otherwise choose one on
   the TV or pass `STOCK_LAUNCHER=<package>`.
+- **Google TV's Ambient mode screensaver says "Unable to load content"** once the stock Google TV
+  launcher (`com.google.android.apps.tv.launcherx`) is disabled, reported on a Sony BRAVIA BF1
+  ([its list](../examples/sony-bravia-bf1/debloat.txt)). The screensaver
+  (`com.google.android.apps.tv.dreamx`) still comes on, with that message instead of photos. To see
+  whether your TV does this, run `tools/screensaver.sh google --test`: it enables Ambient mode again
+  if a list disabled it, starts it, saves a screenshot, and leaves the idle time at 5 minutes
+  (`--after N` for another). If the screenshot shows the message, fall back to the launcher's Clock
+  with `tools/screensaver.sh clock --after 5`. Both print an undo block before changing anything and
+  keep it in `~/.cleanyourtv/screensaver-<host>.log`; the `pm disable-user` line in the block from
+  the `google` run turns Ambient mode off again once the Clock is set.
 
 ## Accessibility helper enabled but the remote button does nothing
 

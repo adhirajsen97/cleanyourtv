@@ -10,9 +10,11 @@
     <!-- Apps pinned to the dock row at the bottom, in this order. Missing apps are skipped. -->
     <string-array name="dock_apps">
         <item>com.netflix.ninja</item>
-        <item>com.amazon.amazonvideo.livingroom</item>
-        <item>com.google.android.youtube.tv</item>
         <item>in.startv.hotstar</item>
+        <item>com.google.android.youtube.tv</item>
+        <item>com.amazon.amazonvideo.livingroom</item>
+        <item>com.sonyliv</item>
+        <item>com.apple.atve.sony.appletv</item>
     </string-array>
     <!-- With fewer dock_apps than columns (or a dock app that is not installed), the free dock slots take
          the first grid apps, so the dock never shows a gap. false leaves them empty (#162); a theme can
@@ -21,12 +23,11 @@
 
     <!-- Apps never shown as tiles (e.g. the Live TV app, which the Inputs menu already covers). -->
     <string-array name="hidden_apps">
-        <item>com.mediatek.wwtv.tvcenter</item>
-        <item>com.mitv.gallery</item>
+        <item>com.sony.dtv.tvx</item>
     </string-array>
 
     <!-- The TV's Live TV / tuner app, offered at the end of the Inputs menu. Leave empty to omit. -->
-    <string name="live_tv_package" translatable="false">com.mediatek.wwtv.tvcenter</string>
+    <string name="live_tv_package" translatable="false">com.sony.dtv.tvx</string>
 
     <!-- Some TVs give their Live TV app no leanback entry point at all, so `live_tv_package` above
          resolves to nothing (TCL Android TV 9 on China-market sets is one). This action is then sent
@@ -73,7 +74,7 @@
 
     <!-- Tiles per row in the grid; the dock always has this many slots. Tiles are 180dp wide at 4 columns and
          shrink to fit from 5 up (about 144dp at 5, 117dp at 6 on a 1080p TV). -->
-    <integer name="columns">4</integer>
+    <integer name="columns">6</integer>
 
     <!-- Basic motion is on; advanced effects are opt-in in the launcher's own Settings screen. -->
     <bool name="animations">true</bool>
@@ -98,4 +99,13 @@
          sets its opacity. Around 60 reads clearly without hiding a wallpaper. Can also be set with
          "sky_intensity": 60 in a theme's config.json. -->
     <integer name="sky_intensity">0</integer>
+
+    <!-- "Continue watching": up to four tiles above the dock with what each app last played (title, the
+         artwork the app hands to the system, how far in), taken from the TV's media sessions; OK resumes in
+         that app. Nothing goes over the network. Needs the notification listener grant that
+         build-and-install.sh gives (cmd notification allow_listener com.gathin.tvhome/.PlaybackListener).
+         The row stays hidden until something has played, and when it does not fit above the dock
+         (rows_below_dock 1 or more). false records nothing and never shows the row; a theme can set
+         "last_played": false. -->
+    <bool name="last_played">true</bool>
 </resources>

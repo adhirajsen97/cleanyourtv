@@ -178,6 +178,9 @@ class HandoverTest(unittest.TestCase):
         start = next(i for i, c in enumerate(commands) if "am start" in c)
         disable = next(i for i, c in enumerate(commands) if "pm disable-user" in c)
         self.assertLess(start, disable, "the launcher is started before the stock Home is disabled")
+        self.assertIn("cmd notification allow_listener com.gathin.tvhome/.PlaybackListener 2>/dev/null; "
+                      "echo playback-listener-allowed", commands,
+                      "the batch grants the Continue watching listener")
         self.assertTrue(state["stock_disabled"])
         self.assertEqual(state["home"], NEW_HOME)
         self.assertIsNone(self.record())

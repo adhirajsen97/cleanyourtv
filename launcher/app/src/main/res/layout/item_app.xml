@@ -47,6 +47,19 @@
             android:textSize="13sp"
             android:fontFamily="@font/outfit"
             android:visibility="gone" />
+
+        <!-- How far into the title, on Continue watching tiles only (LastPlayedAdapter); the app grid
+             never shows it. Not mirrored in Hebrew: playback progress reads left to right everywhere. -->
+        <View
+            android:id="@+id/progress"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_gravity="bottom"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/continue_progress"
+            android:visibility="gone" />
     </FrameLayout>
 
     <TextView

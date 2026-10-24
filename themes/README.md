@@ -50,6 +50,7 @@ is ignored, and a file that doesn't parse is ignored as a whole, so a theme can 
 | `accent_color` | `#RRGGBB` | Colour of the focus glow while the festive skin is on; diya gold if not set |
 | `settings_key_keycodes` | list of keycodes | Remote buttons that open Settings, for `HomeKeyService` (TCL Google TV gear: `[83]`) |
 | `settings_key_panel` | bool | Those buttons open a small quick settings panel (TV settings, Display, Network, Apps, Launcher settings) instead of the TV's Settings |
+| `last_played` | bool | "Continue watching" row above the dock with what each app last played, from the TV's media sessions (true by default; needs the listener grant `build-and-install.sh` gives). false records nothing and never shows the row |
 
 ## Wallpapers
 

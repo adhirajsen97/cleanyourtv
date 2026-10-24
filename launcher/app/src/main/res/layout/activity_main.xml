@@ -19,19 +19,52 @@
         android:layout_height="match_parent"
         android:alpha="0" />
 
-    <!-- Top shelf: the focused dock app's name, positioned above the dock in code. -->
+    <!-- Top shelf: the focused dock app's name (or a Continue watching title), positioned above the
+         dock in code. Titles run longer than app names, hence the width limit. -->
     <TextView
         android:id="@+id/heroName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="68dp"
+        android:maxWidth="760dp"
         android:alpha="0"
         android:textColor="#FFFFFFFF"
         android:textSize="48sp"
         android:fontFamily="@font/outfit_light"
         android:letterSpacing="-0.02"
         android:includeFontPadding="false"
-        android:singleLine="true" />
+        android:singleLine="true"
+        android:ellipsize="end" />
+
+    <!-- "Continue watching" (config.xml, last_played): the caption and up to four tiles of what apps last
+         played, placed above the dock in code and shown only while a dock or row tile has focus. -->
+    <TextView
+        android:id="@+id/continueLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="68dp"
+        android:alpha="0"
+        android:visibility="gone"
+        android:text="@string/continue_watching"
+        android:singleLine="true"
+        android:textColor="#8CFFFFFF"
+        android:textSize="12sp"
+        android:fontFamily="@font/outfit_medium"
+        android:letterSpacing="0.22"
+        android:textAllCaps="true" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/continueRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:alpha="0"
+        android:visibility="gone"
+        android:focusable="false"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        android:descendantFocusability="afterDescendants" />
 
     <LinearLayout
         android:layout_width="match_parent"
