@@ -130,7 +130,7 @@
             ]
           ]
         },
-        "cooler": {
+        "warmer": {
           "variants": [
             [
               {
@@ -170,7 +170,7 @@
             ]
           ]
         },
-        "warmer": {
+        "cooler": {
           "variants": [
             [
               {

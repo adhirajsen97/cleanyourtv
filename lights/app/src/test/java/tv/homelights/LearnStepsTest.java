@@ -32,6 +32,24 @@ public class LearnStepsTest {
         }
         assertEquals("all-on", LearnSteps.ALL.get(0).id);
         assertEquals(34, LearnSteps.ALL.size());
+        // The extra buttons carry the selected group, so they follow the all-rows adjustments.
+        assertEquals("k-button", LearnSteps.ALL.get(index("all-k-minus") + 1).id);
+        assertEquals("select-row1", LearnSteps.ALL.get(index("aid") + 1).id);
+    }
+
+    @Test
+    public void subsets() {
+        assertEquals(LearnSteps.ALL, LearnSteps.subset(null));
+        assertEquals(LearnSteps.ALL, LearnSteps.subset("all"));
+        assertEquals(LearnSteps.ALL, LearnSteps.subset("no-such-step"));
+        assertEquals(java.util.Arrays.asList("select-all", "k-button", "moon", "rgb", "aid"), ids(LearnSteps.subset("extras")));
+        assertEquals(java.util.Arrays.asList("all-on", "off-2"), ids(LearnSteps.subset("off-2, all-on")));
+    }
+
+    static java.util.List<String> ids(java.util.List<LearnSteps.Step> steps) {
+        java.util.List<String> out = new java.util.ArrayList<>();
+        for (LearnSteps.Step s : steps) out.add(s.id);
+        return out;
     }
 
     static int index(String id) {

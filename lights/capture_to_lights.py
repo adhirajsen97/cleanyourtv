@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 """Turn what Learn remote recorded (capture.json) into the app's packet list (lights.json).
 
-Usage: python3 -I lights/capture_to_lights.py lights/capture.json lights/app/src/main/assets/lights.json
+Usage: python3 -I lights/capture_to_lights.py lights/capture.json [more captures...] lights/app/src/main/assets/lights.json
+
+Later capture files override the steps of earlier ones, so a short re-run of a few steps (Learn
+remote with `-e steps extras`) is merged over the full capture.
 
 The remote sends every command twice, as manufacturer data (format A, readable) and as service
 data under 0x08F0 (format B, the one the lights were seen to answer from the TV). Both go out
@@ -30,8 +33,13 @@ for row in (1, 2, 3, 4):
     STEP_TO_COMMAND[f"on-{row}"] = (f"row-{row}", "on")
     STEP_TO_COMMAND[f"off-{row}"] = (f"row-{row}", "off")
 ADJUST = {"brighter": "brighter", "dimmer": "dimmer", "k-plus": "cooler", "k-minus": "warmer"}
+# K+ and K- are filed by the Kelvin reading (K+ cooler). On the drawing-room lights, All rows does the
+# opposite of the single rows even though the capture shows the same codes, so its two are swapped.
+SWAP_K = {"all"}
 for prefix, light in (("all", "all"), ("row1", "row-1"), ("row2", "row-2"), ("row3", "row-3")):
     for suffix, command in ADJUST.items():
+        if light in SWAP_K and command in ("cooler", "warmer"):
+            command = "warmer" if command == "cooler" else "cooler"
         STEP_TO_COMMAND[f"{prefix}-{suffix}"] = (light, command)
 
 LIGHTS = [
@@ -92,10 +100,14 @@ def packet(hexdata, burst_ms=None):
     return p
 
 
-def main(capture_path, out_path):
-    capture = json.load(open(capture_path, encoding="utf-8"))
+def main(capture_paths, out_path):
+    steps = {}
+    for path in capture_paths:
+        for step in json.load(open(path, encoding="utf-8"))["steps"]:
+            if step["packets"]:
+                steps[step["step"]] = step
     commands = {light: {} for light, _ in LIGHTS}
-    for step in capture["steps"]:
+    for step in steps.values():
         target = STEP_TO_COMMAND.get(step["step"])
         if target is None:
             continue
@@ -127,6 +139,6 @@ def main(capture_path, out_path):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 3:
+    if len(sys.argv) < 3:
         raise SystemExit(__doc__)
-    main(sys.argv[1], sys.argv[2])
+    main(sys.argv[1:-1], sys.argv[-1])

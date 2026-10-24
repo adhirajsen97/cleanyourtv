@@ -14,6 +14,7 @@ import android.widget.TextView;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -40,6 +41,7 @@ public final class MainActivity extends Activity {
     private LightsConfig config;
     private TextView status;
     private final Map<String, View> rows = new HashMap<>();
+    private final Marks marks = new Marks();
     /** The command waiting for the permission dialog or the Bluetooth switch. */
     private Light pendingLight;
     private String pendingCommand;
@@ -193,17 +195,28 @@ public final class MainActivity extends Activity {
         });
     }
 
-    /** On and Off: the last one sent stays marked; the lights send nothing back. */
+    /**
+     * On and Off stay marked on the row that sent them; All rows marks every row, and a row's own
+     * change unmarks All rows until the rows agree again (see {@link Marks}).
+     */
     private void markState(Light light, String command) {
         boolean on = "on".equals(command);
         if (!on && !"off".equals(command)) return;
-        View row = rows.get(light.id);
-        if (row == null) return;
-        LinearLayout buttons = row.findViewById(R.id.buttons);
-        View onButton = buttons.findViewWithTag("on");
-        View offButton = buttons.findViewWithTag("off");
-        if (onButton != null) onButton.setSelected(on);
-        if (offButton != null) offButton.setSelected(!on);
+        List<String> switchable = new ArrayList<>();
+        for (Light l : config.lights) {
+            if (!Marks.ALL.equals(l.id) && l.has("on") && l.has("off")) switchable.add(l.id);
+        }
+        marks.set(light.id, on, switchable);
+        for (Light l : config.lights) {
+            View row = rows.get(l.id);
+            if (row == null) continue;
+            Boolean mark = marks.get(l.id);
+            LinearLayout buttons = row.findViewById(R.id.buttons);
+            View onButton = buttons.findViewWithTag("on");
+            View offButton = buttons.findViewWithTag("off");
+            if (onButton != null) onButton.setSelected(Boolean.TRUE.equals(mark));
+            if (offButton != null) offButton.setSelected(Boolean.FALSE.equals(mark));
+        }
     }
 
     private void unblock(Advertiser.Blocker blocker, Light light, String command, boolean mayPrompt) {

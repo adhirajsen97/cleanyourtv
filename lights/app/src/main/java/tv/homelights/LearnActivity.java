@@ -32,16 +32,19 @@ import java.util.Locale;
  * result, capture.json in the app's files directory, is saved after every step and fetched with
  * lights/pull-capture.sh. OK on the TV remote (the Next button) moves on; Back leaves, keeping
  * what was recorded. Started from the main screen, or with
- * {@code am start -n tv.homelights/.LearnActivity}; add {@code -e filter none} to record every
- * packet heard, not only the ones in the lights' two formats.
+ * {@code am start -n tv.homelights/.LearnActivity}; add {@code -e steps extras} for a short run
+ * (ALL ON, then K, moon, RGB, Aid), or {@code -e filter none} to record every packet heard, not
+ * only the ones in the lights' two formats.
  */
 public final class LearnActivity extends Activity {
     static final String EXTRA_FILTER = "filter";
+    static final String EXTRA_STEPS = "steps";
     private static final int REQUEST_PERMISSION = 3;
     private static final int SERVICE_UUID = 0x08F0;
     private static final int COMPANY_ID = 0x5556;
 
     private Capture capture;
+    private List<LearnSteps.Step> plan = LearnSteps.ALL;
     private int step = -1;
     private boolean done;
     private boolean filter = true;
@@ -73,6 +76,7 @@ public final class LearnActivity extends Activity {
             else finishCapture();
         });
         filter = !"none".equals(getIntent().getStringExtra(EXTRA_FILTER));
+        plan = LearnSteps.subset(getIntent().getStringExtra(EXTRA_STEPS));
         String started = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.ROOT).format(new Date());
         capture = new Capture(started, Build.MANUFACTURER + " " + Build.MODEL + ", Android " + Build.VERSION.RELEASE
                 + (filter ? "" : ", every packet recorded"), System.currentTimeMillis());
@@ -182,7 +186,7 @@ public final class LearnActivity extends Activity {
         }
         String address = result.getDevice() == null ? "" : result.getDevice().getAddress();
         if (capture.heard(raw, address, result.getRssi(), System.currentTimeMillis())) {
-            Log.i(Advertiser.TAG, "learn " + LearnSteps.ALL.get(step).id + ": " + AdData.pretty(raw)
+            Log.i(Advertiser.TAG, "learn " + plan.get(step).id + ": " + AdData.pretty(raw)
                     + " rssi " + result.getRssi() + " from " + address);
         }
         updateCounts();
@@ -196,8 +200,8 @@ public final class LearnActivity extends Activity {
 
     private void showStep(int index) {
         step = index;
-        LearnSteps.Step s = LearnSteps.ALL.get(index);
-        counter.setText(getString(R.string.learn_step_counter, index + 1, LearnSteps.ALL.size()));
+        LearnSteps.Step s = plan.get(index);
+        counter.setText(getString(R.string.learn_step_counter, index + 1, plan.size()));
         String text = s.presses == 1
                 ? getString(R.string.learn_press_once, s.button)
                 : getString(R.string.learn_press_times, s.button, s.presses);
@@ -209,7 +213,7 @@ public final class LearnActivity extends Activity {
 
     private void nextStep() {
         save();
-        if (step + 1 >= LearnSteps.ALL.size()) {
+        if (step + 1 >= plan.size()) {
             finishCapture();
             return;
         }
@@ -221,7 +225,7 @@ public final class LearnActivity extends Activity {
         capture.endStep(System.currentTimeMillis());
         stopScan();
         save();
-        counter.setText(getString(R.string.learn_step_counter, LearnSteps.ALL.size(), LearnSteps.ALL.size()));
+        counter.setText(getString(R.string.learn_step_counter, plan.size(), plan.size()));
         int packets = 0;
         for (Capture.StepRecord s : capture.steps()) packets += s.distinct();
         instruction.setText(getString(R.string.learn_done, capture.steps().size(), packets));

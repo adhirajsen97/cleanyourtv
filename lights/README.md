@@ -159,12 +159,21 @@ hears under that button, so the recording needs no clock-watching. The steps, in
 |---|---|---|---|
 | 1, 2 | ALL ON, ALL OFF | 3 each | The packets the TV already sends; a check that the capture works |
 | 3 to 10 | ON 1, OFF 1, ON 2, OFF 2, ON 3, OFF 3, ON 4, OFF 4 | 2 each | Each row's own on and off |
-| 11 | ALL ON | 1 | Selects every row for the next four |
+| 11 | ALL ON | 1 | Selects every row for the next eight |
 | 12 to 15 | sun+, sun−, K+, K− | 3 each | Brightness and colour temperature for all rows |
-| 16 to 20 | ON 1, then sun+, sun−, K+, K− | 1, then 3 each | The same for row 1 |
-| 21 to 25 | ON 2, then the four | 1, then 3 each | Row 2 |
-| 26 to 30 | ON 3, then the four | 1, then 3 each | Row 3 |
-| 31 to 34 | K (round, top left), moon, RGB, Aid | 2 each | Whatever they do; note it |
+| 16 to 19 | K (round, top left), moon, RGB, Aid | 2 each | These carry the selected group too, so while it is "all" |
+| 20 to 24 | ON 1, then sun+, sun−, K+, K− | 1, then 3 each | The same for row 1 |
+| 25 to 29 | ON 2, then the four | 1, then 3 each | Row 2 |
+| 30 to 34 | ON 3, then the four | 1, then 3 each | Row 3 |
+
+A few steps can be run on their own, for example the four extra buttons again after a change:
+
+```
+TV_HOST=192.168.1.26 tools/venv/bin/python -I tools/tv.py 'am start -n tv.homelights/.LearnActivity -e steps extras'
+TV_HOST=192.168.1.26 lights/pull-capture.sh lights/capture-extras.json
+```
+
+`extras` is ALL ON, then K, moon, RGB, Aid; a comma-separated list of step ids works as well.
 
 Never press **SETUP**: it pairs or unpairs the lights. Press the buttons about a second apart;
 when the screen's count has gone up, press **Next step** on the TV remote. **Finish** or Back stops
@@ -175,10 +184,11 @@ early and keeps what is recorded. The capture is saved after every step as
 TV_HOST=192.168.1.26 lights/pull-capture.sh        # writes lights/capture.json and prints a summary
 ```
 
-Then turn it into the packet list and rebuild (or push the file):
+Then turn it into the packet list and rebuild (or push the file). Several capture files merge,
+later ones overriding the steps they contain:
 
 ```
-python3 -I lights/capture_to_lights.py lights/capture.json lights/app/src/main/assets/lights.json
+python3 -I lights/capture_to_lights.py lights/capture.json lights/capture-extras.json lights/app/src/main/assets/lights.json
 ```
 
 For each step the capture lists every distinct packet, how many copies came, when, its signal
@@ -203,9 +213,10 @@ in time, which reads plainly. Format A, 27 bytes after the company id:
 | 25, 26 | constant `60 57` |
 
 So the row travels inside every adjustment packet, which is why each row on the screen has its
-own Brighter and Dimmer. An adjustment press is two packets, press then release, kept together in
-`lights.json` (400 ms each). K+ is filed as `cooler` and K− as `warmer`, the Kelvin reading; if
-the lights do the opposite, swap the two names in `capture_to_lights.py` and run it again.
+own Brighter and Dimmer; the K, moon, RGB and Aid buttons carry the selected group as well. An
+adjustment press is two packets, press then release, kept together in `lights.json` (400 ms each).
+K+ is filed as `cooler` and K− as `warmer`, the Kelvin reading, except for All rows, where the
+drawing-room lights do the opposite (`SWAP_K` in `capture_to_lights.py`).
 
 Two checks on the Learn screen: "Heard in this step" must go up when you press the light remote;
 if it stays at 0 while "Other devices ignored" climbs, the remote's packets are in a format the
