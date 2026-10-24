@@ -1,0 +1,236 @@
+{
+  "started": "2026-10-24T15:25:58+0530",
+  "device": "Sony BRAVIA 4K VH22, Android 12",
+  "steps": [
+    {
+      "step": "select-all",
+      "instruction": "On the light remote, press ALL ON once.",
+      "began": 0,
+      "ended": 8.391,
+      "copies": 125,
+      "ignored": 197,
+      "packets": [
+        {
+          "raw": "0201021B16F0081000564D24903F044D7E83025246C66F86148C70B7B23D55",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 56 4D 24 90 3F 04 4D 7E 83 02 52 46 C6 6F 86 14 8C 70 B7 B2 3D 55",
+          "count": 64,
+          "first": 6.939,
+          "last": 7.541,
+          "rssi": -59,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC3151D0699F0824CBDBFC9F4D833BAF756057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 D0 69 9F 08 24 CB DB FC 9F 4D 83 3B AF 75 60 57",
+          "count": 61,
+          "first": 6.941,
+          "last": 7.54,
+          "rssi": -59,
+          "address": "59:BA:2B:D2:57:8D"
+        }
+      ]
+    },
+    {
+      "step": "k-button",
+      "instruction": "On the light remote, press K (the round button at the top left) 2 times, about a second apart.",
+      "began": 8.391,
+      "ended": 19.152,
+      "copies": 444,
+      "ignored": 191,
+      "packets": [
+        {
+          "raw": "0201021B16F0081000DE1F8A9EB3E36BAF3FD93A705EAB445006418D0B620F",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 DE 1F 8A 9E B3 E3 6B AF 3F D9 3A 70 5E AB 44 50 06 41 8D 0B 62 0F",
+          "count": 58,
+          "first": 13.467,
+          "last": 13.975,
+          "rssi": -58,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31515C699F08DBCB2BFE00D2D5A4413E6057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 5C 69 9F 08 DB CB 2B FE 00 D2 D5 A4 41 3E 60 57",
+          "count": 64,
+          "first": 13.476,
+          "last": 13.974,
+          "rssi": -57,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F0081000C2B9A16338EAB036A01EA2B765B8B1522CD0A5FB4BC8",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 C2 B9 A1 63 38 EA B0 36 A0 1E A2 B7 65 B8 B1 52 2C D0 A5 FB 4B C8",
+          "count": 60,
+          "first": 14.613,
+          "last": 14.911,
+          "rssi": -58,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31515C699FF7DBCBABFE0CDE7AA8E5BC6057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 5C 69 9F F7 DB CB AB FE 0C DE 7A A8 E5 BC 60 57",
+          "count": 58,
+          "first": 14.623,
+          "last": 14.925,
+          "rssi": -57,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F0081000AC63F66AC06083824BFF19DBD1004A7E709B6C719801",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 AC 63 F6 6A C0 60 83 82 4B FF 19 DB D1 00 4A 7E 70 9B 6C 71 98 01",
+          "count": 98,
+          "first": 17.103,
+          "last": 17.662,
+          "rssi": -58,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31515C699FF724CB6BFE30E2A494D91F6057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 5C 69 9F F7 24 CB 6B FE 30 E2 A4 94 D9 1F 60 57",
+          "count": 106,
+          "first": 17.107,
+          "last": 17.674,
+          "rssi": -57,
+          "address": "59:BA:2B:D2:57:8D"
+        }
+      ]
+    },
+    {
+      "step": "moon",
+      "instruction": "On the light remote, press the moon (the round button at the top right) 2 times, about a second apart.",
+      "began": 19.152,
+      "ended": 31.354,
+      "copies": 217,
+      "ignored": 260,
+      "packets": [
+        {
+          "raw": "0201021B16F00810001C7A8919E6C0C1608C8BB97A9E7EA518C827BDEFBBB4",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 1C 7A 89 19 E6 C0 C1 60 8C 8B B9 7A 9E 7E A5 18 C8 27 BD EF BB B4",
+          "count": 49,
+          "first": 26.903,
+          "last": 27.457,
+          "rssi": -58,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31511C699F0824CBEBFCBB69BC1F2F816057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 1C 69 9F 08 24 CB EB FC BB 69 BC 1F 2F 81 60 57",
+          "count": 47,
+          "first": 26.923,
+          "last": 27.458,
+          "rssi": -57,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F0081000A56AA16297CBFFE7EB0018E07131250611E5D4F2808E",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 A5 6A A1 62 97 CB FF E7 EB 00 18 E0 71 31 25 06 11 E5 D4 F2 80 8E",
+          "count": 59,
+          "first": 28.564,
+          "last": 28.976,
+          "rssi": -58,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31511C699F0824CB0BFC8654D12265506057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 1C 69 9F 08 24 CB 0B FC 86 54 D1 22 65 50 60 57",
+          "count": 62,
+          "first": 28.573,
+          "last": 28.976,
+          "rssi": -57,
+          "address": "59:BA:2B:D2:57:8D"
+        }
+      ]
+    },
+    {
+      "step": "rgb",
+      "instruction": "On the light remote, press RGB 2 times, about a second apart.",
+      "began": 31.354,
+      "ended": 41.135,
+      "copies": 258,
+      "ignored": 166,
+      "packets": [
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC3151A0699F0824CB8BFC489A7CEC666C6057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 A0 69 9F 08 24 CB 8B FC 48 9A 7C EC 66 6C 60 57",
+          "count": 77,
+          "first": 37.951,
+          "last": 38.527,
+          "rssi": -55,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F0081000A4079BDA71C3EB0A2B24F91DFD26A84A79393E2BD1C0",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 A4 07 9B DA 71 C3 EB 0A 2B 24 F9 1D FD 26 A8 4A 79 39 3E 2B D1 C0",
+          "count": 72,
+          "first": 37.956,
+          "last": 38.528,
+          "rssi": -56,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC315120699F0824CB4BFC0BD9D6AF3C836057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 20 69 9F 08 24 CB 4B FC 0B D9 D6 AF 3C 83 60 57",
+          "count": 55,
+          "first": 39.113,
+          "last": 39.658,
+          "rssi": -55,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F0081000B3ABB13026FD5841877C8358D645DA7260C040EBEF92",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 B3 AB B1 30 26 FD 58 41 87 7C 83 58 D6 45 DA 72 60 C0 40 EB EF 92",
+          "count": 54,
+          "first": 39.123,
+          "last": 39.66,
+          "rssi": -56,
+          "address": "10:9E:3A:10:25:5D"
+        }
+      ]
+    },
+    {
+      "step": "aid",
+      "instruction": "On the light remote, press Aid 2 times, about a second apart.",
+      "began": 41.135,
+      "ended": 46.66,
+      "copies": 240,
+      "ignored": 103,
+      "packets": [
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC315190699F0824CBCBFCEC3ECE489FBA6057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 90 69 9F 08 24 CB CB FC EC 3E CE 48 9F BA 60 57",
+          "count": 61,
+          "first": 43.773,
+          "last": 44.328,
+          "rssi": -56,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F00810007C908F87F0F980195C5AC86188ACBD15277AB9D22413",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 7C 90 8F 87 F0 F9 80 19 5C 5A C8 61 88 AC BD 15 27 7A B9 D2 24 13",
+          "count": 70,
+          "first": 43.776,
+          "last": 44.328,
+          "rssi": -56,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC315110699F0824CB33FC6EBC2FCACF616057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 10 69 9F 08 24 CB 33 FC 6E BC 2F CA CF 61 60 57",
+          "count": 63,
+          "first": 45.043,
+          "last": 45.51,
+          "rssi": -57,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F0081000E6A975E19969A2C474776DA59E66F7A6D42352107511",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 E6 A9 75 E1 99 69 A2 C4 74 77 6D A5 9E 66 F7 A6 D4 23 52 10 75 11",
+          "count": 46,
+          "first": 45.044,
+          "last": 45.525,
+          "rssi": -57,
+          "address": "10:9E:3A:10:25:5D"
+        }
+      ]
+    }
+  ]
+}
