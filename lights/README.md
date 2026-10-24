@@ -37,9 +37,14 @@ TV_HOST=192.168.1.26 lights/build-and-install.sh
 
 Windows: `lights\build-and-install.ps1 -TvHost 192.168.1.26`.
 
-The script builds the APK (JDK 17 and the Android SDK, as for the launcher), pushes and installs it,
-grants the Bluetooth advertising permission over adb, and starts the app. Nothing else on the TV
-changes.
+The script builds the APK, pushes and installs it, grants the Bluetooth advertising permission over
+adb, and starts the app. Nothing else on the TV changes.
+
+The build needs a JDK 17 to 22 and the Android SDK. Android Studio provides both (its bundled
+runtime is found automatically); without it, `brew install openjdk@17` and `brew install --cask
+android-commandlinetools` followed by `sdkmanager "platforms;android-34" "build-tools;34.0.0"`.
+The script prints which JDK and SDK it uses, or says what is missing: a newer Java such as 25
+cannot run Gradle 8.9 and is skipped. `JAVA_HOME` and `ANDROID_HOME` override the search.
 
 The app appears in the TV's app list and as a tile in the cleanyourtv launcher. The launcher also
 offers it as a [module card](../docs/modules.md) ("Lights · Drawing room") the first time; answer

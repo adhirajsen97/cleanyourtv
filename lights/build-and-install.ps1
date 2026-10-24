@@ -18,7 +18,19 @@ if (-not $env:JAVA_HOME -or -not (Test-Path "$env:JAVA_HOME\bin\java.exe")) {
     if (-not $jbr) { throw 'Set JAVA_HOME to a JDK 17+ (Android Studio ships one in its jbr folder)' }
     $env:JAVA_HOME = $jbr
 }
+# Gradle 8.9 runs on JDK 17 to 22; say so instead of letting Groovy fail on a newer Java.
+$prev = $ErrorActionPreference; $ErrorActionPreference = 'Continue'
+$javaOut = (& "$env:JAVA_HOME\bin\java.exe" -version 2>&1 | ForEach-Object { "$_" }) -join "`n"
+$ErrorActionPreference = $prev
+$major = 0
+if ($javaOut -match 'version "(\d+)(\.(\d+))?') { $major = [int]$Matches[1]; if ($major -eq 1 -and $Matches[3]) { $major = [int]$Matches[3] } }
+if ($major -lt 17 -or $major -gt 22) {
+    throw "JDK $major at $env:JAVA_HOME, but Gradle 8.9 runs on 17 to 22. Install Android Studio (its bundled runtime is found automatically) or set JAVA_HOME to a JDK 17."
+}
+Write-Host "Using JDK $major at $env:JAVA_HOME"
 $sdk = if ($env:ANDROID_HOME) { $env:ANDROID_HOME } else { "$env:LOCALAPPDATA\Android\Sdk" }
+if (-not (Test-Path $sdk)) { throw "no Android SDK at $sdk: install Android Studio (the SDK comes with it) or set ANDROID_HOME" }
+Write-Host "Using Android SDK at $sdk"
 if (-not (Test-Path local.properties)) {
     "sdk.dir=$($sdk -replace '\\', '\\')" | Out-File -Encoding ascii local.properties
 }
