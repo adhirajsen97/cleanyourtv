@@ -21,7 +21,8 @@ import java.util.Locale;
 
 /**
  * Puts the lights' packets on air as Bluetooth LE advertisements, the way nRF Connect's Advertiser
- * does: one record per advertisement, non-connectable, no device name, no TX power, at the fastest
+ * does: one record per advertisement, no device name, no TX power, connectable when the packet says
+ * so (Android then puts the Flags record in front, as a phone app's packet has), at the fastest
  * interval Android offers (about 100 ms), for a burst of {@code burstMs}. The packets of one command
  * go on air one after another. One command runs at a time; a new one stops the running burst, so the
  * last button pressed wins. Everything is logged under {@link #TAG}.
@@ -82,7 +83,7 @@ public final class Advertiser {
     public String capabilities() {
         BluetoothAdapter adapter = adapter();
         if (adapter == null) return "";
-        return String.format(Locale.ROOT, "Android %d, multi-advertising %s, extended %s", Build.VERSION.SDK_INT,
+        return String.format(Locale.ROOT, "Android %s, multi-advertising %s, extended %s", Build.VERSION.RELEASE,
                 yesNo(adapter.isMultipleAdvertisementSupported()), yesNo(adapter.isLeExtendedAdvertisingSupported()));
     }
 
@@ -169,13 +170,15 @@ public final class Advertiser {
             }
             Packet packet = packets.get(index);
             listener.onProgress(index + 1, packets.size());
-            Log.i(TAG, "advertising " + packet.describe() + " for " + burstMs + " ms: " + Hex.encode(packet.adBytes()));
-            // The stack's own timeout is a safety net a little after the stop below.
+            Log.i(TAG, "advertising " + packet.describe() + " for " + burstMs + " ms: "
+                    + (packet.connectable ? "[flags, added by Android] " : "") + Hex.encode(packet.adBytes()));
+            // No stack timeout: the burst ends with stop() below. A timeout would also make Android
+            // write the Flags as "limited discoverable" (02 01 01) instead of the usual 02 01 02.
             AdvertiseSettings settings = new AdvertiseSettings.Builder()
                     .setAdvertiseMode(AdvertiseSettings.ADVERTISE_MODE_LOW_LATENCY)
                     .setTxPowerLevel(AdvertiseSettings.ADVERTISE_TX_POWER_HIGH)
-                    .setConnectable(false)
-                    .setTimeout(burstMs + 200)
+                    .setConnectable(packet.connectable)
+                    .setTimeout(0)
                     .build();
             try {
                 advertiser.startAdvertising(settings, data(packet), this);

@@ -1,6 +1,7 @@
 package tv.homelights;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThrows;
@@ -26,7 +27,7 @@ public class LightsConfigTest {
     @Test
     public void bundledFileParsesToTheDrawingRoomPackets() throws IOException {
         LightsConfig config = LightsConfig.parse(bundled());
-        assertEquals(800, config.burstMs);
+        assertEquals(1500, config.burstMs);
         assertEquals(1, config.lights.size());
         Light light = config.find("drawing-room");
         assertNotNull(light);
@@ -36,6 +37,7 @@ public class LightsConfigTest {
         Packet on = light.packets(true).get(0);
         assertEquals(Packet.Kind.SERVICE_DATA, on.kind);
         assertEquals(0x08F0, on.id);
+        assertTrue("format B goes out with the Flags record, as the phone sends it", on.connectable);
         assertEquals("1000B559C42541FDEF78E0E567050CC0555F4A1AE719D07D", Hex.encode(on.payload));
         assertEquals("1000EA2D71611DCBAA79F270FE6376E486E88FD664E3AA48", Hex.encode(light.packets(false).get(0).payload));
         assertNull(config.find("kitchen"));
@@ -55,7 +57,28 @@ public class LightsConfigTest {
         assertEquals(Packet.Kind.MANUFACTURER_DATA, a.kind);
         assertEquals(0x5556, a.id);
         assertEquals(27, a.payload.length);
+        assertFalse("27 bytes leave no room for Flags", a.connectable);
+        assertTrue(light.on.get(0).connectable);
+        assertTrue(light.off.get(0).connectable);
         assertEquals(4, light.off.get(0).payload.length);
+    }
+
+    @Test
+    public void connectableCanBeSwitchedOffForAllOrPerPacket() {
+        LightsConfig all = LightsConfig.parse("{\"connectable\":false,\"lights\":[" + light("a") + "]}");
+        assertFalse(all.lights.get(0).on.get(0).connectable);
+        assertFalse(all.lights.get(0).off.get(0).connectable);
+        LightsConfig one = LightsConfig.parse("{\"connectable\":false,\"lights\":[{\"id\":\"a\","
+                + "\"on\":[{\"service_data\":\"08F0\",\"data\":\"1000EA2D\",\"connectable\":true}],"
+                + "\"off\":[" + B + "]}]}");
+        assertTrue(one.lights.get(0).on.get(0).connectable);
+        assertFalse(one.lights.get(0).off.get(0).connectable);
+    }
+
+    @Test
+    public void burstUpToAMinute() {
+        assertEquals(60000, LightsConfig.parse("{\"burst_ms\":60000,\"lights\":[" + light("a") + "]}").burstMs);
+        assertMessage("burst_ms must be 100 to 60000", "{\"burst_ms\":60001,\"lights\":[" + light("a") + "]}");
     }
 
     @Test
@@ -63,7 +86,7 @@ public class LightsConfigTest {
         assertMessage("not valid JSON", "nonsense");
         assertMessage("\"lights\" is missing or empty", "{}");
         assertMessage("\"lights\" is missing or empty", "{\"lights\":[]}");
-        assertMessage("burst_ms must be 100 to 10000", "{\"burst_ms\":50,\"lights\":[]}");
+        assertMessage("burst_ms must be 100 to 60000", "{\"burst_ms\":50,\"lights\":[]}");
         assertMessage("lights[0] has no \"id\"", "{\"lights\":[{\"name\":\"x\"}]}");
         assertMessage("two lights have the id \"a\"", "{\"lights\":[" + light("a") + "," + light("a") + "]}");
         assertMessage("light \"a\" has no \"off\" packets", "{\"lights\":[{\"id\":\"a\",\"on\":[" + B + "]}]}");

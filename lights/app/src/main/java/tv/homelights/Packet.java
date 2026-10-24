@@ -10,10 +10,11 @@ import java.util.Locale;
  *   SERVICE_DATA        AD type 0x16, 16-bit service UUID, payload    nRF Connect: "Service Data"
  *   MANUFACTURER_DATA   AD type 0xFF, company identifier, payload     nRF Connect: "Manufacturer Data"
  * </pre>
- * A legacy advertisement holds 31 bytes in all. The app sends one record per advertisement,
- * non-connectable and without a device name or TX power, so the record is the whole advertisement
- * and the payload may be at most 27 bytes. (Android adds a 3-byte Flags record to connectable
- * advertisements only, which is why they are sent non-connectable.)
+ * A legacy advertisement holds 31 bytes in all. The app sends one record per advertisement, without
+ * a device name or TX power, so the payload may be at most 27 bytes. A {@link #connectable} packet
+ * goes out the way a phone app sends it: Android puts the 3-byte Flags record ({@code 02 01 02})
+ * in front, which leaves 24 bytes of payload. Format B is exactly that size, so it is sent with
+ * Flags; format A (27 bytes) has no room for them and goes out non-connectable, without.
  */
 public final class Packet {
 
@@ -38,13 +39,18 @@ public final class Packet {
     /** Length byte, AD type byte and the 16-bit identifier. */
     public static final int OVERHEAD = 4;
     public static final int MAX_PAYLOAD = LEGACY_MAX_BYTES - OVERHEAD;
+    /** The Flags record Android adds in front of a connectable advertisement. */
+    public static final int FLAGS_BYTES = 3;
+    public static final int MAX_CONNECTABLE_PAYLOAD = MAX_PAYLOAD - FLAGS_BYTES;
 
     public final Kind kind;
     /** Service UUID or company identifier, 0 to 0xFFFF. */
     public final int id;
     public final byte[] payload;
+    /** Sent connectable, so Android puts the Flags record in front; false when the payload leaves no room. */
+    public final boolean connectable;
 
-    public Packet(Kind kind, int id, byte[] payload) {
+    public Packet(Kind kind, int id, byte[] payload, boolean connectable) {
         if (kind == null) throw new IllegalArgumentException("no packet kind");
         if (id < 0 || id > 0xFFFF) throw new IllegalArgumentException("identifier is not 16-bit: " + id);
         if (payload == null || payload.length == 0) throw new IllegalArgumentException("empty payload");
@@ -56,6 +62,12 @@ public final class Packet {
         this.kind = kind;
         this.id = id;
         this.payload = payload.clone();
+        this.connectable = connectable && payload.length <= MAX_CONNECTABLE_PAYLOAD;
+    }
+
+    /** Bytes on air: the record, plus the Flags record when connectable. */
+    public int airLength() {
+        return adLength() + (connectable ? FLAGS_BYTES : 0);
     }
 
     /** Size of the record on air, header included. */
@@ -75,19 +87,20 @@ public final class Packet {
     }
 
     public String describe() {
-        return String.format(Locale.ROOT, "%s %04X, %d bytes", kind.label, id, payload.length);
+        return String.format(Locale.ROOT, "%s %04X, %d bytes, %s", kind.label, id, payload.length,
+                connectable ? "with flags" : "no flags");
     }
 
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Packet)) return false;
         Packet p = (Packet) o;
-        return kind == p.kind && id == p.id && Arrays.equals(payload, p.payload);
+        return kind == p.kind && id == p.id && connectable == p.connectable && Arrays.equals(payload, p.payload);
     }
 
     @Override
     public int hashCode() {
-        return 31 * (31 * kind.hashCode() + id) + Arrays.hashCode(payload);
+        return 31 * (31 * (31 * kind.hashCode() + id) + (connectable ? 1 : 0)) + Arrays.hashCode(payload);
     }
 
     @Override

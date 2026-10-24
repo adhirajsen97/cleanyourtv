@@ -17,11 +17,16 @@ two records, which nRF Connect calls by these names:
 | Service Data, UUID `0x08F0` ("format B") | `0x16` | 2 bytes | 24 bytes | 28 bytes |
 | Manufacturer Data, Company ID `0x5556` ("format A") | `0xFF` | 2 bytes | 27 bytes | 31 bytes |
 
-The app sends one record per advertisement, **non-connectable**, with no device name and no TX power,
-so the record is the whole advertisement. That matters for format A: it fills the 31 bytes exactly,
-and Android adds a 3-byte Flags record to connectable advertisements, which would push it over the
-limit. Each packet is advertised at the fastest interval Android offers (about every 100 ms) for
-`burst_ms` (800 ms by default), then advertising stops.
+The app sends one record per advertisement, with no device name and no TX power. One more thing
+rides in front of it: the 3-byte **Flags** record (`02 01 02`), which Android puts at the start of
+every *connectable* advertisement. A phone app, and nRF Connect with its default options, send
+connectable, so the lights have only ever seen `02 01 02` followed by the record. Format B is sized
+for exactly that: 3 + 28 = 31 bytes. The app therefore sends format B connectable too. Format A
+fills the 31 bytes on its own, so it has no room for Flags and goes out non-connectable, which is
+also why nRF Connect could not send it connectable.
+
+Each packet is advertised at the fastest interval Android offers (about every 100 ms) for
+`burst_ms` (1.5 s by default, roughly 15 copies), then advertising stops.
 
 The same bytes keep working on replay, so the packets are fixed strings in `lights.json`.
 
@@ -57,7 +62,7 @@ Left and Right move between On and Off, Up and Down between lights.
 
 | Status line | Meaning |
 |---|---|
-| Ready. Bluetooth LE advertising available (Android 12, multi-advertising yes, …) | Press On or Off. |
+| Ready. Bluetooth LE advertising available (Android 12, multi-advertising no, extended yes) | Press On or Off. "multi-advertising no" only means one packet at a time, which is all the app needs. |
 | Sent Drawing room On. | The packet went on air. If the lights did not react, see Troubleshooting. |
 | Press On or Off, then allow Nearby devices… | Android 12+ runtime permission. The install script grants it; otherwise the TV shows a dialog on the first press. |
 | Bluetooth is off. Press On or Off to switch it on. | The first press asks Android to turn Bluetooth on. |
@@ -83,7 +88,8 @@ The built-in list is [`app/src/main/assets/lights.json`](app/src/main/assets/lig
 
 ```json
 {
-  "burst_ms": 800,
+  "burst_ms": 1500,
+  "connectable": true,
   "lights": [
     {
       "id": "drawing-room",
@@ -95,7 +101,10 @@ The built-in list is [`app/src/main/assets/lights.json`](app/src/main/assets/lig
 }
 ```
 
-- `burst_ms`: how long each packet is advertised, 100 to 10000. Optional, 800 by default.
+- `burst_ms`: how long each packet is advertised, 100 to 60000. Optional, 1500 by default.
+- `connectable`: send with the Flags record in front, as a phone does (see above). Optional, true by
+  default; a packet can set its own `"connectable": false`. A payload over 24 bytes never gets Flags,
+  there is no room, so format A is unaffected either way.
 - `lights`: one entry per light or group, shown as a row in that order. `id` is what the scripted
   check names; `name` is the row's label (defaults to the id).
 - `on` and `off`: a list of packets, advertised one after another. A packet is an object with
@@ -124,11 +133,18 @@ in the built-in file and run `build-and-install.sh` again so it survives a reins
   TV's Bluetooth controller has no advertiser (peripheral) role. Nothing in software changes that.
   The way forward is a small always-on bridge next to the lights (an ESP32 board, or an old phone)
   that advertises on the TV's behalf, with the TV talking to it over Wi-Fi.
-- **"Sent" but the lights do nothing.** Compare with nRF Connect on the phone: the same record type,
-  UUID or company ID, and payload, and in nRF Connect's options the advertisement is legacy and
-  non-connectable. Try a longer `burst_ms` (2000) in a pushed file. Then check the TV's radio can be
-  seen at all: in nRF Connect's Scanner on the phone, a device advertising service data `0x08F0`
-  should appear for a moment after each press.
+- **"Sent" but the lights do nothing.** The TV accepted the packet; the question is whether the
+  lights can hear it and recognise it. Two things to try, each a pushed file, no rebuild:
+  1. The other Flags setting: `"connectable": false` at the top of the file (or `true` if it was
+     false), then press again.
+  2. Is the TV transmitting at all? Push a file with `"burst_ms": 20000`. On the phone open
+     nRF Connect, choose the **Scanner** tab, press **SCAN**, and stand near the TV. Press **Off** on
+     the TV. For the next 20 seconds a new entry appears in the phone's list; tap it to expand it.
+     If one of its lines reads **Service Data** with **0x08F0**, the TV is transmitting the packet,
+     and the remaining difference is in nRF Connect's Advertiser options for the packet that worked
+     from the phone (Connectable, Legacy, interval): a screenshot of that options page shows what to
+     match. If no such entry ever appears, the TV's Bluetooth reports success without radiating,
+     which is a chipset problem; see the first point above for the bridge.
 - **"no free advertiser slot"**: another app on the TV is advertising. Stop it (Settings › Apps) and
   press again.
 - **Permission refused by mistake**: Settings › Apps › Home Lights › Permissions › Nearby devices, or

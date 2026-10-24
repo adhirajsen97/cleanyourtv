@@ -1,5 +1,5 @@
 {
-  "burst_ms": 800,
+  "burst_ms": 1500,
   "lights": [
     {
       "id": "drawing-room",

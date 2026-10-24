@@ -19,7 +19,8 @@ import java.util.Set;
  * external files directory when a file is there (lights/push-config.sh puts it there). Format:
  * <pre>
  * {
- *   "burst_ms": 800,                      how long each packet is advertised; 100 to 10000, optional
+ *   "burst_ms": 1500,                     how long each packet is advertised; 100 to 60000, optional
+ *   "connectable": true,                  send with the Flags record in front, as a phone does; optional
  *   "lights": [
  *     { "id": "drawing-room", "name": "Drawing room",
  *       "on":  [ { "service_data": "08F0", "data": "1000B559..." } ],
@@ -28,15 +29,17 @@ import java.util.Set;
  * }
  * </pre>
  * A packet names exactly one of "service_data" (16-bit service UUID, hex) or "manufacturer_data"
- * (company identifier, hex), and "data", the payload in hex. The packets of a list are advertised
- * one after another. Parsing is strict: any problem is an {@link IllegalArgumentException} whose
+ * (company identifier, hex), and "data", the payload in hex, and may set "connectable" for itself.
+ * The packets of a list are advertised one after another. Parsing is strict: any problem is an {@link IllegalArgumentException} whose
  * message says where, so a bad file shows on the status line instead of sending the wrong bytes.
  */
 public final class LightsConfig {
     public static final String FILE_NAME = "lights.json";
-    public static final int DEFAULT_BURST_MS = 800;
+    public static final int DEFAULT_BURST_MS = 1500;
     public static final int MIN_BURST_MS = 100;
-    public static final int MAX_BURST_MS = 10000;
+    /** Long enough for a phone to catch the TV in a scanner; Android itself allows up to 180 s. */
+    public static final int MAX_BURST_MS = 60000;
+    public static final boolean DEFAULT_CONNECTABLE = true;
     /** A packet list is a few hundred bytes; anything this size is the wrong file. */
     public static final long MAX_FILE_BYTES = 64 * 1024;
 
@@ -66,6 +69,7 @@ public final class LightsConfig {
         if (burstMs < MIN_BURST_MS || burstMs > MAX_BURST_MS) {
             throw new IllegalArgumentException("burst_ms must be " + MIN_BURST_MS + " to " + MAX_BURST_MS);
         }
+        boolean connectable = root.optBoolean("connectable", DEFAULT_CONNECTABLE);
         JSONArray array = root.optJSONArray("lights");
         if (array == null || array.length() == 0) throw new IllegalArgumentException("\"lights\" is missing or empty");
         List<Light> lights = new ArrayList<>();
@@ -78,12 +82,12 @@ public final class LightsConfig {
             if (!ids.add(id)) throw new IllegalArgumentException("two lights have the id \"" + id + "\"");
             String name = o.optString("name", "").trim();
             if (name.isEmpty()) name = id;
-            lights.add(new Light(id, name, packets(o, "on", id), packets(o, "off", id)));
+            lights.add(new Light(id, name, packets(o, "on", id, connectable), packets(o, "off", id, connectable)));
         }
         return new LightsConfig(burstMs, lights);
     }
 
-    private static List<Packet> packets(JSONObject light, String key, String id) {
+    private static List<Packet> packets(JSONObject light, String key, String id, boolean connectable) {
         JSONArray array = light.optJSONArray(key);
         if (array == null || array.length() == 0) {
             throw new IllegalArgumentException("light \"" + id + "\" has no \"" + key + "\" packets");
@@ -94,7 +98,7 @@ public final class LightsConfig {
             JSONObject o = array.optJSONObject(i);
             if (o == null) throw new IllegalArgumentException(where + " is not an object");
             try {
-                out.add(packet(o));
+                out.add(packet(o, connectable));
             } catch (IllegalArgumentException e) {
                 throw new IllegalArgumentException(where + ": " + e.getMessage());
             }
@@ -102,7 +106,7 @@ public final class LightsConfig {
         return out;
     }
 
-    static Packet packet(JSONObject o) {
+    static Packet packet(JSONObject o, boolean connectable) {
         Packet.Kind kind = null;
         for (Packet.Kind k : Packet.Kind.values()) {
             if (!o.has(k.key)) continue;
@@ -116,7 +120,7 @@ public final class LightsConfig {
         }
         int id = ((idBytes[0] & 0xFF) << 8) | (idBytes[1] & 0xFF);
         if (!o.has("data")) throw new IllegalArgumentException("has no \"data\"");
-        return new Packet(kind, id, hex(o, "data"));
+        return new Packet(kind, id, hex(o, "data"), o.optBoolean("connectable", connectable));
     }
 
     /** The hex value under {@code key}; a problem with it names the key. */
