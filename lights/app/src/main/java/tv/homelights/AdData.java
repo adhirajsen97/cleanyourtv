@@ -4,6 +4,10 @@ import java.util.Locale;
 
 /** Reads the records ("AD structures") of a raw advertisement, as a scanner hands them over. */
 public final class AdData {
+    /** AD types every device sends, so they say nothing about which device it is. */
+    static final int FLAGS = 0x01;
+    static final int TX_POWER = 0x0A;
+
     private AdData() {}
 
     /**
@@ -41,6 +45,31 @@ public final class AdData {
             i += 1 + len;
         }
         return false;
+    }
+
+    /**
+     * The shape of an advertisement, for telling a device's packets from a remote's: each record's
+     * AD type and the first three bytes after it (a company id or service UUID and a subtype),
+     * e.g. "FF4C0010" for a phone's Nearby packet. Flags and TX power records are left out, since
+     * every device sends those and a phone sends the same packet with and without them. A phone's
+     * packets change their contents and their address all the time, but keep the shape; a
+     * remote's shape is its own.
+     */
+    public static String shape(byte[] raw) {
+        StringBuilder sb = new StringBuilder();
+        int i = 0;
+        while (i + 1 < raw.length) {
+            int len = raw[i] & 0xFF;
+            if (len == 0 || i + 1 + len > raw.length) break;
+            int type = raw[i + 1] & 0xFF;
+            if (type != FLAGS && type != TX_POWER) {
+                if (sb.length() > 0) sb.append('|');
+                int end = Math.min(i + 1 + len, i + 5);
+                for (int j = i + 1; j < end; j++) sb.append(String.format(Locale.ROOT, "%02X", raw[j] & 0xFF));
+            }
+            i += 1 + len;
+        }
+        return sb.toString();
     }
 
     /** "02 01 02 | 1B 16 F0 08 …": the records separated for reading. */

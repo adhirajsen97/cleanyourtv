@@ -6,7 +6,10 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class LearnStepsTest {
@@ -17,6 +20,12 @@ public class LearnStepsTest {
             assertTrue("duplicate id " + s.id, ids.add(s.id));
             assertFalse(s.id, s.button.toUpperCase().contains("SETUP"));
             assertTrue(s.presses >= 1);
+            assertFalse(s.quiet);
+        }
+        for (LearnSteps.Step s : LearnSteps.COVE) {
+            assertTrue("duplicate id " + s.id, ids.add(s.id));
+            assertTrue(s.id, s.id.startsWith("cove-"));
+            assertTrue(s.presses >= 0);
         }
     }
 
@@ -38,16 +47,49 @@ public class LearnStepsTest {
     }
 
     @Test
-    public void subsets() {
-        assertEquals(LearnSteps.ALL, LearnSteps.subset(null));
-        assertEquals(LearnSteps.ALL, LearnSteps.subset("all"));
-        assertEquals(LearnSteps.ALL, LearnSteps.subset("no-such-step"));
-        assertEquals(java.util.Arrays.asList("select-all", "k-button", "moon", "rgb", "aid"), ids(LearnSteps.subset("extras")));
-        assertEquals(java.util.Arrays.asList("all-on", "off-2"), ids(LearnSteps.subset("off-2, all-on")));
+    public void theCoveRemoteStartsQuietAndEndsWithTheSlide() {
+        assertEquals(11, LearnSteps.COVE.size());
+        LearnSteps.Step quiet = LearnSteps.COVE.get(0);
+        assertEquals("cove-quiet", quiet.id);
+        assertTrue(quiet.quiet);
+        assertEquals("nothing is pressed, so the text is the whole instruction", 0, quiet.presses);
+        assertEquals("cove-on", LearnSteps.COVE.get(1).id);
+        assertEquals(3, LearnSteps.COVE.get(1).presses);
+        assertEquals(Arrays.asList("cove-cool", "cove-neutral", "cove-warm"),
+                ids(LearnSteps.COVE.subList(5, 8)));
+        LearnSteps.Step slide = LearnSteps.COVE.get(10);
+        assertEquals("cove-slide", slide.id);
+        assertEquals(0, slide.presses);
+        assertFalse("a slide is not the quiet step", slide.quiet);
     }
 
-    static java.util.List<String> ids(java.util.List<LearnSteps.Step> steps) {
-        java.util.List<String> out = new java.util.ArrayList<>();
+    @Test
+    public void plans() {
+        assertEquals(LearnSteps.ALL, LearnSteps.plan(null).steps);
+        assertEquals(LearnSteps.ALL, LearnSteps.plan("all").steps);
+        assertEquals(LearnSteps.ALL, LearnSteps.plan("lights").steps);
+        assertEquals(LearnSteps.ALL, LearnSteps.plan("no-such-step").steps);
+        assertFalse(LearnSteps.plan(null).everyPacket);
+        assertEquals("capture.json", LearnSteps.plan(null).file);
+        assertEquals(Arrays.asList("select-all", "k-button", "moon", "rgb", "aid"), ids(LearnSteps.plan("extras").steps));
+        assertEquals(Arrays.asList("all-on", "off-2"), ids(LearnSteps.plan("off-2, all-on").steps));
+        assertEquals("the light remote", LearnSteps.plan("extras").remote);
+
+        LearnSteps.Plan cove = LearnSteps.plan("cove");
+        assertEquals(LearnSteps.COVE, cove.steps);
+        assertTrue("its format is unknown, so every packet is recorded", cove.everyPacket);
+        assertEquals("capture-cove.json", cove.file);
+        assertEquals("lights/pull-capture.sh --cove", cove.pullCommand);
+        assertEquals("the cove remote", cove.remote);
+        // A list of its step ids keeps the cove plan's settings.
+        LearnSteps.Plan two = LearnSteps.plan("cove-on,cove-quiet");
+        assertEquals(Arrays.asList("cove-quiet", "cove-on"), ids(two.steps));
+        assertTrue(two.everyPacket);
+        assertEquals("capture-cove.json", two.file);
+    }
+
+    static List<String> ids(List<LearnSteps.Step> steps) {
+        List<String> out = new ArrayList<>();
         for (LearnSteps.Step s : steps) out.add(s.id);
         return out;
     }

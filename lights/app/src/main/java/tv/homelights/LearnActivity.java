@@ -27,14 +27,16 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Learn the light remote: the TV listens for its packets while the screen asks for one button at a
- * time ({@link LearnSteps}), so every packet heard is filed under the button that caused it. The
- * result, capture.json in the app's files directory, is saved after every step and fetched with
- * lights/pull-capture.sh. OK on the TV remote (the Next button) moves on; Back leaves, keeping
- * what was recorded. Started from the main screen, or with
- * {@code am start -n tv.homelights/.LearnActivity}; add {@code -e steps extras} for a short run
- * (ALL ON, then K, moon, RGB, Aid), or {@code -e filter none} to record every packet heard, not
- * only the ones in the lights' two formats.
+ * Learn a remote: the TV listens for its packets while the screen asks for one button at a time
+ * ({@link LearnSteps}), so every packet heard is filed under the button that caused it. The
+ * result, capture.json (capture-cove.json for the cove remote) in the app's files directory, is
+ * saved after every step and fetched with lights/pull-capture.sh. OK on the TV remote (the Next
+ * button) moves on; Back leaves, keeping what was recorded. Started from the main screen, or with
+ * {@code am start -n tv.homelights/.LearnActivity}; add {@code -e steps cove} for the cove remote,
+ * {@code -e steps extras} for a short run of the light remote (ALL ON, then K, moon, RGB, Aid), or
+ * a comma-separated list of step ids. {@code -e filter none} records every packet heard, not only
+ * the ones in the lights' two formats; the cove remote's plan does that anyway, and
+ * {@code -e filter lights} puts the filter back for it.
  */
 public final class LearnActivity extends Activity {
     static final String EXTRA_FILTER = "filter";
@@ -44,7 +46,7 @@ public final class LearnActivity extends Activity {
     private static final int COMPANY_ID = 0x5556;
 
     private Capture capture;
-    private List<LearnSteps.Step> plan = LearnSteps.ALL;
+    private LearnSteps.Plan plan = LearnSteps.LIGHT_REMOTE;
     private int step = -1;
     private boolean done;
     private boolean filter = true;
@@ -75,8 +77,11 @@ public final class LearnActivity extends Activity {
             if (done) finish();
             else finishCapture();
         });
-        filter = !"none".equals(getIntent().getStringExtra(EXTRA_FILTER));
-        plan = LearnSteps.subset(getIntent().getStringExtra(EXTRA_STEPS));
+        plan = LearnSteps.plan(getIntent().getStringExtra(EXTRA_STEPS));
+        String filterExtra = getIntent().getStringExtra(EXTRA_FILTER);
+        filter = filterExtra == null ? !plan.everyPacket : !"none".equals(filterExtra);
+        ((TextView) findViewById(R.id.title)).setText(getString(R.string.learn_title, plan.remote));
+        ((TextView) findViewById(R.id.footer)).setText(plan.footer);
         String started = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.ROOT).format(new Date());
         capture = new Capture(started, Build.MANUFACTURER + " " + Build.MODEL + ", Android " + Build.VERSION.RELEASE
                 + (filter ? "" : ", every packet recorded"), System.currentTimeMillis());
@@ -186,7 +191,7 @@ public final class LearnActivity extends Activity {
         }
         String address = result.getDevice() == null ? "" : result.getDevice().getAddress();
         if (capture.heard(raw, address, result.getRssi(), System.currentTimeMillis())) {
-            Log.i(Advertiser.TAG, "learn " + plan.get(step).id + ": " + AdData.pretty(raw)
+            Log.i(Advertiser.TAG, "learn " + plan.steps.get(step).id + ": " + AdData.pretty(raw)
                     + " rssi " + result.getRssi() + " from " + address);
         }
         updateCounts();
@@ -200,20 +205,21 @@ public final class LearnActivity extends Activity {
 
     private void showStep(int index) {
         step = index;
-        LearnSteps.Step s = plan.get(index);
-        counter.setText(getString(R.string.learn_step_counter, index + 1, plan.size()));
-        String text = s.presses == 1
-                ? getString(R.string.learn_press_once, s.button)
-                : getString(R.string.learn_press_times, s.button, s.presses);
+        LearnSteps.Step s = plan.steps.get(index);
+        counter.setText(getString(R.string.learn_step_counter, index + 1, plan.steps.size()));
+        String text;
+        if (s.presses == 0) text = s.button;
+        else if (s.presses == 1) text = getString(R.string.learn_press_once, plan.remote, s.button);
+        else text = getString(R.string.learn_press_times, plan.remote, s.button, s.presses);
         instruction.setText(text);
         note.setText(s.note.isEmpty() ? getString(R.string.learn_note_default) : s.note);
-        capture.beginStep(s.id, text, System.currentTimeMillis());
+        capture.beginStep(s.id, text, System.currentTimeMillis(), s.quiet);
         updateCounts();
     }
 
     private void nextStep() {
         save();
-        if (step + 1 >= plan.size()) {
+        if (step + 1 >= plan.steps.size()) {
             finishCapture();
             return;
         }
@@ -225,11 +231,11 @@ public final class LearnActivity extends Activity {
         capture.endStep(System.currentTimeMillis());
         stopScan();
         save();
-        counter.setText(getString(R.string.learn_step_counter, plan.size(), plan.size()));
+        counter.setText(getString(R.string.learn_step_counter, plan.steps.size(), plan.steps.size()));
         int packets = 0;
         for (Capture.StepRecord s : capture.steps()) packets += s.distinct();
         instruction.setText(getString(R.string.learn_done, capture.steps().size(), packets));
-        note.setText(R.string.learn_done_note);
+        note.setText(getString(R.string.learn_done_note, plan.pullCommand, plan.file));
         next.setVisibility(View.GONE);
         finishButton.setText(R.string.learn_close);
         finishButton.requestFocus();
@@ -238,7 +244,7 @@ public final class LearnActivity extends Activity {
     private void save() {
         File dir = getExternalFilesDir(null);
         if (dir == null) return;
-        File file = new File(dir, Capture.FILE_NAME);
+        File file = new File(dir, plan.file);
         try (OutputStream out = new FileOutputStream(file)) {
             out.write(capture.toText().getBytes(StandardCharsets.UTF_8));
         } catch (IOException e) {

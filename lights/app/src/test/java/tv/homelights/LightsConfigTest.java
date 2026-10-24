@@ -30,7 +30,7 @@ public class LightsConfigTest {
     public void bundledFileHasEveryRowFilledFromTheCapture() throws IOException {
         LightsConfig config = LightsConfig.parse(bundled());
         assertEquals(800, config.burstMs);
-        assertEquals(6, config.lights.size());
+        assertEquals(7, config.lights.size());
         List<String> six = Arrays.asList("on", "off", "dimmer", "brighter", "warmer", "cooler");
         for (String id : new String[] {"all", "row-1", "row-2", "row-3"}) {
             Light light = config.find(id);
@@ -49,6 +49,11 @@ public class LightsConfigTest {
         }
         assertEquals(Arrays.asList("on", "off"), config.find("row-4").commands());
         assertEquals(Arrays.asList("aid", "k", "moon", "rgb"), config.find("extras").commands());
+        Light cove = config.find("cove");
+        assertNotNull("the cove row is there for the cove remote's capture to fill", cove);
+        assertTrue("no capture of the cove remote yet", cove.commands().isEmpty());
+        assertFalse("a remote of its own: All rows does not switch it", cove.inAll);
+        assertTrue(config.find("row-1").inAll);
         // The first ALL ON press of the capture comes first (a fresh parse: the loop above already rotated).
         assertEquals("10006A5925EC68A2B2FAEB7BC22B0F1EDD74C0021A21EA82",
                 Hex.encode(LightsConfig.parse(bundled()).find("all").packets("on").get(0).payload));
@@ -107,6 +112,14 @@ public class LightsConfigTest {
 
         LightsConfig legacy = LightsConfig.parse("{\"lights\":[" + light("a") + "]}");
         assertEquals(Arrays.asList("on", "off"), legacy.lights.get(0).commands());
+    }
+
+    @Test
+    public void inAllIsTrueUnlessSaidOtherwise() {
+        LightsConfig config = LightsConfig.parse("{\"lights\":[" + light("a")
+                + ",{\"id\":\"b\",\"in_all\":false,\"on\":[" + B + "],\"off\":[" + B + "]}]}");
+        assertTrue(config.find("a").inAll);
+        assertFalse(config.find("b").inAll);
     }
 
     @Test

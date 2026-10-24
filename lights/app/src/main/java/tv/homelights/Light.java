@@ -16,6 +16,9 @@ import java.util.Map;
  * A command can have several variants, one per press recorded from the remote. Each carries its
  * own counter, and the lights ignore a packet whose counter they just saw, so {@link #packets}
  * hands out the variants in turn: two presses in a row never send the same bytes.
+ *
+ * A light with a remote of its own, such as the cove strip, is not switched by All rows
+ * ({@link #inAll} false), so the screen does not mark it along with All rows.
  */
 public final class Light {
     /** Commands with a place of their own on the screen, in this order; other names follow them. */
@@ -24,12 +27,19 @@ public final class Light {
 
     public final String id;
     public final String name;
+    /** Whether All rows switches this light too; true unless lights.json says "in_all": false. */
+    public final boolean inAll;
     private final Map<String, List<List<Packet>>> commands;
     private final Map<String, Integer> next = new HashMap<>();
 
     public Light(String id, String name, Map<String, List<List<Packet>>> commands) {
+        this(id, name, commands, true);
+    }
+
+    public Light(String id, String name, Map<String, List<List<Packet>>> commands, boolean inAll) {
         this.id = id;
         this.name = name;
+        this.inAll = inAll;
         Map<String, List<List<Packet>>> copy = new LinkedHashMap<>();
         for (Map.Entry<String, List<List<Packet>>> e : commands.entrySet()) {
             List<List<Packet>> variants = new ArrayList<>();

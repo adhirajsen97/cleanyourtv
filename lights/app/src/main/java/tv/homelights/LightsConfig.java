@@ -30,7 +30,8 @@ import java.util.regex.Pattern;
  *       "commands": {
  *         "on":  [ { "service_data": "08F0", "data": "1000B559..." } ],
  *         "off": [ { "service_data": "08F0", "data": "1000EA2D..." } ] } },
- *     { "id": "row-1", "name": "Row 1" }           no packets captured yet: a row without buttons
+ *     { "id": "row-1", "name": "Row 1" },          no packets captured yet: a row without buttons
+ *     { "id": "cove", "name": "Cove", "in_all": false }    a remote of its own: All rows does not switch it
  *   ]
  * }
  * </pre>
@@ -92,7 +93,7 @@ public final class LightsConfig {
             if (!ids.add(id)) throw new IllegalArgumentException("two lights have the id \"" + id + "\"");
             String name = o.optString("name", "").trim();
             if (name.isEmpty()) name = id;
-            lights.add(new Light(id, name, commands(o, id, connectable)));
+            lights.add(new Light(id, name, commands(o, id, connectable), o.optBoolean("in_all", true)));
         }
         return new LightsConfig(burstMs, lights);
     }

@@ -52,6 +52,8 @@ public final class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         status = findViewById(R.id.status);
         findViewById(R.id.learn).setOnClickListener(v -> startActivity(new Intent(this, LearnActivity.class)));
+        findViewById(R.id.learn_cove).setOnClickListener(v -> startActivity(
+                new Intent(this, LearnActivity.class).putExtra(LearnActivity.EXTRA_STEPS, LearnSteps.COVE_REMOTE.id)));
         advertiser = new Advertiser(this);
         String note = loadConfig();
         buildRows();
@@ -196,15 +198,16 @@ public final class MainActivity extends Activity {
     }
 
     /**
-     * On and Off stay marked on the row that sent them; All rows marks every row, and a row's own
-     * change unmarks All rows until the rows agree again (see {@link Marks}).
+     * On and Off stay marked on the row that sent them; All rows marks every row it switches, and a
+     * row's own change unmarks All rows until the rows agree again (see {@link Marks}). A light with
+     * a remote of its own ({@code "in_all": false}) is marked by its own buttons only.
      */
     private void markState(Light light, String command) {
         boolean on = "on".equals(command);
         if (!on && !"off".equals(command)) return;
         List<String> switchable = new ArrayList<>();
         for (Light l : config.lights) {
-            if (!Marks.ALL.equals(l.id) && l.has("on") && l.has("off")) switchable.add(l.id);
+            if (!Marks.ALL.equals(l.id) && l.inAll && l.has("on") && l.has("off")) switchable.add(l.id);
         }
         marks.set(light.id, on, switchable);
         for (Light l : config.lights) {

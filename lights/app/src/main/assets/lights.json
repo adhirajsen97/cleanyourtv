@@ -845,6 +845,11 @@
       }
     },
     {
+      "id": "cove",
+      "name": "Cove, the ambient strip round the ceiling",
+      "in_all": false
+    },
+    {
       "id": "extras",
       "name": "Other remote buttons",
       "commands": {

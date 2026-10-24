@@ -8,8 +8,14 @@ The drawing room has three rows of ceiling lights, numbered 1 to 3 as on the lig
 remote also addresses them all at once. The screen shows a row per group, **All rows** first, with
 a button for every command whose packets are known: **On**, **Off**, **Dimmer**, **Brighter**,
 **Warmer**, **Cooler**. Every packet came from the light remote itself, recorded by the TV with
-**Learn remote** (see below) and turned into `lights.json` by `capture_to_lights.py`. New lights
-and new packets go into that JSON file, pushed to the TV without a rebuild.
+**Learn light remote** (see below) and turned into `lights.json` by `capture_to_lights.py`. New
+lights and new packets go into that JSON file, pushed to the TV without a rebuild.
+
+Round the ceiling runs an ambient strip, the cove, with a remote of its own: the "TC" touch
+remote, with O and I at the top, a ring from white to yellow for the colour temperature and two
+bulbs for the brightness. It has its own row, **Cove**, filled the same way by **Learn cove
+remote**; until that capture is made the row shows no buttons. Whether the TV can hear this remote
+at all is the first thing the capture tells (see [Learning the cove remote](#learning-the-cove-remote)).
 
 ## How the lights are driven
 
@@ -63,7 +69,8 @@ Show to keep it ahead of the grid.
 
 Open Home Lights, read the status line at the bottom, then press **On** or **Off** on the TV
 remote. Left and Right move between the buttons of a row, Up and Down between rows; Up from the
-first row reaches **Learn remote**. A row without packets says so instead of showing buttons.
+first row reaches **Learn light remote** and **Learn cove remote**. A row without packets says so
+instead of showing buttons.
 
 The remote's logic carries over: the row you are on is the row you adjust. ON 1 on the light remote
 and then the brightness keys change row 1 only; on the TV, the Brighter button in row 1 does the
@@ -111,7 +118,8 @@ The built-in list is [`app/src/main/assets/lights.json`](app/src/main/assets/lig
     },
     { "id": "row-1", "name": "Row 1, over the sofas" },
     { "id": "row-2", "name": "Row 2, fan and pendant" },
-    { "id": "row-3", "name": "Row 3, towards the dining table" }
+    { "id": "row-3", "name": "Row 3, towards the dining table" },
+    { "id": "cove", "name": "Cove, the ambient strip round the ceiling", "in_all": false }
   ]
 }
 ```
@@ -122,6 +130,8 @@ The built-in list is [`app/src/main/assets/lights.json`](app/src/main/assets/lig
   there is no room, so format A is unaffected either way.
 - `lights`: one entry per light or group, shown as a row in that order. `id` is what the scripted
   check names; `name` is the row's label (defaults to the id).
+- `in_all`: whether **All rows** switches this light too, so that the screen marks it along with All
+  rows. True unless given; false for the cove, which has a remote of its own.
 - `commands`: the row's buttons. `on`, `off`, `dimmer`, `brighter`, `warmer` and `cooler` have
   fixed places and labels; any other name (lower-case letters, digits, hyphens, such as `moon` or
   `rgb`) gets a button after them, alphabetically. A row with no `commands` shows none, with a
@@ -149,11 +159,11 @@ says "Using lights.json pushed to the TV" while it is in use. A file with a mist
 the reason on the status line, and the built-in list stays in force. Once a packet is proven, put it
 in the built-in file and run `build-and-install.sh` again so it survives a reinstall.
 
-## Learning the remote
+## Learning the light remote
 
 The light remote sends the same kind of packets the app does, and the TV's Bluetooth can hear
-them. **Learn remote** on the main screen asks for one button at a time and files every packet it
-hears under that button, so the recording needs no clock-watching. The steps, in order:
+them. **Learn light remote** on the main screen asks for one button at a time and files every
+packet it hears under that button, so the recording needs no clock-watching. The steps, in order:
 
 | Step | Light remote button | Presses | Why |
 |---|---|---|---|
@@ -226,6 +236,55 @@ file: `am start -n tv.homelights/.LearnActivity -e filter none` over `tools/tv.p
 If you prefer the phone, the same sequence works with nRF Connect's Scanner, noting the time of
 each step; the TV route is simply less to keep track of.
 
+## Learning the cove remote
+
+The ambient strip round the ceiling has a remote of its own, the "TC" touch remote: O and I at the
+top, a ring from white (left) to yellow (right) that sets the colour temperature, two bulbs for the
+brightness. Nothing is known about its packets yet, not even whether they are Bluetooth LE at all:
+remotes of this shape are often plain 2.4 GHz radio, which the TV cannot hear. **Learn cove
+remote** on the main screen finds out, and records what there is:
+
+| Step | On the cove remote | Presses | Why |
+|---|---|---|---|
+| 1 | nothing, for ten seconds | 0 | The TV notes what the room sends on its own (phones, fans, the neighbours' devices); those senders, and packets of the same shape (a phone's rotating-address packets keep their shape), are left out of every later step |
+| 2, 3 | I, O | 3 each | On and off |
+| 4, 5 | the upper bulb, the lower bulb | 3 each | Brighter, dimmer |
+| 6 to 8 | the ring at its white end, at the bottom, at its yellow end | 2 taps each | Three colour temperatures: cool, neutral, warm |
+| 9, 10 | the yellow dot, the white dot | 2 each | Whatever they do, note it |
+| 11 | a slow slide round the ring, white end to yellow end | once | Shows how the ring encodes the colour; it becomes no button |
+
+Unlike the light remote's run, every packet heard is recorded, not only the two formats the lights
+use, since the format is the thing to find out; that is why the quiet first step matters. The check
+is on the screen: from step 2 on, "Heard in this step" must go up with each press. If it stays at 0
+while "Other devices ignored" climbs, the TV does not hear the remote: it is not a Bluetooth LE
+remote, and driving the strip takes a bridge next to it (see Troubleshooting) rather than the TV's
+radio. If it goes up, fetch the file and turn it into packets, together with the light remote's
+captures:
+
+```
+TV_HOST=192.168.1.26 lights/pull-capture.sh --cove      # writes lights/capture-cove.json and prints a summary
+python3 -I lights/capture_to_lights.py lights/capture.json lights/capture-extras.json lights/capture-cove.json lights/app/src/main/assets/lights.json
+```
+
+The cove steps are filed as heard, without decoding: each press's packets (those within half a
+second of each other) become one variant of the command, so **On**, **Off**, **Brighter** and
+**Dimmer** appear on the Cove row, then **Cool**, **Neutral**, **Warm**, **White dot** and
+**Yellow dot**. Push the file to try them; the ones that work go into the built-in file with a
+rebuild. The script prints, per step, how many presses it found and from which sender addresses,
+which is where to look when a button does nothing: a step with packets from several senders may
+have caught a passer-by's phone, and a packet in a record the app cannot send (anything but service
+data or manufacturer data) is named on stderr. The slide step is reported, not filed.
+
+The same run from the computer, and a few steps on their own:
+
+```
+TV_HOST=192.168.1.26 tools/venv/bin/python -I tools/tv.py 'am start -n tv.homelights/.LearnActivity -e steps cove'
+TV_HOST=192.168.1.26 tools/venv/bin/python -I tools/tv.py 'am start -n tv.homelights/.LearnActivity -e steps cove-quiet,cove-on,cove-off'
+```
+
+A re-run should include `cove-quiet`, so the room's own packets are known; without it every packet
+heard counts as the remote's, and the converter says so.
+
 ## Troubleshooting
 
 - **"This TV's Bluetooth cannot send advertisements"**, or the log says `FEATURE_UNSUPPORTED`: the
@@ -260,6 +319,9 @@ each step; the TV route is simply less to keep track of.
   command is built in the app with a fresh counter instead of rotating recorded presses.
 - **The extra buttons.** `extras` holds K, moon, RGB and Aid as recorded; what they do is for a
   test on the lights.
+- **The cove remote.** Once its capture is in and the buttons work, decode it the way the light
+  remote's was: a counter, a command byte, and whether the ring sends an absolute colour
+  temperature, which would give the Cove row a Warmer and a Cooler as well.
 - **The room.** A drawn plan of the drawing room with each light as a focusable spot. A flat or
   isometric drawing on a Canvas suits a 1 GB TV; a 3D engine does not.
 - **Colour and brightness**, once those packets exist, as extra commands per light.
@@ -271,7 +333,7 @@ cd lights && ./gradlew testReleaseUnitTest lintRelease assembleRelease
 ```
 
 The JVM tests cover the hex codec, the record layout (format A is exactly 31 bytes, format B 28),
-the `lights.json` parser including the built-in file, the learn-step list, the raw advertisement
-reader and the capture file. Everything that sends is in `Advertiser.java`, everything that listens
+the `lights.json` parser including the built-in file, the learn-step lists of both remotes, the raw
+advertisement reader and the capture file with its quiet-step baseline. Everything that sends is in `Advertiser.java`, everything that listens
 in `LearnActivity.java`; the main screen is `MainActivity.java`. CI builds this project on every
 pull request.
