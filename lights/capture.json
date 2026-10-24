@@ -1,0 +1,2686 @@
+{
+  "started": "2026-10-24T14:58:02+0530",
+  "device": "Sony BRAVIA 4K VH22, Android 12",
+  "steps": [
+    {
+      "step": "all-on",
+      "instruction": "On the light remote, press ALL ON 3 times, about a second apart.",
+      "began": 0.001,
+      "ended": 24.329,
+      "copies": 234,
+      "ignored": 375,
+      "packets": [
+        {
+          "raw": "0201021B16F00810006A5925EC68A2B2FAEB7BC22B0F1EDD74C0021A21EA82",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 6A 59 25 EC 68 A2 B2 FA EB 7B C2 2B 0F 1E DD 74 C0 02 1A 21 EA 82",
+          "count": 33,
+          "first": 18.328,
+          "last": 18.828,
+          "rssi": -65,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC3151D0699F0824CB95FC9F4D263BC89A6057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 D0 69 9F 08 24 CB 95 FC 9F 4D 26 3B C8 9A 60 57",
+          "count": 30,
+          "first": 18.339,
+          "last": 18.827,
+          "rssi": -64,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F0081000FE41AABE93C34B8F1FC81A503E8B9B347661AD16A1B4",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 FE 41 AA BE 93 C3 4B 8F 1F C8 1A 50 3E 8B 9B 34 76 61 AD 16 A1 B4",
+          "count": 46,
+          "first": 19.224,
+          "last": 19.741,
+          "rssi": -66,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC3151D0699F0824CB55FCEA38CD4ECB336057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 D0 69 9F 08 24 CB 55 FC EA 38 CD 4E CB 33 60 57",
+          "count": 47,
+          "first": 19.241,
+          "last": 19.742,
+          "rssi": -66,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F008100074C7D2DAA90E4882CDB316060FC7FC9358D530DD6FDB",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 74 C7 D2 DA A9 0E 48 82 CD B3 16 06 0F C7 FC 93 58 D5 30 DD 6F DB",
+          "count": 45,
+          "first": 20.263,
+          "last": 20.793,
+          "rssi": -64,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC3151D0699F0824CBD5FC4B99BCEF26496057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 D0 69 9F 08 24 CB D5 FC 4B 99 BC EF 26 49 60 57",
+          "count": 33,
+          "first": 20.265,
+          "last": 20.792,
+          "rssi": -63,
+          "address": "59:BA:2B:D2:57:8D"
+        }
+      ]
+    },
+    {
+      "step": "all-off",
+      "instruction": "On the light remote, press ALL OFF 3 times, about a second apart.",
+      "began": 24.329,
+      "ended": 31.47,
+      "copies": 273,
+      "ignored": 118,
+      "packets": [
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC315150699F0824CB25FCE53796416ABC6057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 50 69 9F 08 24 CB 25 FC E5 37 96 41 6A BC 60 57",
+          "count": 42,
+          "first": 27.314,
+          "last": 27.862,
+          "rssi": -73,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F00810005313DECF798339C95D0C098920C9ED92F2DBF8AA938F",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 53 13 DE CF 79 83 39 C9 5D 0C 09 89 20 C9 ED 92 F2 DB F8 AA 93 8F",
+          "count": 35,
+          "first": 27.44,
+          "last": 27.862,
+          "rssi": -73,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC315150699F0824CBA5FCA7759003EB716057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 50 69 9F 08 24 CB A5 FC A7 75 90 03 EB 71 60 57",
+          "count": 62,
+          "first": 28.589,
+          "last": 29.076,
+          "rssi": -68,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F00810005FAB5CCEEE41D54F2830ED78BF7D37E4B1FCCA7AF81B",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 5F AB 5C CE EE 41 D5 4F 28 30 ED 78 BF 7D 37 E4 B1 FC CA 7A F8 1B",
+          "count": 53,
+          "first": 28.591,
+          "last": 29.074,
+          "rssi": -67,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC315150699F0824CB65FCD3015A77994E6057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 50 69 9F 08 24 CB 65 FC D3 01 5A 77 99 4E 60 57",
+          "count": 46,
+          "first": 29.806,
+          "last": 30.258,
+          "rssi": -67,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F008100015F1B04967158008A45C6978BB5FBFCA64797C1D4E3E",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 15 F1 B0 49 67 15 80 08 A4 5C 69 78 BB 5F BF CA 64 79 7C 1D 4E 3E",
+          "count": 35,
+          "first": 29.822,
+          "last": 30.256,
+          "rssi": -69,
+          "address": "10:9E:3A:10:25:5D"
+        }
+      ]
+    },
+    {
+      "step": "on-1",
+      "instruction": "On the light remote, press ON 1 2 times, about a second apart.",
+      "began": 31.47,
+      "ended": 41.81,
+      "copies": 193,
+      "ignored": 156,
+      "packets": [
+        {
+          "raw": "0201021B16F0081000A59921C49B727DE67DF1F466040DC1A64051E68651A9",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 A5 99 21 C4 9B 72 7D E6 7D F1 F4 66 04 0D C1 A6 40 51 E6 86 51 A9",
+          "count": 52,
+          "first": 38.677,
+          "last": 38.976,
+          "rssi": -59,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC3151D0691F0824CBE5FCD90B487D49E16057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 D0 69 1F 08 24 CB E5 FC D9 0B 48 7D 49 E1 60 57",
+          "count": 49,
+          "first": 38.691,
+          "last": 38.977,
+          "rssi": -59,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F00810003CF651DEF25F435EC8BBA26EFB3CFE89D16F4931566D",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 3C F6 51 DE F2 5F 43 5E C8 BB A2 6E FB 3C FE 89 D1 6F 49 31 56 6D",
+          "count": 43,
+          "first": 39.821,
+          "last": 40.34,
+          "rssi": -61,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC3151D0691F0824CB05FC03D106A7CA7D6057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 D0 69 1F 08 24 CB 05 FC 03 D1 06 A7 CA 7D 60 57",
+          "count": 49,
+          "first": 39.84,
+          "last": 40.341,
+          "rssi": -61,
+          "address": "59:BA:2B:D2:57:8D"
+        }
+      ]
+    },
+    {
+      "step": "off-1",
+      "instruction": "On the light remote, press OFF 1 2 times, about a second apart.",
+      "began": 41.81,
+      "ended": 48.611,
+      "copies": 229,
+      "ignored": 88,
+      "packets": [
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC315150691F0824CB85FC28FAFE8CDDF36057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 50 69 1F 08 24 CB 85 FC 28 FA FE 8C DD F3 60 57",
+          "count": 35,
+          "first": 45.746,
+          "last": 46.272,
+          "rssi": -57,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F0081000724DB0184E58C803E313D957C45BC6E9F423C1D4A3B6",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 72 4D B0 18 4E 58 C8 03 E3 13 D9 57 C4 5B C6 E9 F4 23 C1 D4 A3 B6",
+          "count": 42,
+          "first": 45.756,
+          "last": 46.146,
+          "rssi": -58,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "0201021B16F00810002A1265AC28E2F2BAAA3A826B4F5E9D74CA425A21E205",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 2A 12 65 AC 28 E2 F2 BA AA 3A 82 6B 4F 5E 9D 74 CA 42 5A 21 E2 05",
+          "count": 74,
+          "first": 46.781,
+          "last": 47.207,
+          "rssi": -59,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC315150691F0824CB45FCDF0DBB7B0FD46057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 50 69 1F 08 24 CB 45 FC DF 0D BB 7B 0F D4 60 57",
+          "count": 78,
+          "first": 46.79,
+          "last": 47.209,
+          "rssi": -58,
+          "address": "59:BA:2B:D2:57:8D"
+        }
+      ]
+    },
+    {
+      "step": "on-2",
+      "instruction": "On the light remote, press ON 2 2 times, about a second apart.",
+      "began": 48.611,
+      "ended": 55.018,
+      "copies": 182,
+      "ignored": 76,
+      "packets": [
+        {
+          "raw": "0201021B16F0081000F44F525A298EC8024F3396868F477C50C155B0CFDF4C",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 F4 4F 52 5A 29 8E C8 02 4F 33 96 86 8F 47 7C 50 C1 55 B0 CF DF 4C",
+          "count": 71,
+          "first": 52.491,
+          "last": 52.992,
+          "rssi": -61,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC3151D069DF0824CBC5FCC91B5E6D00636057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 D0 69 DF 08 24 CB C5 FC C9 1B 5E 6D 00 63 60 57",
+          "count": 64,
+          "first": 52.506,
+          "last": 52.993,
+          "rssi": -60,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F008100036AA44F05F642D1EE1623226A60FE69EEE10D7B0D6E5",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 36 AA 44 F0 5F 64 2D 1E E1 62 32 26 A6 0F E6 9E EE 10 D7 B0 D6 E5",
+          "count": 25,
+          "first": 53.728,
+          "last": 54.242,
+          "rssi": -61,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC3151D069DF0824CB3AFC5B8938FF2DC06057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 D0 69 DF 08 24 CB 3A FC 5B 89 38 FF 2D C0 60 57",
+          "count": 22,
+          "first": 53.739,
+          "last": 54.242,
+          "rssi": -61,
+          "address": "59:BA:2B:D2:57:8D"
+        }
+      ]
+    },
+    {
+      "step": "off-2",
+      "instruction": "On the light remote, press OFF 2 2 times, about a second apart.",
+      "began": 55.018,
+      "ended": 59.876,
+      "copies": 169,
+      "ignored": 55,
+      "packets": [
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31515069DF0824CBBAFC4D9F3DE926BF6057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 50 69 DF 08 24 CB BA FC 4D 9F 3D E9 26 BF 60 57",
+          "count": 17,
+          "first": 57.331,
+          "last": 57.733,
+          "rssi": -61,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F00810001BC58CB6F152938F08B24A6E7FBC581DCFED7B075309",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 1B C5 8C B6 F1 52 93 8F 08 B2 4A 6E 7F BC 58 1D CF ED 7B 07 53 09",
+          "count": 18,
+          "first": 57.346,
+          "last": 57.623,
+          "rssi": -61,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "0201021B16F0081000CA0E854CC802125A49DA628BAFBE7D92A5A2BA8D8D75",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 CA 0E 85 4C C8 02 12 5A 49 DA 62 8B AF BE 7D 92 A5 A2 BA 8D 8D 75",
+          "count": 67,
+          "first": 58.464,
+          "last": 58.942,
+          "rssi": -61,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31515069DF0824CB7AFCB86AE91CC2A26057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 50 69 DF 08 24 CB 7A FC B8 6A E9 1C C2 A2 60 57",
+          "count": 67,
+          "first": 58.472,
+          "last": 58.942,
+          "rssi": -60,
+          "address": "59:BA:2B:D2:57:8D"
+        }
+      ]
+    },
+    {
+      "step": "on-3",
+      "instruction": "On the light remote, press ON 3 2 times, about a second apart.",
+      "began": 59.876,
+      "ended": 66.48,
+      "copies": 128,
+      "ignored": 86,
+      "packets": [
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC3151D0695F0824CBFAFCD1034D7568226057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 D0 69 5F 08 24 CB FA FC D1 03 4D 75 68 22 60 57",
+          "count": 44,
+          "first": 62.809,
+          "last": 63.289,
+          "rssi": -58,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F0081000F3487E6FD9239969FEADA92980694D70B57B58EC952C",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 F3 48 7E 6F D9 23 99 69 FE AD A9 29 80 69 4D 70 B5 7B 58 EC 95 2C",
+          "count": 47,
+          "first": 62.81,
+          "last": 63.009,
+          "rssi": -58,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC3151D0695F0824CB1AFC61B3C5C5DA196057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 D0 69 5F 08 24 CB 1A FC 61 B3 C5 C5 DA 19 60 57",
+          "count": 19,
+          "first": 64.366,
+          "last": 64.925,
+          "rssi": -58,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F0081000245F3217B9482DC51885069904118396052403F41E09",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 24 5F 32 17 B9 48 2D C5 18 85 06 99 04 11 83 96 05 24 03 F4 1E 09",
+          "count": 18,
+          "first": 64.367,
+          "last": 64.925,
+          "rssi": -59,
+          "address": "10:9E:3A:10:25:5D"
+        }
+      ]
+    },
+    {
+      "step": "off-3",
+      "instruction": "On the light remote, press OFF 3 2 times, about a second apart.",
+      "began": 66.48,
+      "ended": 71.52,
+      "copies": 280,
+      "ignored": 62,
+      "packets": [
+        {
+          "raw": "0201021B16F00810001504CBA4AE8C04C4F91393D3C747EE4A5032362E8D53",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 15 04 CB A4 AE 8C 04 C4 F9 13 93 D3 C7 47 EE 4A 50 32 36 2E 8D 53",
+          "count": 72,
+          "first": 69.071,
+          "last": 69.559,
+          "rssi": -67,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC315150695F0824CB9AFC38EAFE9C6FFA6057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 50 69 5F 08 24 CB 9A FC 38 EA FE 9C 6F FA 60 57",
+          "count": 74,
+          "first": 69.203,
+          "last": 69.559,
+          "rssi": -67,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F0081000A5FBEE705275660C03DD599E5C1678324ED4EB3A9815",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 A5 FB EE 70 52 75 66 0C 03 DD 59 9E 5C 16 78 32 4E D4 EB 3A 98 15",
+          "count": 72,
+          "first": 70.06,
+          "last": 70.523,
+          "rssi": -61,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC315150695F0824CB5AFCBD6F891952976057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 50 69 5F 08 24 CB 5A FC BD 6F 89 19 52 97 60 57",
+          "count": 62,
+          "first": 70.062,
+          "last": 70.509,
+          "rssi": -61,
+          "address": "59:BA:2B:D2:57:8D"
+        }
+      ]
+    },
+    {
+      "step": "on-4",
+      "instruction": "On the light remote, press ON 4 2 times, about a second apart.",
+      "began": 71.52,
+      "ended": 78.422,
+      "copies": 249,
+      "ignored": 92,
+      "packets": [
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC3151D069BF0824CBDAFC6FBD51CB389F6057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 D0 69 BF 08 24 CB DA FC 6F BD 51 CB 38 9F 60 57",
+          "count": 60,
+          "first": 75.22,
+          "last": 75.706,
+          "rssi": -59,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F0081000ECAEB62A8020C3C20F8E599BD1BF0A2493DB2CF43EC7",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 EC AE B6 2A 80 20 C3 C2 0F 8E 59 9B D1 BF 0A 24 93 DB 2C F4 3E C7",
+          "count": 56,
+          "first": 75.221,
+          "last": 75.576,
+          "rssi": -59,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "0201021B16F0081000F3437E6FD9239969F9ADA92980694D41B47B58263184",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 F3 43 7E 6F D9 23 99 69 F9 AD A9 29 80 69 4D 41 B4 7B 58 26 31 84",
+          "count": 71,
+          "first": 76.929,
+          "last": 77.409,
+          "rssi": -59,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC3151D069BF0824CB2AFC40928AE417D66057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 D0 69 BF 08 24 CB 2A FC 40 92 8A E4 17 D6 60 57",
+          "count": 62,
+          "first": 76.941,
+          "last": 77.392,
+          "rssi": -59,
+          "address": "59:BA:2B:D2:57:8D"
+        }
+      ]
+    },
+    {
+      "step": "off-4",
+      "instruction": "On the light remote, press OFF 4 2 times, about a second apart.",
+      "began": 78.422,
+      "ended": 81.943,
+      "copies": 310,
+      "ignored": 36,
+      "packets": [
+        {
+          "raw": "0201021B16F0081000D21910B8EEF868A346B379F764FB66807D83611A9447",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 D2 19 10 B8 EE F8 68 A3 46 B3 79 F7 64 FB 66 80 7D 83 61 1A 94 47",
+          "count": 84,
+          "first": 79.749,
+          "last": 80.289,
+          "rssi": -63,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31515069BF0824CBAAFC548615F080FA6057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 50 69 BF 08 24 CB AA FC 54 86 15 F0 80 FA 60 57",
+          "count": 91,
+          "first": 79.756,
+          "last": 80.29,
+          "rssi": -63,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F00810006223BC2FF2C98419DF08533D889891D5329AAE61E805",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 62 23 BC 2F F2 C9 84 19 DF 08 53 3D 88 98 91 D5 32 9A AE 61 E8 05",
+          "count": 68,
+          "first": 80.9,
+          "last": 81.259,
+          "rssi": -62,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31515069BF0824CB6AFC24F69280BFE76057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 50 69 BF 08 24 CB 6A FC 24 F6 92 80 BF E7 60 57",
+          "count": 67,
+          "first": 80.901,
+          "last": 81.259,
+          "rssi": -61,
+          "address": "59:BA:2B:D2:57:8D"
+        }
+      ]
+    },
+    {
+      "step": "select-all",
+      "instruction": "On the light remote, press ALL ON once.",
+      "began": 81.943,
+      "ended": 90.092,
+      "copies": 86,
+      "ignored": 106,
+      "packets": [
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC3151D0699F0824CBEAFC20F26184D2FF6057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 D0 69 9F 08 24 CB EA FC 20 F2 61 84 D2 FF 60 57",
+          "count": 44,
+          "first": 87.956,
+          "last": 88.473,
+          "rssi": -64,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F008100094DB323A49EEA8622D53F6E6EF271CA5DE35D0CB1C00",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 94 DB 32 3A 49 EE A8 62 2D 53 F6 E6 EF 27 1C A5 DE 35 D0 CB 1C 00",
+          "count": 42,
+          "first": 87.958,
+          "last": 88.473,
+          "rssi": -64,
+          "address": "10:9E:3A:10:25:5D"
+        }
+      ]
+    },
+    {
+      "step": "all-brighter",
+      "instruction": "On the light remote, press sun + (brightness up) 3 times, about a second apart.",
+      "began": 90.092,
+      "ended": 99.752,
+      "copies": 577,
+      "ignored": 137,
+      "packets": [
+        {
+          "raw": "0201021B16F00810001507B04967158008A4746978BB5FBF8EE2797CC67BF3",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 15 07 B0 49 67 15 80 08 A4 74 69 78 BB 5F BF 8E E2 79 7C C6 7B F3",
+          "count": 28,
+          "first": 96.173,
+          "last": 96.307,
+          "rssi": -61,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC315144699F0824CB0AFC96447B3242E46057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 44 69 9F 08 24 CB 0A FC 96 44 7B 32 42 E4 60 57",
+          "count": 27,
+          "first": 96.189,
+          "last": 96.307,
+          "rssi": -60,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31515C699F0864CB8AD49D4F023980756057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 5C 69 9F 08 64 CB 8A D4 9D 4F 02 39 80 75 60 57",
+          "count": 73,
+          "first": 96.417,
+          "last": 96.893,
+          "rssi": -60,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F0081000873EBA775DA8EBA9C256676EB29D676B12A051CB44B0",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 87 3E BA 77 5D A8 EB A9 C2 56 67 6E B2 9D 67 6B 12 A0 51 CB 44 B0",
+          "count": 59,
+          "first": 96.422,
+          "last": 96.906,
+          "rssi": -60,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "0201021B16F0081000F23E3098CED8488362BB59D744DB46D66BA3416E81E4",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 F2 3E 30 98 CE D8 48 83 62 BB 59 D7 44 DB 46 D6 6B A3 41 6E 81 E4",
+          "count": 39,
+          "first": 97.223,
+          "last": 97.456,
+          "rssi": -63,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC315144699F0824CB4AFC9C4E59381DC86057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 44 69 9F 08 24 CB 4A FC 9C 4E 59 38 1D C8 60 57",
+          "count": 34,
+          "first": 97.224,
+          "last": 97.443,
+          "rssi": -62,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31515C699F0864CBCAD45183B0F5C95E6057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 5C 69 9F 08 64 CB CA D4 51 83 B0 F5 C9 5E 60 57",
+          "count": 52,
+          "first": 97.54,
+          "last": 97.976,
+          "rssi": -61,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F0081000514F0249981F8E8F425881104444C655F0A0B5E299CA",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 51 4F 02 49 98 1F 8E 8F 42 58 81 10 44 44 C6 55 F0 A0 B5 E2 99 CA",
+          "count": 56,
+          "first": 97.542,
+          "last": 98.047,
+          "rssi": -61,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC315144699F0824CB32FC36E47E9220846057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 44 69 9F 08 24 CB 32 FC 36 E4 7E 92 20 84 60 57",
+          "count": 19,
+          "first": 98.339,
+          "last": 98.456,
+          "rssi": -63,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F008100073F571F0E63D9881479A439816851A527000805A46D0",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 73 F5 71 F0 E6 3D 98 81 47 9A 43 98 16 85 1A 52 70 00 80 5A 46 D0",
+          "count": 20,
+          "first": 98.356,
+          "last": 98.451,
+          "rssi": -64,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31515C699F0864CBB2D423F19A871AB46057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 5C 69 9F 08 64 CB B2 D4 23 F1 9A 87 1A B4 60 57",
+          "count": 85,
+          "first": 98.584,
+          "last": 99.161,
+          "rssi": -61,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F0081000555AF0092755C048E42C2938EF1FFDF6A6393C57C61F",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 55 5A F0 09 27 55 C0 48 E4 2C 29 38 EF 1F FD F6 A6 39 3C 57 C6 1F",
+          "count": 85,
+          "first": 98.586,
+          "last": 99.162,
+          "rssi": -61,
+          "address": "10:9E:3A:10:25:5D"
+        }
+      ]
+    },
+    {
+      "step": "all-dimmer",
+      "instruction": "On the light remote, press sun - (brightness down) 3 times, about a second apart.",
+      "began": 99.752,
+      "ended": 107.279,
+      "copies": 540,
+      "ignored": 116,
+      "packets": [
+        {
+          "raw": "0201021B16F0081000DC2349D9260001A04C5179BA5FBE655F83E77D7DB85A",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 DC 23 49 D9 26 00 01 A0 4C 51 79 BA 5F BE 65 5F 83 E7 7D 7D B8 5A",
+          "count": 20,
+          "first": 103.441,
+          "last": 103.509,
+          "rssi": -60,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC315144699F0824CB727C11C38CB5F2C66057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 44 69 9F 08 24 CB 72 7C 11 C3 8C B5 F2 C6 60 57",
+          "count": 26,
+          "first": 103.456,
+          "last": 103.509,
+          "rssi": -60,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F0081000D9F88B5160C1DF4A5AE9AAA347FA3FBBE3DB48F04FDB",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 D9 F8 8B 51 60 C1 DF 4A 5A E9 AA A3 47 FA 3F BB E3 DB 48 F0 4F DB",
+          "count": 83,
+          "first": 103.561,
+          "last": 104.125,
+          "rssi": -61,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31515C699F0864CBF2E88E5C312A05366057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 5C 69 9F 08 64 CB F2 E8 8E 5C 31 2A 05 36 60 57",
+          "count": 76,
+          "first": 103.573,
+          "last": 104.125,
+          "rssi": -61,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC315144699F0824CB127C67B573C3ED0B6057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 44 69 9F 08 24 CB 12 7C 67 B5 73 C3 ED 0B 60 57",
+          "count": 20,
+          "first": 104.369,
+          "last": 104.559,
+          "rssi": -61,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F00810009194C28958DF4E4F828041D0918404838C6075960216",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 91 94 C2 89 58 DF 4E 4F 82 80 41 D0 91 84 04 83 8C 60 75 96 02 16",
+          "count": 17,
+          "first": 104.374,
+          "last": 104.559,
+          "rssi": -61,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "0201021B16F0081000FDAF7A6F50CBA38F9B79BC5CAF099835958D9FB1D52B",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 FD AF 7A 6F 50 CB A3 8F 9B 79 BC 5C AF 09 98 35 95 8D 9F B1 D5 2B",
+          "count": 66,
+          "first": 104.68,
+          "last": 105.241,
+          "rssi": -61,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31515C699F0864CB92E804D671A025806057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 5C 69 9F 08 64 CB 92 E8 04 D6 71 A0 25 80 60 57",
+          "count": 65,
+          "first": 104.69,
+          "last": 105.24,
+          "rssi": -61,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F008100053FDDECF798339C95D24098921C9EDDD07DBF8BB9A02",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 53 FD DE CF 79 83 39 C9 5D 24 09 89 21 C9 ED DD 07 DB F8 BB 9A 02",
+          "count": 19,
+          "first": 105.606,
+          "last": 105.675,
+          "rssi": -61,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC315144699F0824CB527C1BC973BFE8E46057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 44 69 9F 08 24 CB 52 7C 1B C9 73 BF E8 E4 60 57",
+          "count": 18,
+          "first": 105.623,
+          "last": 105.675,
+          "rssi": -61,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F0081000555724C5A11D0F98003487E5C420B74681FA07F4D1C7",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 55 57 24 C5 A1 1D 0F 98 00 34 87 E5 C4 20 B7 46 81 FA 07 F4 D1 C7",
+          "count": 66,
+          "first": 105.79,
+          "last": 106.325,
+          "rssi": -61,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31515C699F0864CBD2E814C674B09F5B6057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 5C 69 9F 08 64 CB D2 E8 14 C6 74 B0 9F 5B 60 57",
+          "count": 64,
+          "first": 105.807,
+          "last": 106.326,
+          "rssi": -61,
+          "address": "59:BA:2B:D2:57:8D"
+        }
+      ]
+    },
+    {
+      "step": "all-k-plus",
+      "instruction": "On the light remote, press K+ 3 times, about a second apart.",
+      "began": 107.279,
+      "ended": 115.663,
+      "copies": 518,
+      "ignored": 104,
+      "packets": [
+        {
+          "raw": "0201021B16F00810001E4F4A5E7323AB6FFF01FAB0DC6B7B74D8814D053954",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 1E 4F 4A 5E 73 23 AB 6F FF 01 FA B0 DC 6B 7B 74 D8 81 4D 05 39 54",
+          "count": 11,
+          "first": 111.8,
+          "last": 111.841,
+          "rssi": -62,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC315144699F0824CB22BCA476D6008EFD6057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 44 69 9F 08 24 CB 22 BC A4 76 D6 00 8E FD 60 57",
+          "count": 10,
+          "first": 111.801,
+          "last": 111.841,
+          "rssi": -62,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F0081000D9F28B5160C1DF4A5AE9AAA34BFA3FCE4ADB482F9876",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 D9 F2 8B 51 60 C1 DF 4A 5A E9 AA A3 4B FA 3F CE 4A DB 48 2F 98 76",
+          "count": 59,
+          "first": 111.963,
+          "last": 112.524,
+          "rssi": -62,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31515C699F0864CBA2D8B062B814F2AE6057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 5C 69 9F 08 64 CB A2 D8 B0 62 B8 14 F2 AE 60 57",
+          "count": 58,
+          "first": 111.973,
+          "last": 112.524,
+          "rssi": -60,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F00810006C3336AA00A043428B27D91B533F8A70195BAC60F954",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 6C 33 36 AA 00 A0 43 42 8B 27 D9 1B 53 3F 8A 70 19 5B AC 60 F9 54",
+          "count": 32,
+          "first": 112.757,
+          "last": 113.011,
+          "rssi": -60,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC315144699F0824CB62BC69BB7DCD500C6057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 44 69 9F 08 24 CB 62 BC 69 BB 7D CD 50 0C 60 57",
+          "count": 38,
+          "first": 112.774,
+          "last": 113.011,
+          "rssi": -59,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F0081000B3103E2F9963D929BDDCE969E4290F3B133B18CC34F9",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 B3 10 3E 2F 99 63 D9 29 BD DC E9 69 E4 29 0F 3B 13 3B 18 CC 34 F9",
+          "count": 49,
+          "first": 113.082,
+          "last": 113.574,
+          "rssi": -61,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31515C699F0864CBE2D852802EF634BE6057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 5C 69 9F 08 64 CB E2 D8 52 80 2E F6 34 BE 60 57",
+          "count": 55,
+          "first": 113.083,
+          "last": 113.575,
+          "rssi": -60,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC315144699F0824CB02BC895BD72DF8B36057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 44 69 9F 08 24 CB 02 BC 89 5B D7 2D F8 B3 60 57",
+          "count": 25,
+          "first": 113.856,
+          "last": 114.043,
+          "rssi": -61,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F0081000F1FCA2E938BF2E2FE2E021B0F2E464D6ED0015C0754C",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 F1 FC A2 E9 38 BF 2E 2F E2 E0 21 B0 F2 E4 64 D6 ED 00 15 C0 75 4C",
+          "count": 21,
+          "first": 113.873,
+          "last": 114.043,
+          "rssi": -61,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "0201021B16F0081000FC0C69F9062021806C69599A5A9E470509C75DBE7B8A",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 FC 0C 69 F9 06 20 21 80 6C 69 59 9A 5A 9E 47 05 09 C7 5D BE 7B 8A",
+          "count": 81,
+          "first": 114.121,
+          "last": 114.641,
+          "rssi": -61,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31515C699F0864CB82D8D7059F73DC336057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 5C 69 9F 08 64 CB 82 D8 D7 05 9F 73 DC 33 60 57",
+          "count": 79,
+          "first": 114.139,
+          "last": 114.642,
+          "rssi": -60,
+          "address": "59:BA:2B:D2:57:8D"
+        }
+      ]
+    },
+    {
+      "step": "all-k-minus",
+      "instruction": "On the light remote, press K- 3 times, about a second apart.",
+      "began": 115.663,
+      "ended": 120.787,
+      "copies": 508,
+      "ignored": 68,
+      "packets": [
+        {
+          "raw": "0201021B16F0081000C51C41A4FB121D861CB89406676DA163693186AA7D80",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 C5 1C 41 A4 FB 12 1D 86 1C B8 94 06 67 6D A1 63 69 31 86 AA 7D 80",
+          "count": 28,
+          "first": 117.348,
+          "last": 117.491,
+          "rssi": -61,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC315144699F0824CB423CD002DB74F1346057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 44 69 9F 08 24 CB 42 3C D0 02 DB 74 F1 34 60 57",
+          "count": 17,
+          "first": 117.356,
+          "last": 117.489,
+          "rssi": -61,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F0081000A4C4B29739C8AD459B3486199C9101E3BCA483CFCE68",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 A4 C4 B2 97 39 C8 AD 45 9B 34 86 19 9C 91 01 E3 BC A4 83 CF CE 68",
+          "count": 76,
+          "first": 117.639,
+          "last": 118.142,
+          "rssi": -61,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31515C699F0864CBC2E4E6348942D72B6057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 5C 69 9F 08 64 CB C2 E4 E6 34 89 42 D7 2B 60 57",
+          "count": 75,
+          "first": 117.64,
+          "last": 118.143,
+          "rssi": -61,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC315144699F0824CB3E3C598BA1FDF98A6057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 44 69 9F 08 24 CB 3E 3C 59 8B A1 FD F9 8A 60 57",
+          "count": 31,
+          "first": 118.408,
+          "last": 118.593,
+          "rssi": -61,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F00810004C29168A20806362AB07F93B721FAA62837B8C918358",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 4C 29 16 8A 20 80 63 62 AB 07 F9 3B 72 1F AA 62 83 7B 8C 91 83 58",
+          "count": 32,
+          "first": 118.422,
+          "last": 118.593,
+          "rssi": -61,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31515C699F0864CBBEE4F72501538D1C6057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 5C 69 9F 08 64 CB BE E4 F7 25 01 53 8D 1C 60 57",
+          "count": 38,
+          "first": 118.69,
+          "last": 119.175,
+          "rssi": -61,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F0081000DDBB5A4F70EB83AFBB599C7CBF29B86386ADBF2845E8",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 DD BB 5A 4F 70 EB 83 AF BB 59 9C 7C BF 29 B8 63 86 AD BF 28 45 E8",
+          "count": 36,
+          "first": 118.693,
+          "last": 119.176,
+          "rssi": -61,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "0201021B16F0081000DC9D2F27505920B9FCD168C12B0C1D334BDA19C7ABE7",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 DC 9D 2F 27 50 59 20 B9 FC D1 68 C1 2B 0C 1D 33 4B DA 19 C7 AB E7",
+          "count": 19,
+          "first": 119.549,
+          "last": 119.758,
+          "rssi": -62,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC315144699F0824CB7E3CD705C87367E06057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 44 69 9F 08 24 CB 7E 3C D7 05 C8 73 67 E0 60 57",
+          "count": 20,
+          "first": 119.556,
+          "last": 119.758,
+          "rssi": -62,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F00810003C2951DEF25F435EC98AA26EE33CFCC0AB6F495CCE2D",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 3C 29 51 DE F2 5F 43 5E C9 8A A2 6E E3 3C FC C0 AB 6F 49 5C CE 2D",
+          "count": 63,
+          "first": 119.773,
+          "last": 120.341,
+          "rssi": -61,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31515C699F0864CBFEE45B89F5FFFFA56057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 5C 69 9F 08 64 CB FE E4 5B 89 F5 FF FF A5 60 57",
+          "count": 73,
+          "first": 119.774,
+          "last": 120.341,
+          "rssi": -61,
+          "address": "59:BA:2B:D2:57:8D"
+        }
+      ]
+    },
+    {
+      "step": "select-row1",
+      "instruction": "On the light remote, press ON 1 once.",
+      "began": 120.787,
+      "ended": 125.945,
+      "copies": 111,
+      "ignored": 106,
+      "packets": [
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC3151D0691F0824CB1EFC37E56693366A6057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 D0 69 1F 08 24 CB 1E FC 37 E5 66 93 36 6A 60 57",
+          "count": 52,
+          "first": 124.541,
+          "last": 125.075,
+          "rssi": -62,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F008100033AFBEAF19E359A93C6D69E940A98D4618BB98B30F85",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 33 AF BE AF 19 E3 59 A9 3C 6D 69 E9 40 A9 8D 46 18 BB 98 B3 0F 85",
+          "count": 59,
+          "first": 124.542,
+          "last": 125.076,
+          "rssi": -63,
+          "address": "10:9E:3A:10:25:5D"
+        }
+      ]
+    },
+    {
+      "step": "row1-brighter",
+      "instruction": "On the light remote, press sun + (brightness up) 3 times, about a second apart.",
+      "began": 125.945,
+      "ended": 137.372,
+      "copies": 457,
+      "ignored": 207,
+      "packets": [
+        {
+          "raw": "0201021B16F008100053CEDECF798339C95C24098920C9EDB1A8DBF8AA3A1A",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 53 CE DE CF 79 83 39 C9 5C 24 09 89 20 C9 ED B1 A8 DB F8 AA 3A 1A",
+          "count": 29,
+          "first": 133.909,
+          "last": 134.075,
+          "rssi": -65,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC315144691F0824CB9EFC69BB05CD33C36057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 44 69 1F 08 24 CB 9E FC 69 BB 05 CD 33 C3 60 57",
+          "count": 22,
+          "first": 133.923,
+          "last": 134.074,
+          "rssi": -64,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F00810007296B0184E58C803E323D957D05BC46A5523C17A2D87",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 72 96 B0 18 4E 58 C8 03 E3 23 D9 57 D0 5B C4 6A 55 23 C1 7A 2D 87",
+          "count": 64,
+          "first": 134.25,
+          "last": 134.807,
+          "rssi": -59,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31515C691F0864CB5ED4F123E7552F8D6057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 5C 69 1F 08 64 CB 5E D4 F1 23 E7 55 2F 8D 60 57",
+          "count": 54,
+          "first": 134.256,
+          "last": 134.792,
+          "rssi": -59,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F008100032D7F0580E188843A37B9917841B862BCF638183DD21",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 32 D7 F0 58 0E 18 88 43 A3 7B 99 17 84 1B 86 2B CF 63 81 83 DD 21",
+          "count": 27,
+          "first": 135.037,
+          "last": 135.209,
+          "rssi": -69,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC315144691F0824CBDEFCD406557057176057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 44 69 1F 08 24 CB DE FC D4 06 55 70 57 17 60 57",
+          "count": 33,
+          "first": 135.056,
+          "last": 135.208,
+          "rssi": -68,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31515C691F0864CB2ED4ED3FAC49760D6057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 5C 69 1F 08 64 CB 2E D4 ED 3F AC 49 76 0D 60 57",
+          "count": 34,
+          "first": 135.279,
+          "last": 135.758,
+          "rssi": -59,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F0081000CA24854CC802125A4AEA628BBBBE7FDBB8A2BAD31700",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 CA 24 85 4C C8 02 12 5A 4A EA 62 8B BB BE 7F DB B8 A2 BA D3 17 00",
+          "count": 45,
+          "first": 135.29,
+          "last": 135.758,
+          "rssi": -60,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "0201021B16F00810002AC565AC28E2F2BAAA12826B4F5E9DEC27425A0C7AC6",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 2A C5 65 AC 28 E2 F2 BA AA 12 82 6B 4F 5E 9D EC 27 42 5A 0C 7A C6",
+          "count": 16,
+          "first": 136.085,
+          "last": 136.242,
+          "rssi": -66,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC315144691F0824CBAEFC18CA71BC960A6057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 44 69 1F 08 24 CB AE FC 18 CA 71 BC 96 0A 60 57",
+          "count": 11,
+          "first": 136.089,
+          "last": 136.241,
+          "rssi": -65,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31515C691F0864CB6ED412C09CB6A95B6057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 5C 69 1F 08 64 CB 6E D4 12 C0 9C B6 A9 5B 60 57",
+          "count": 59,
+          "first": 136.359,
+          "last": 136.906,
+          "rssi": -59,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F00810001521B04967158008A56C6978AF5FBDA81F797CE837D4",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 15 21 B0 49 67 15 80 08 A5 6C 69 78 AF 5F BD A8 1F 79 7C E8 37 D4",
+          "count": 63,
+          "first": 136.373,
+          "last": 136.907,
+          "rssi": -59,
+          "address": "10:9E:3A:10:25:5D"
+        }
+      ]
+    },
+    {
+      "step": "row1-dimmer",
+      "instruction": "On the light remote, press sun - (brightness down) 3 times, about a second apart.",
+      "began": 137.372,
+      "ended": 143.698,
+      "copies": 550,
+      "ignored": 84,
+      "packets": [
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC315144691F0824CBEE7CDC0EFF7882966057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 44 69 1F 08 24 CB EE 7C DC 0E FF 78 82 96 60 57",
+          "count": 34,
+          "first": 140.081,
+          "last": 140.259,
+          "rssi": -67,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F0081000754B04E5813D2FB8210CA7C5CD00950635DA27CCEBE5",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 75 4B 04 E5 81 3D 2F B8 21 0C A7 C5 CD 00 95 06 35 DA 27 CC EB E5",
+          "count": 31,
+          "first": 140.09,
+          "last": 140.259,
+          "rssi": -67,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "0201021B16F008100032DCF0580E188843A3639917AC1B8473956381F1F957",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 32 DC F0 58 0E 18 88 43 A3 63 99 17 AC 1B 84 73 95 63 81 F1 F9 57",
+          "count": 56,
+          "first": 140.35,
+          "last": 140.874,
+          "rssi": -62,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31515C691F0864CB0EE8508287F4240D6057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 5C 69 1F 08 64 CB 0E E8 50 82 87 F4 24 0D 60 57",
+          "count": 60,
+          "first": 140.351,
+          "last": 140.874,
+          "rssi": -62,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC315144691F0824CB8E7C08DA2FAC2D246057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 44 69 1F 08 24 CB 8E 7C 08 DA 2F AC 2D 24 60 57",
+          "count": 16,
+          "first": 141.106,
+          "last": 141.158,
+          "rssi": -67,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F0081000E58BE122D78BBFA7AA5A58A03071658D81A594C7DF14",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 E5 8B E1 22 D7 8B BF A7 AA 5A 58 A0 30 71 65 8D 81 A5 94 C7 DF 14",
+          "count": 18,
+          "first": 141.108,
+          "last": 141.159,
+          "rssi": -67,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31515C691F0864CB4EE8F527E1519F366057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 5C 69 1F 08 64 CB 4E E8 F5 27 E1 51 9F 36 60 57",
+          "count": 82,
+          "first": 141.282,
+          "last": 141.826,
+          "rssi": -65,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F008100044155277D9284DA57AD466F94C71E171B0446300C00E",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 44 15 52 77 D9 28 4D A5 7A D4 66 F9 4C 71 E1 71 B0 44 63 00 C0 0E",
+          "count": 74,
+          "first": 141.291,
+          "last": 141.825,
+          "rssi": -65,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC315144691F0824CBCE7CE4368940DBA26057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 44 69 1F 08 24 CB CE 7C E4 36 89 40 DB A2 60 57",
+          "count": 31,
+          "first": 142.19,
+          "last": 142.491,
+          "rssi": -67,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F008100044145277D9284DA57ACC66F96571E3B1DD44636435E9",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 44 14 52 77 D9 28 4D A5 7A CC 66 F9 65 71 E3 B1 DD 44 63 64 35 E9",
+          "count": 35,
+          "first": 142.206,
+          "last": 142.492,
+          "rssi": -66,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "0201021B16F008100091B0C28958DF4E4F839841D0B8840605F96075442390",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 91 B0 C2 89 58 DF 4E 4F 83 98 41 D0 B8 84 06 05 F9 60 75 44 23 90",
+          "count": 59,
+          "first": 142.506,
+          "last": 143.025,
+          "rssi": -61,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31515C691F0864CB36E83CEEF698C9246057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 5C 69 1F 08 64 CB 36 E8 3C EE F6 98 C9 24 60 57",
+          "count": 54,
+          "first": 142.508,
+          "last": 143.024,
+          "rssi": -61,
+          "address": "59:BA:2B:D2:57:8D"
+        }
+      ]
+    },
+    {
+      "step": "row1-k-plus",
+      "instruction": "On the light remote, press K+ 3 times, about a second apart.",
+      "began": 143.698,
+      "ended": 150.855,
+      "copies": 386,
+      "ignored": 106,
+      "packets": [
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC315144691F0824CBB6BCC01250640BA06057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 44 69 1F 08 24 CB B6 BC C0 12 50 64 0B A0 60 57",
+          "count": 8,
+          "first": 147.337,
+          "last": 147.472,
+          "rssi": -62,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F0081000339431B0A67DD8C106DA03D854C55AF47040C0D603C0",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 33 94 31 B0 A6 7D D8 C1 06 DA 03 D8 54 C5 5A F4 70 40 C0 D6 03 C0",
+          "count": 9,
+          "first": 147.438,
+          "last": 147.473,
+          "rssi": -64,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31515C691F0864CB76D8F7258553AB7B6057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 5C 69 1F 08 64 CB 76 D8 F7 25 85 53 AB 7B 60 57",
+          "count": 77,
+          "first": 147.589,
+          "last": 148.077,
+          "rssi": -60,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F00810005422F2FA892E68A2ECA236260BE7DE07D1F510D43D05",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 54 22 F2 FA 89 2E 68 A2 EC A2 36 26 0B E7 DE 07 D1 F5 10 D4 3D 05",
+          "count": 66,
+          "first": 147.591,
+          "last": 148.077,
+          "rssi": -60,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "0201021B16F00810005EAE8FEC5AA4B07FB9CB9C293B30F89A8DAA0FB4D7BA",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 5E AE 8F EC 5A A4 B0 7F B9 CB 9C 29 3B 30 F8 9A 8D AA 0F B4 D7 BA",
+          "count": 16,
+          "first": 148.527,
+          "last": 148.689,
+          "rssi": -62,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC315144691F0824CBF6BC2AF8698E06826057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 44 69 1F 08 24 CB F6 BC 2A F8 69 8E 06 82 60 57",
+          "count": 19,
+          "first": 148.539,
+          "last": 148.69,
+          "rssi": -61,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31515C691F0864CB16D806D4C4A2AFB36057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 5C 69 1F 08 64 CB 16 D8 06 D4 C4 A2 AF B3 60 57",
+          "count": 35,
+          "first": 148.797,
+          "last": 149.342,
+          "rssi": -56,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F0081000AE80A1671A628D30240DE4DF03B6F4B469CB13EF7D17",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 AE 80 A1 67 1A 62 8D 30 24 0D E4 DF 03 B6 F4 B4 69 CB 13 EF 7D 17",
+          "count": 38,
+          "first": 148.806,
+          "last": 149.341,
+          "rssi": -59,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "0201021B16F008100062A501C3984A109601A6021787E7EE45327005531390",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 62 A5 01 C3 98 4A 10 96 01 A6 02 17 87 E7 EE 45 32 70 05 53 13 90",
+          "count": 9,
+          "first": 149.556,
+          "last": 149.582,
+          "rssi": -60,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC315144691F0824CB96BC65B7D1C118E86057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 44 69 1F 08 24 CB 96 BC 65 B7 D1 C1 18 E8 60 57",
+          "count": 5,
+          "first": 149.574,
+          "last": 149.579,
+          "rssi": -60,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31515C691F0864CB56D8BB69E41F07FE6057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 5C 69 1F 08 64 CB 56 D8 BB 69 E4 1F 07 FE 60 57",
+          "count": 54,
+          "first": 149.771,
+          "last": 150.308,
+          "rssi": -59,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F0081000254B6EF0D2F5E68C816DD91EF896FA9CA6546BB5698F",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 25 4B 6E F0 D2 F5 E6 8C 81 6D D9 1E F8 96 FA 9C A6 54 6B B5 69 8F",
+          "count": 50,
+          "first": 149.773,
+          "last": 150.308,
+          "rssi": -59,
+          "address": "10:9E:3A:10:25:5D"
+        }
+      ]
+    },
+    {
+      "step": "row1-k-minus",
+      "instruction": "On the light remote, press K- 3 times, about a second apart.",
+      "began": 150.855,
+      "ended": 155.754,
+      "copies": 379,
+      "ignored": 63,
+      "packets": [
+        {
+          "raw": "0201021B16F008100062A701C3984A109601A6021786E7EED370700528A236",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 62 A7 01 C3 98 4A 10 96 01 A6 02 17 86 E7 EE D3 70 70 05 28 A2 36",
+          "count": 10,
+          "first": 152.317,
+          "last": 152.356,
+          "rssi": -67,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC315144691F0824CBD63C9143EE35572A6057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 44 69 1F 08 24 CB D6 3C 91 43 EE 35 57 2A 60 57",
+          "count": 9,
+          "first": 152.323,
+          "last": 152.357,
+          "rssi": -67,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F00810009C92F17E52FFE3FE682A02CE439C5CB2F1CFE978644F",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 9C 92 F1 7E 52 FF E3 FE 68 2A 02 CE 43 9C 5C B2 F1 CF E9 78 64 4F",
+          "count": 59,
+          "first": 152.476,
+          "last": 153.022,
+          "rssi": -60,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31515C691F0864CB26E48D5F372930E36057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 5C 69 1F 08 64 CB 26 E4 8D 5F 37 29 30 E3 60 57",
+          "count": 55,
+          "first": 152.49,
+          "last": 153.023,
+          "rssi": -59,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC315144691F0824CBA63C66B420C251846057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 44 69 1F 08 24 CB A6 3C 66 B4 20 C2 51 84 60 57",
+          "count": 5,
+          "first": 153.387,
+          "last": 153.409,
+          "rssi": -65,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F008100027AA1AD7FD084B0963EEC7CE053DC538ED00F1773D31",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 27 AA 1A D7 FD 08 4B 09 63 EE C7 CE 05 3D C5 38 ED 00 F1 77 3D 31",
+          "count": 7,
+          "first": 153.406,
+          "last": 153.489,
+          "rssi": -66,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "0201021B16F008100007893AF7DD286B2943D6E7EE3E1DE7260520D1C2D7AD",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 07 89 3A F7 DD 28 6B 29 43 D6 E7 EE 3E 1D E7 26 05 20 D1 C2 D7 AD",
+          "count": 48,
+          "first": 153.613,
+          "last": 154.174,
+          "rssi": -60,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31515C691F0864CB66E4B361961709216057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 5C 69 1F 08 64 CB 66 E4 B3 61 96 17 09 21 60 57",
+          "count": 58,
+          "first": 153.624,
+          "last": 154.174,
+          "rssi": -59,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC315144691F0824CBE63C07D50DA3EB666057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 44 69 1F 08 24 CB E6 3C 07 D5 0D A3 EB 66 60 57",
+          "count": 13,
+          "first": 154.458,
+          "last": 154.61,
+          "rssi": -61,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F008100045283AD2496A28C420C374E77BE5F0B42209E27B13AB",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 45 28 3A D2 49 6A 28 C4 20 C3 74 E7 7B E5 F0 B4 22 09 E2 7B 13 AB",
+          "count": 16,
+          "first": 154.473,
+          "last": 154.626,
+          "rssi": -61,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "0201021B16F0081000BCE34F47303940D99DA908A1506C7F9180BA798813E2",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 BC E3 4F 47 30 39 40 D9 9D A9 08 A1 50 6C 7F 91 80 BA 79 88 13 E2",
+          "count": 48,
+          "first": 154.757,
+          "last": 155.259,
+          "rssi": -61,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31515C691F0864CB06E44B99FEEFA8A86057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 5C 69 1F 08 64 CB 06 E4 4B 99 FE EF A8 A8 60 57",
+          "count": 51,
+          "first": 154.758,
+          "last": 155.259,
+          "rssi": -60,
+          "address": "59:BA:2B:D2:57:8D"
+        }
+      ]
+    },
+    {
+      "step": "select-row2",
+      "instruction": "On the light remote, press ON 2 once.",
+      "began": 155.754,
+      "ended": 162.128,
+      "copies": 83,
+      "ignored": 97,
+      "packets": [
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC3151D069DF0824CB86FCBE6C131AB0BE6057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 D0 69 DF 08 24 CB 86 FC BE 6C 13 1A B0 BE 60 57",
+          "count": 40,
+          "first": 160.368,
+          "last": 160.843,
+          "rssi": -64,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F00810001BF98CB6F152938F08B34A6E7FBC584443ED7B079876",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 1B F9 8C B6 F1 52 93 8F 08 B3 4A 6E 7F BC 58 44 43 ED 7B 07 98 76",
+          "count": 43,
+          "first": 160.373,
+          "last": 160.843,
+          "rssi": -65,
+          "address": "10:9E:3A:10:25:5D"
+        }
+      ]
+    },
+    {
+      "step": "row2-brighter",
+      "instruction": "On the light remote, press sun + (brightness up) 3 times, about a second apart.",
+      "began": 162.128,
+      "ended": 169.149,
+      "copies": 458,
+      "ignored": 92,
+      "packets": [
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31514469DF0824CB46FC9341D53721306057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 44 69 DF 08 24 CB 46 FC 93 41 D5 37 21 30 60 57",
+          "count": 11,
+          "first": 165.581,
+          "last": 165.609,
+          "rssi": -73,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F0081000C485D2F759A8CD25F94CE679E4F163D83CC4E36DF419",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 C4 85 D2 F7 59 A8 CD 25 F9 4C E6 79 E4 F1 63 D8 3C C4 E3 6D F4 19",
+          "count": 5,
+          "first": 165.591,
+          "last": 165.608,
+          "rssi": -73,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "0201021B16F0081000FD857A6F50CBA38F9979BC5C930998581B8D9F524C1F",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 FD 85 7A 6F 50 CB A3 8F 99 79 BC 5C 93 09 98 58 1B 8D 9F 52 4C 1F",
+          "count": 53,
+          "first": 165.739,
+          "last": 166.326,
+          "rssi": -59,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31515C69DF0864CBC6D433E1A99770326057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 5C 69 DF 08 64 CB C6 D4 33 E1 A9 97 70 32 60 57",
+          "count": 59,
+          "first": 165.742,
+          "last": 166.326,
+          "rssi": -58,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31514469DF0824CB38FC74A6ABD0B32A6057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 44 69 DF 08 24 CB 38 FC 74 A6 AB D0 B3 2A 60 57",
+          "count": 20,
+          "first": 166.636,
+          "last": 166.774,
+          "rssi": -59,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F00810009CBF6F67101960F9BE912881684C5D86A19A590A78E0",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 9C BF 6F 67 10 19 60 F9 BE 91 28 81 68 4C 5D 86 A1 9A 59 0A 78 E0",
+          "count": 21,
+          "first": 166.698,
+          "last": 166.774,
+          "rssi": -59,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31515C69DF0864CBB8D45486D9F042886057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 5C 69 DF 08 64 CB B8 D4 54 86 D9 F0 42 88 60 57",
+          "count": 75,
+          "first": 166.881,
+          "last": 167.307,
+          "rssi": -58,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F00810001E164A5E7323AB6FFD19FAB0CA6B792F50814DAAD656",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 1E 16 4A 5E 73 23 AB 6F FD 19 FA B0 CA 6B 79 2F 50 81 4D AA D6 56",
+          "count": 74,
+          "first": 166.89,
+          "last": 167.308,
+          "rssi": -59,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31514469DF0824CB78FCA476AB00C3A76057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 44 69 DF 08 24 CB 78 FC A4 76 AB 00 C3 A7 60 57",
+          "count": 19,
+          "first": 168.027,
+          "last": 168.157,
+          "rssi": -63,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F00810005C7DAFA7D0D9A0397E51E841A88C9D4F725A992C46DD",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 5C 7D AF A7 D0 D9 A0 39 7E 51 E8 41 A8 8C 9D 4F 72 5A 99 2C 46 DD",
+          "count": 14,
+          "first": 168.04,
+          "last": 168.157,
+          "rssi": -64,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "0201021B16F008100044297B3A91230BEAC9FB19FD09C64A61CCD9DE485258",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 44 29 7B 3A 91 23 0B EA C9 FB 19 FD 09 C6 4A 61 CC D9 DE 48 52 58",
+          "count": 49,
+          "first": 168.172,
+          "last": 168.757,
+          "rssi": -59,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31515C69DF0864CBF8D4C416FD6067F06057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 5C 69 DF 08 64 CB F8 D4 C4 16 FD 60 67 F0 60 57",
+          "count": 58,
+          "first": 168.174,
+          "last": 168.758,
+          "rssi": -58,
+          "address": "59:BA:2B:D2:57:8D"
+        }
+      ]
+    },
+    {
+      "step": "row2-dimmer",
+      "instruction": "On the light remote, press sun - (brightness down) 3 times, about a second apart.",
+      "began": 169.149,
+      "ended": 174.549,
+      "copies": 619,
+      "ignored": 65,
+      "packets": [
+        {
+          "raw": "0201021B16F0081000A214C103588AD056C266C2D744272E2AF0B0C55055DD",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 A2 14 C1 03 58 8A D0 56 C2 66 C2 D7 44 27 2E 2A F0 B0 C5 50 55 DD",
+          "count": 35,
+          "first": 170.955,
+          "last": 171.157,
+          "rssi": -61,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31514469DF0824CB187CC012E364D1A66057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 44 69 DF 08 24 CB 18 7C C0 12 E3 64 D1 A6 60 57",
+          "count": 35,
+          "first": 170.973,
+          "last": 171.143,
+          "rssi": -61,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31515C69DF0864CB98E86CBEF0C809856057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 5C 69 DF 08 64 CB 98 E8 6C BE F0 C8 09 85 60 57",
+          "count": 41,
+          "first": 171.157,
+          "last": 171.742,
+          "rssi": -56,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F0081000828C5CCF122964F939D8B3DD407873FEA27A4EDDAB2C",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 82 8C 5C CF 12 29 64 F9 39 D8 B3 DD 40 78 73 FE A2 7A 4E DD AB 2C",
+          "count": 41,
+          "first": 171.173,
+          "last": 171.74,
+          "rssi": -57,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "0201021B16F0081000E5FBAE301235264C42B519DE1D5638CE5494AB8ACB43",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 E5 FB AE 30 12 35 26 4C 42 B5 19 DE 1D 56 38 CE 54 94 AB 8A CB 43",
+          "count": 35,
+          "first": 172.143,
+          "last": 172.36,
+          "rssi": -61,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31514469DF0824CB587C39EB409DCFF26057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 44 69 DF 08 24 CB 58 7C 39 EB 40 9D CF F2 60 57",
+          "count": 38,
+          "first": 172.156,
+          "last": 172.343,
+          "rssi": -61,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31515C69DF0864CBD8E89F4D543B81096057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 5C 69 DF 08 64 CB D8 E8 9F 4D 54 3B 81 09 60 57",
+          "count": 127,
+          "first": 172.379,
+          "last": 172.961,
+          "rssi": -56,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F0081000051A4ED0F2D5C6ACA24DF93ED4B6DA3DBE744B7291FE",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 05 1A 4E D0 F2 D5 C6 AC A2 4D F9 3E D4 B6 DA 3D BE 74 4B 72 91 FE",
+          "count": 114,
+          "first": 172.39,
+          "last": 172.96,
+          "rssi": -57,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31514469DF0824CB287C30E2E99467546057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 44 69 DF 08 24 CB 28 7C 30 E2 E9 94 67 54 60 57",
+          "count": 36,
+          "first": 173.424,
+          "last": 173.575,
+          "rssi": -68,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F00810006C6136AA00A043428927D91B503F8A09AB5BAC5765EE",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 6C 61 36 AA 00 A0 43 42 89 27 D9 1B 50 3F 8A 09 AB 5B AC 57 65 EE",
+          "count": 32,
+          "first": 173.439,
+          "last": 173.575,
+          "rssi": -68,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31515C69DF0864CBA8E802D029A6E1676057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 5C 69 DF 08 64 CB A8 E8 02 D0 29 A6 E1 67 60 57",
+          "count": 47,
+          "first": 173.699,
+          "last": 174.176,
+          "rssi": -57,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F0081000752904E5813D2FB82214A7C5E400979A5DDA27F1A866",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 75 29 04 E5 81 3D 2F B8 22 14 A7 C5 E4 00 97 9A 5D DA 27 F1 A8 66",
+          "count": 38,
+          "first": 173.706,
+          "last": 174.176,
+          "rssi": -58,
+          "address": "10:9E:3A:10:25:5D"
+        }
+      ]
+    },
+    {
+      "step": "row2-k-plus",
+      "instruction": "On the light remote, press K+ 3 times, about a second apart.",
+      "began": 174.549,
+      "ended": 180.86,
+      "copies": 489,
+      "ignored": 77,
+      "packets": [
+        {
+          "raw": "0201021B16F0081000E2E33CAF7249049959A0D3BD0A181123F21A2E0ED0D9",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 E2 E3 3C AF 72 49 04 99 59 A0 D3 BD 0A 18 11 23 F2 1A 2E 0E D0 D9",
+          "count": 9,
+          "first": 177.186,
+          "last": 177.307,
+          "rssi": -69,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31514469DF0824CB68BC6DBFA1C9A0686057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 44 69 DF 08 24 CB 68 BC 6D BF A1 C9 A0 68 60 57",
+          "count": 8,
+          "first": 177.187,
+          "last": 177.306,
+          "rssi": -68,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F00810000202DC4F92A9E479B958335DCCF8F3A928FACEE4DE70",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 02 02 DC 4F 92 A9 E4 79 B9 58 33 5D CC F8 F3 A9 28 FA CE E4 DE 70",
+          "count": 50,
+          "first": 177.463,
+          "last": 177.791,
+          "rssi": -59,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31515C69DF0864CBE8D8F6244552E3C76057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 5C 69 DF 08 64 CB E8 D8 F6 24 45 52 E3 C7 60 57",
+          "count": 55,
+          "first": 177.472,
+          "last": 177.79,
+          "rssi": -58,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31514469DF0824CB08BCFB29AA5FD89B6057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 44 69 DF 08 24 CB 08 BC FB 29 AA 5F D8 9B 60 57",
+          "count": 13,
+          "first": 178.272,
+          "last": 178.308,
+          "rssi": -62,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F0081000F5A750A987F560E84694899859BF5F0D0D999C1D93EF",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 F5 A7 50 A9 87 F5 60 E8 46 94 89 98 59 BF 5F 0D 0D 99 9C 1D 93 EF",
+          "count": 13,
+          "first": 178.274,
+          "last": 178.308,
+          "rssi": -64,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "0201021B16F0081000C5CBC102F7AB9F878962788035514729B985B427EFEE",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 C5 CB C1 02 F7 AB 9F 87 89 62 78 80 35 51 47 29 B9 85 B4 27 EF EE",
+          "count": 64,
+          "first": 178.516,
+          "last": 179.043,
+          "rssi": -58,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31515C69DF0864CB88D8C5176C61E17E6057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 5C 69 DF 08 64 CB 88 D8 C5 17 6C 61 E1 7E 60 57",
+          "count": 60,
+          "first": 178.517,
+          "last": 179.043,
+          "rssi": -57,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F0081000A2A77CEF320944D919E093FD4A585197B95A6E988808",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 A2 A7 7C EF 32 09 44 D9 19 E0 93 FD 4A 58 51 97 B9 5A 6E 98 88 08",
+          "count": 31,
+          "first": 179.523,
+          "last": 179.724,
+          "rssi": -64,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31514469DF0824CB48BCAF7DEB0B4EA56057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 44 69 DF 08 24 CB 48 BC AF 7D EB 0B 4E A5 60 57",
+          "count": 32,
+          "first": 179.524,
+          "last": 179.724,
+          "rssi": -64,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31515C69DF0864CBC8D84290E6E6F7936057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 5C 69 DF 08 64 CB C8 D8 42 90 E6 E6 F7 93 60 57",
+          "count": 79,
+          "first": 179.844,
+          "last": 180.325,
+          "rssi": -59,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F0081000C2C61C8F526924B97998F39D0C38337D0F3A0E9F02AE",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 C2 C6 1C 8F 52 69 24 B9 79 98 F3 9D 0C 38 33 7D 0F 3A 0E 9F 02 AE",
+          "count": 75,
+          "first": 179.857,
+          "last": 180.324,
+          "rssi": -59,
+          "address": "10:9E:3A:10:25:5D"
+        }
+      ]
+    },
+    {
+      "step": "row2-k-minus",
+      "instruction": "On the light remote, press K- 3 times, about a second apart.",
+      "began": 180.86,
+      "ended": 186.083,
+      "copies": 370,
+      "ignored": 58,
+      "packets": [
+        {
+          "raw": "0201021B16F00810008583FA1289AAE804E303B427BB2530A828C9220210BF",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 85 83 FA 12 89 AA E8 04 E3 03 B4 27 BB 25 30 A8 28 C9 22 02 10 BF",
+          "count": 15,
+          "first": 182.365,
+          "last": 182.509,
+          "rssi": -66,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31514469DF0824CB303C4A98BDEE22E56057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 44 69 DF 08 24 CB 30 3C 4A 98 BD EE 22 E5 60 57",
+          "count": 8,
+          "first": 182.366,
+          "last": 182.509,
+          "rssi": -67,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31515C69DF0864CBB0E422F0838671E36057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 5C 69 DF 08 64 CB B0 E4 22 F0 83 86 71 E3 60 57",
+          "count": 41,
+          "first": 182.629,
+          "last": 183.144,
+          "rssi": -59,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F0081000252C6EF0D2F5E68C826DD91EC496FA7B00546BC55DAB",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 25 2C 6E F0 D2 F5 E6 8C 82 6D D9 1E C4 96 FA 7B 00 54 6B C5 5D AB",
+          "count": 49,
+          "first": 182.639,
+          "last": 183.157,
+          "rssi": -59,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31514469DF0824CB703C94460430CF846057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 44 69 DF 08 24 CB 70 3C 94 46 04 30 CF 84 60 57",
+          "count": 36,
+          "first": 183.469,
+          "last": 183.576,
+          "rssi": -66,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F0081000E5EFAE301235264C42B519DE1F5638645294AB243259",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 E5 EF AE 30 12 35 26 4C 42 B5 19 DE 1F 56 38 64 52 94 AB 24 32 59",
+          "count": 30,
+          "first": 183.474,
+          "last": 183.575,
+          "rssi": -66,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31515C69DF0864CBF0E4CB19F06FDC236057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 5C 69 DF 08 64 CB F0 E4 CB 19 F0 6F DC 23 60 57",
+          "count": 17,
+          "first": 183.705,
+          "last": 184.227,
+          "rssi": -62,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F0081000C4B9FBBA11A38B6A497B997D8546CAF7F5595E61D71C",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 C4 B9 FB BA 11 A3 8B 6A 49 7B 99 7D 85 46 CA F7 F5 59 5E 61 D7 1C",
+          "count": 23,
+          "first": 183.722,
+          "last": 184.241,
+          "rssi": -62,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "0201021B16F00810000A619181FD2B4A9910B81E83950466A96B3684E96AFD",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 0A 61 91 81 FD 2B 4A 99 10 B8 1E 83 95 04 66 A9 6B 36 84 E9 6A FD",
+          "count": 28,
+          "first": 184.809,
+          "last": 184.908,
+          "rssi": -63,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31514469DF0824CB103CB6644F12CC306057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 44 69 DF 08 24 CB 10 3C B6 64 4F 12 CC 30 60 57",
+          "count": 30,
+          "first": 184.812,
+          "last": 184.908,
+          "rssi": -63,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F008100099FECB1120819F0A18A9EAE337BA7FFA939B08306327",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 99 FE CB 11 20 81 9F 0A 18 A9 EA E3 37 BA 7F FA 93 9B 08 30 63 27",
+          "count": 42,
+          "first": 185.023,
+          "last": 185.509,
+          "rssi": -62,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31515C69DF0864CB90E42EFCD48ACA226057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 5C 69 DF 08 64 CB 90 E4 2E FC D4 8A CA 22 60 57",
+          "count": 51,
+          "first": 185.026,
+          "last": 185.509,
+          "rssi": -61,
+          "address": "59:BA:2B:D2:57:8D"
+        }
+      ]
+    },
+    {
+      "step": "select-row3",
+      "instruction": "On the light remote, press ON 3 once.",
+      "began": 186.083,
+      "ended": 190.107,
+      "copies": 171,
+      "ignored": 54,
+      "packets": [
+        {
+          "raw": "0201021B16F008100095D74B242E0C84447992135347C76EE14BB2B6AEB05D",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 95 D7 4B 24 2E 0C 84 44 79 92 13 53 47 C7 6E E1 4B B2 B6 AE B0 5D",
+          "count": 88,
+          "first": 188.779,
+          "last": 189.241,
+          "rssi": -61,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC3151D0695F0824CB50FCAC7E3F08C8CC6057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 D0 69 5F 08 24 CB 50 FC AC 7E 3F 08 C8 CC 60 57",
+          "count": 83,
+          "first": 188.78,
+          "last": 189.241,
+          "rssi": -61,
+          "address": "59:BA:2B:D2:57:8D"
+        }
+      ]
+    },
+    {
+      "step": "row3-brighter",
+      "instruction": "On the light remote, press sun + (brightness up) 3 times, about a second apart.",
+      "began": 190.107,
+      "ended": 197.626,
+      "copies": 507,
+      "ignored": 94,
+      "packets": [
+        {
+          "raw": "0201021B16F00810003C86A939C6E0E140AFB1995ABE5E8591AB079DC76367",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 3C 86 A9 39 C6 E0 E1 40 AF B1 99 5A BE 5E 85 91 AB 07 9D C7 63 67",
+          "count": 22,
+          "first": 192.867,
+          "last": 192.992,
+          "rssi": -62,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC315144695F0824CBD0FCD301A077A8356057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 44 69 5F 08 24 CB D0 FC D3 01 A0 77 A8 35 60 57",
+          "count": 29,
+          "first": 192.872,
+          "last": 192.992,
+          "rssi": -62,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F0081000EA8D71611DCBAA79F140FE6362E48447B5D664E2BE8F",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 EA 8D 71 61 1D CB AA 79 F1 40 FE 63 62 E4 84 47 B5 D6 64 E2 BE 8F",
+          "count": 60,
+          "first": 193.158,
+          "last": 193.589,
+          "rssi": -59,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31515C695F0864CB20D4FF2DA15B167C6057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 5C 69 5F 08 64 CB 20 D4 FF 2D A1 5B 16 7C 60 57",
+          "count": 66,
+          "first": 193.172,
+          "last": 193.606,
+          "rssi": -59,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F00810007538ABC4CEEC64A4995BF3B3A7278E43B752561F6AA6",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 75 38 AB C4 CE EC 64 A4 99 5B F3 B3 A7 27 8E 43 B7 52 56 1F 6A A6",
+          "count": 26,
+          "first": 194.019,
+          "last": 194.209,
+          "rssi": -59,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC315144695F0824CBA0FCCA18706E9D756057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 44 69 5F 08 24 CB A0 FC CA 18 70 6E 9D 75 60 57",
+          "count": 26,
+          "first": 194.02,
+          "last": 194.208,
+          "rssi": -59,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31515C695F0864CB60D424F62F8022516057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 5C 69 5F 08 64 CB 60 D4 24 F6 2F 80 22 51 60 57",
+          "count": 59,
+          "first": 194.224,
+          "last": 194.809,
+          "rssi": -58,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F008100064417257F9086D8558F446D95051C118C064430F3D28",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 64 41 72 57 F9 08 6D 85 58 F4 46 D9 50 51 C1 18 C0 64 43 0F 3D 28",
+          "count": 51,
+          "first": 194.226,
+          "last": 194.81,
+          "rssi": -58,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "0201021B16F008100062CB01C3984A109603A6021785E7EE6A247005C24F64",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 62 CB 01 C3 98 4A 10 96 03 A6 02 17 85 E7 EE 6A 24 70 05 C2 4F 64",
+          "count": 17,
+          "first": 195.158,
+          "last": 195.359,
+          "rssi": -59,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC315144695F0824CBE0FC9C4E4638A9196057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 44 69 5F 08 24 CB E0 FC 9C 4E 46 38 A9 19 60 57",
+          "count": 22,
+          "first": 195.172,
+          "last": 195.359,
+          "rssi": -59,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F00810005D46DACFF06B032F38D91CFC33A938CD442D3FE17279",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 5D 46 DA CF F0 6B 03 2F 38 D9 1C FC 33 A9 38 CD 44 2D 3F E1 72 79",
+          "count": 66,
+          "first": 195.447,
+          "last": 195.973,
+          "rssi": -64,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31515C695F0864CB00D4D301A0771F306057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 5C 69 5F 08 64 CB 00 D4 D3 01 A0 77 1F 30 60 57",
+          "count": 63,
+          "first": 195.448,
+          "last": 195.974,
+          "rssi": -63,
+          "address": "59:BA:2B:D2:57:8D"
+        }
+      ]
+    },
+    {
+      "step": "row3-dimmer",
+      "instruction": "On the light remote, press sun - (brightness down) 3 times, about a second apart.",
+      "began": 197.626,
+      "ended": 202.935,
+      "copies": 542,
+      "ignored": 57,
+      "packets": [
+        {
+          "raw": "0201021B16F008100086041581F909C2A4173D0DC5FF0697A23543328DB921",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 86 04 15 81 F9 09 C2 A4 17 3D 0D C5 FF 06 97 A2 35 43 32 8D B9 21",
+          "count": 20,
+          "first": 199.112,
+          "last": 199.259,
+          "rssi": -66,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC315144695F0824CB807C00D206A42E0F6057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 44 69 5F 08 24 CB 80 7C 00 D2 06 A4 2E 0F 60 57",
+          "count": 22,
+          "first": 199.124,
+          "last": 199.26,
+          "rssi": -66,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F0081000F995AB7140E1FF6A79C98A8367DA1F8DC9FB68B40F1E",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 F9 95 AB 71 40 E1 FF 6A 79 C9 8A 83 67 DA 1F 8D C9 FB 68 B4 0F 1E",
+          "count": 108,
+          "first": 199.272,
+          "last": 199.823,
+          "rssi": -58,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31515C695F0864CB40E84F9DC3EB492F6057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 5C 69 5F 08 64 CB 40 E8 4F 9D C3 EB 49 2F 60 57",
+          "count": 97,
+          "first": 199.273,
+          "last": 199.824,
+          "rssi": -57,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F0081000051901C2376B5F4748BAB840D09185ECFA45741E7AF3",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 05 19 01 C2 37 6B 5F 47 48 BA B8 40 D0 91 85 EC FA 45 74 1E 7A F3",
+          "count": 27,
+          "first": 200.351,
+          "last": 200.557,
+          "rssi": -61,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC315144695F0824CBC07CFF2D1B5BC56B6057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 44 69 5F 08 24 CB C0 7C FF 2D 1B 5B C5 6B 60 57",
+          "count": 22,
+          "first": 200.356,
+          "last": 200.426,
+          "rssi": -61,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F0081000354B90694735A028874C4958B37F9D583D595C636E0C",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 35 4B 90 69 47 35 A0 28 87 4C 49 58 B3 7F 9D 58 3D 59 5C 63 6E 0C",
+          "count": 58,
+          "first": 200.721,
+          "last": 201.176,
+          "rssi": -57,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31515C695F0864CB3CE866B48AC27CCC6057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 5C 69 5F 08 64 CB 3C E8 66 B4 8A C2 7C CC 60 57",
+          "count": 51,
+          "first": 200.74,
+          "last": 201.176,
+          "rssi": -57,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC315144695F0824CBBC7C2FFD1D8B8C436057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 44 69 5F 08 24 CB BC 7C 2F FD 1D 8B 8C 43 60 57",
+          "count": 21,
+          "first": 201.596,
+          "last": 201.794,
+          "rssi": -57,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F0081000BE1C6F0CBA44509F5B2B7CC9D8D0182B244AEFAEBCB7",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 BE 1C 6F 0C BA 44 50 9F 5B 2B 7C C9 D8 D0 18 2B 24 4A EF AE BC B7",
+          "count": 19,
+          "first": 201.608,
+          "last": 201.794,
+          "rssi": -58,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "0201021B16F00810005F305CCEEE41D54F2B00ED78977D35D217FCCA66E5D4",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 5F 30 5C CE EE 41 D5 4F 2B 00 ED 78 97 7D 35 D2 17 FC CA 66 E5 D4",
+          "count": 46,
+          "first": 201.872,
+          "last": 202.377,
+          "rssi": -58,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31515C695F0864CB7CE88A589C2E4CE06057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 5C 69 5F 08 64 CB 7C E8 8A 58 9C 2E 4C E0 60 57",
+          "count": 51,
+          "first": 201.89,
+          "last": 202.376,
+          "rssi": -58,
+          "address": "59:BA:2B:D2:57:8D"
+        }
+      ]
+    },
+    {
+      "step": "row3-k-plus",
+      "instruction": "On the light remote, press K+ 3 times, about a second apart.",
+      "began": 202.935,
+      "ended": 208.671,
+      "copies": 445,
+      "ignored": 81,
+      "packets": [
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC315144695F0824CBFCBC71A3E1D51AB16057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 44 69 5F 08 24 CB FC BC 71 A3 E1 D5 1A B1 60 57",
+          "count": 24,
+          "first": 204.639,
+          "last": 204.742,
+          "rssi": -66,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F0081000A590DA32A98AC824C22394079A0510E110E9026E10C1",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 A5 90 DA 32 A9 8A C8 24 C2 23 94 07 9A 05 10 E1 10 E9 02 6E 10 C1",
+          "count": 31,
+          "first": 204.656,
+          "last": 204.742,
+          "rssi": -66,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31515C695F0864CB1CD84F9D66EB195E6057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 5C 69 5F 08 64 CB 1C D8 4F 9D 66 EB 19 5E 60 57",
+          "count": 69,
+          "first": 204.797,
+          "last": 205.341,
+          "rssi": -67,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F0081000DC8EB13E12BFA3BE2A6A428E3FDC1CA99D8FA9F14696",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 DC 8E B1 3E 12 BF A3 BE 2A 6A 42 8E 3F DC 1C A9 9D 8F A9 F1 46 96",
+          "count": 72,
+          "first": 204.806,
+          "last": 205.356,
+          "rssi": -65,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "0201021B16F00810007F177CEECE61F56F0B38CD589D5D1794D8DCEA361312",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 7F 17 7C EE CE 61 F5 6F 0B 38 CD 58 9D 5D 17 94 D8 DC EA 36 13 12",
+          "count": 7,
+          "first": 205.927,
+          "last": 206.073,
+          "rssi": -67,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC315144695F0824CB9CBCB4668D10C62A6057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 44 69 5F 08 24 CB 9C BC B4 66 8D 10 C6 2A 60 57",
+          "count": 8,
+          "first": 205.939,
+          "last": 206.089,
+          "rssi": -66,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F00810007EDBAFCC7A84905F9BF3BC093D10DABEF78A2F17B1F7",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 7E DB AF CC 7A 84 90 5F 9B F3 BC 09 3D 10 DA BE F7 8A 2F 17 B1 F7",
+          "count": 45,
+          "first": 206.191,
+          "last": 206.677,
+          "rssi": -66,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31515C695F0864CB5CD818CA9ABC7FF66057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 5C 69 5F 08 64 CB 5C D8 18 CA 9A BC 7F F6 60 57",
+          "count": 36,
+          "first": 206.206,
+          "last": 206.676,
+          "rssi": -67,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F0081000FF95FC6E4EE175EF8BB84DD81DDD975ED35C6A48DCD7",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 FF 95 FC 6E 4E E1 75 EF 8B B8 4D D8 1D DD 97 5E D3 5C 6A 48 DC D7",
+          "count": 10,
+          "first": 207.124,
+          "last": 207.157,
+          "rssi": -63,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC315144695F0824CBDCBC20F2E084B8126057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 44 69 5F 08 24 CB DC BC 20 F2 E0 84 B8 12 60 57",
+          "count": 8,
+          "first": 207.14,
+          "last": 207.157,
+          "rssi": -63,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31515C695F0864CB2CD82BF9348F51E06057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 5C 69 5F 08 64 CB 2C D8 2B F9 34 8F 51 E0 60 57",
+          "count": 69,
+          "first": 207.223,
+          "last": 207.793,
+          "rssi": -73,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F0081000ECC1B62A8020C3C208BF599BF5BF081C98DB2CB1AF0B",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 EC C1 B6 2A 80 20 C3 C2 08 BF 59 9B F5 BF 08 1C 98 DB 2C B1 AF 0B",
+          "count": 66,
+          "first": 207.224,
+          "last": 207.793,
+          "rssi": -73,
+          "address": "10:9E:3A:10:25:5D"
+        }
+      ]
+    },
+    {
+      "step": "row3-k-minus",
+      "instruction": "On the light remote, press K- 3 times, about a second apart.",
+      "began": 208.671,
+      "ended": 213.71,
+      "copies": 453,
+      "ignored": 64,
+      "packets": [
+        {
+          "raw": "0201021B16F008100086301581F909C2A4173D0DC5FD0697CF3243328D6CDF",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 86 30 15 81 F9 09 C2 A4 17 3D 0D C5 FD 06 97 CF 32 43 32 8D 6C DF",
+          "count": 34,
+          "first": 210.266,
+          "last": 210.39,
+          "rssi": -64,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC315144695F0824CBAC3C11C311B5CE106057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 44 69 5F 08 24 CB AC 3C 11 C3 11 B5 CE 10 60 57",
+          "count": 41,
+          "first": 210.273,
+          "last": 210.391,
+          "rssi": -64,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31515C695F0864CB6CE4EA38754EC4666057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 5C 69 5F 08 64 CB 6C E4 EA 38 75 4E C4 66 60 57",
+          "count": 41,
+          "first": 210.484,
+          "last": 210.86,
+          "rssi": -67,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F0081000E4A0DB9A3183AB4A685BB95DA566EACBBA797EEEEB4A",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 E4 A0 DB 9A 31 83 AB 4A 68 5B B9 5D A5 66 EA CB BA 79 7E EE EB 4A",
+          "count": 42,
+          "first": 210.489,
+          "last": 210.742,
+          "rssi": -67,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC315144695F0824CBEC3C598B87FD7F6F6057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 44 69 5F 08 24 CB EC 3C 59 8B 87 FD 7F 6F 60 57",
+          "count": 38,
+          "first": 211.347,
+          "last": 211.474,
+          "rssi": -73,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F0081000143BB2BAC96E28E2AEFA76666CA79C8CCDB550DE1E14",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 14 3B B2 BA C9 6E 28 E2 AE FA 76 66 6C A7 9C 8C CD B5 50 DE 1E 14",
+          "count": 33,
+          "first": 211.358,
+          "last": 211.473,
+          "rssi": -73,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31515C695F0864CB0CE4F0226554CA516057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 5C 69 5F 08 64 CB 0C E4 F0 22 65 54 CA 51 60 57",
+          "count": 26,
+          "first": 211.582,
+          "last": 212.107,
+          "rssi": -69,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F00810005BE8CCF6B112D3CF49C20A2E27FC1ADA90AD3B6F5DD5",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 5B E8 CC F6 B1 12 D3 CF 49 C2 0A 2E 27 FC 1A DA 90 AD 3B 6F 5D D5",
+          "count": 22,
+          "first": 211.589,
+          "last": 212.092,
+          "rssi": -70,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "0201021B16F0081000D27D10B8EEF868A3419B79F767FB6675338361BA9AD3",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 D2 7D 10 B8 EE F8 68 A3 41 9B 79 F7 67 FB 66 75 33 83 61 BA 9A D3",
+          "count": 33,
+          "first": 212.517,
+          "last": 212.724,
+          "rssi": -65,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC315144695F0824CB8C3C9C4E46389BE46057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 44 69 5F 08 24 CB 8C 3C 9C 4E 46 38 9B E4 60 57",
+          "count": 36,
+          "first": 212.539,
+          "last": 212.725,
+          "rssi": -64,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31515C695F0864CB4CE4D301F977051E6057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 5C 69 5F 08 64 CB 4C E4 D3 01 F9 77 05 1E 60 57",
+          "count": 55,
+          "first": 212.739,
+          "last": 213.291,
+          "rssi": -62,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F008100025136EF0D2F5E68C836DD91EC496FAAEB1546BB4E1C0",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 25 13 6E F0 D2 F5 E6 8C 83 6D D9 1E C4 96 FA AE B1 54 6B B4 E1 C0",
+          "count": 52,
+          "first": 212.741,
+          "last": 213.291,
+          "rssi": -62,
+          "address": "10:9E:3A:10:25:5D"
+        }
+      ]
+    },
+    {
+      "step": "k-button",
+      "instruction": "On the light remote, press K (the round button at the top left) 2 times, about a second apart.",
+      "began": 213.71,
+      "ended": 222.046,
+      "copies": 309,
+      "ignored": 115,
+      "packets": [
+        {
+          "raw": "0201021B16F0081000F4DF525A298EC8024E029686CF47834C0755B0357100",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 F4 DF 52 5A 29 8E C8 02 4E 02 96 86 CF 47 83 4C 07 55 B0 35 71 00",
+          "count": 100,
+          "first": 219.399,
+          "last": 219.876,
+          "rssi": -61,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31515C695F08DBCBCCFE9547713175006057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 5C 69 5F 08 DB CB CC FE 95 47 71 31 75 00 60 57",
+          "count": 88,
+          "first": 219.406,
+          "last": 219.877,
+          "rssi": -60,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31515C695FF7DBCB34FE7EAC76DAE7606057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 5C 69 5F F7 DB CB 34 FE 7E AC 76 DA E7 60 60 57",
+          "count": 58,
+          "first": 220.486,
+          "last": 220.976,
+          "rssi": -60,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F0081000C5E3BA52C9EAA844A25BF467B89A8FBCD68962A0CD1C",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 C5 E3 BA 52 C9 EA A8 44 A2 5B F4 67 B8 9A 8F BC D6 89 62 A0 CD 1C",
+          "count": 63,
+          "first": 220.49,
+          "last": 220.976,
+          "rssi": -61,
+          "address": "10:9E:3A:10:25:5D"
+        }
+      ]
+    },
+    {
+      "step": "moon",
+      "instruction": "On the light remote, press the moon (the round button at the top right) 2 times, about a second apart.",
+      "began": 222.046,
+      "ended": 229.545,
+      "copies": 126,
+      "ignored": 106,
+      "packets": [
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31511C695F0824CBB4FCB2607C16C72D6057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 1C 69 5F 08 24 CB B4 FC B2 60 7C 16 C7 2D 60 57",
+          "count": 34,
+          "first": 226.707,
+          "last": 227.123,
+          "rssi": -59,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F008100052E190386E78E823C101F977E47BE6B28503E13E0C57",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 52 E1 90 38 6E 78 E8 23 C1 01 F9 77 E4 7B E6 B2 85 03 E1 3E 0C 57",
+          "count": 31,
+          "first": 226.856,
+          "last": 227.124,
+          "rssi": -60,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC31511C695F0824CB74FC24F692806F9B6057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 1C 69 5F 08 24 CB 74 FC 24 F6 92 80 6F 9B 60 57",
+          "count": 33,
+          "first": 227.922,
+          "last": 228.339,
+          "rssi": -59,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F0081000ECDBB62A8020C3C208BD599BD1BF0AEBF3DB2C167643",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 EC DB B6 2A 80 20 C3 C2 08 BD 59 9B D1 BF 0A EB F3 DB 2C 16 76 43",
+          "count": 28,
+          "first": 227.94,
+          "last": 228.34,
+          "rssi": -59,
+          "address": "10:9E:3A:10:25:5D"
+        }
+      ]
+    },
+    {
+      "step": "rgb",
+      "instruction": "On the light remote, press RGB 2 times, about a second apart.",
+      "began": 229.545,
+      "ended": 236.994,
+      "copies": 318,
+      "ignored": 96,
+      "packets": [
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC3151A0695F0824CBF4FC5D8FC9F94D1F6057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 A0 69 5F 08 24 CB F4 FC 5D 8F C9 F9 4D 1F 60 57",
+          "count": 83,
+          "first": 234.445,
+          "last": 234.858,
+          "rssi": -67,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F008100055328BE4EECC4484B95CD3938707AE42AC7276E86A03",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 55 32 8B E4 EE CC 44 84 B9 5C D3 93 87 07 AE 42 AC 72 76 E8 6A 03",
+          "count": 86,
+          "first": 234.457,
+          "last": 234.858,
+          "rssi": -68,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "0201021B16F0081000EAA171611DCBAA79F17EFE6376E4863EEED664CA3B6D",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 EA A1 71 61 1D CB AA 79 F1 7E FE 63 76 E4 86 3E EE D6 64 CA 3B 6D",
+          "count": 74,
+          "first": 235.766,
+          "last": 236.31,
+          "rssi": -62,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC315120695F0824CB14FC558766F155016057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 20 69 5F 08 24 CB 14 FC 55 87 66 F1 55 01 60 57",
+          "count": 75,
+          "first": 235.767,
+          "last": 236.323,
+          "rssi": -61,
+          "address": "59:BA:2B:D2:57:8D"
+        }
+      ]
+    },
+    {
+      "step": "aid",
+      "instruction": "On the light remote, press Aid 2 times, about a second apart.",
+      "began": 236.994,
+      "ended": 244.798,
+      "copies": 174,
+      "ignored": 91,
+      "packets": [
+        {
+          "raw": "0201021B16F0081000221CFC6FB289C459984B137DC8D8D1F3D1DAEE530758",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 22 1C FC 6F B2 89 C4 59 98 4B 13 7D C8 D8 D1 F3 D1 DA EE 53 07 58",
+          "count": 51,
+          "first": 239.321,
+          "last": 239.857,
+          "rssi": -71,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC315190695F0824CB94FC70A2CDD419936057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 90 69 5F 08 24 CB 94 FC 70 A2 CD D4 19 93 60 57",
+          "count": 55,
+          "first": 239.339,
+          "last": 239.856,
+          "rssi": -70,
+          "address": "59:BA:2B:D2:57:8D"
+        },
+        {
+          "raw": "0201021B16F0081000D99D8B5160C1DF4A59DBAAA36FFA3D488EDB48AEBD18",
+          "records": "02 01 02 | 1B 16 F0 08 10 00 D9 9D 8B 51 60 C1 DF 4A 59 DB AA A3 6F FA 3D 48 8E DB 48 AE BD 18",
+          "count": 34,
+          "first": 240.804,
+          "last": 241.309,
+          "rssi": -69,
+          "address": "10:9E:3A:10:25:5D"
+        },
+        {
+          "raw": "1EFF5655188752B65F2B5E00FC315110695F0824CB54FC97454F3361C16057",
+          "records": "1E FF 56 55 18 87 52 B6 5F 2B 5E 00 FC 31 51 10 69 5F 08 24 CB 54 FC 97 45 4F 33 61 C1 60 57",
+          "count": 34,
+          "first": 240.823,
+          "last": 241.309,
+          "rssi": -68,
+          "address": "59:BA:2B:D2:57:8D"
+        }
+      ]
+    }
+  ]
+}

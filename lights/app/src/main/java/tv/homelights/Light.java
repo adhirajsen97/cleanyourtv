@@ -1,0 +1,96 @@
+package tv.homelights;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * A light, or a row of lights that answer the same packets, with what each command it knows does.
+ * Commands are named in lights.json ("on", "off", "brighter", …); a row shows a button for every
+ * command that has actions, so a row whose packets are not captured yet shows none. An action is
+ * a {@link Packet} to put on air, or a {@link Request} to a bridge over the network for a light
+ * the TV's radio cannot reach.
+ *
+ * A command can have several variants, one per press recorded from the remote. Each carries its
+ * own counter, and the lights ignore a packet whose counter they just saw, so {@link #actions}
+ * hands out the variants in turn: two presses in a row never send the same bytes.
+ *
+ * A light with a remote of its own, such as the cove strip, is not switched by All rows
+ * ({@link #inAll} false), so the screen does not mark it along with All rows.
+ */
+public final class Light {
+    /** Commands with a place of their own on the screen, in this order; other names follow them. */
+    public static final List<String> KNOWN_COMMANDS = Collections.unmodifiableList(
+            Arrays.asList("on", "off", "dimmer", "brighter", "warmer", "cooler"));
+
+    public final String id;
+    public final String name;
+    /** Whether All rows switches this light too; true unless lights.json says "in_all": false. */
+    public final boolean inAll;
+    private final Map<String, List<List<Action>>> commands;
+    private final Map<String, Integer> next = new HashMap<>();
+
+    public Light(String id, String name, Map<String, List<List<Action>>> commands) {
+        this(id, name, commands, true);
+    }
+
+    public Light(String id, String name, Map<String, List<List<Action>>> commands, boolean inAll) {
+        this.id = id;
+        this.name = name;
+        this.inAll = inAll;
+        Map<String, List<List<Action>>> copy = new LinkedHashMap<>();
+        for (Map.Entry<String, List<List<Action>>> e : commands.entrySet()) {
+            List<List<Action>> variants = new ArrayList<>();
+            for (List<Action> v : e.getValue()) variants.add(Collections.unmodifiableList(new ArrayList<>(v)));
+            copy.put(e.getKey(), Collections.unmodifiableList(variants));
+        }
+        this.commands = Collections.unmodifiableMap(copy);
+    }
+
+    public boolean has(String command) {
+        return commands.containsKey(command);
+    }
+
+    /** How many recorded presses a command has to rotate through; 0 for a command it lacks. */
+    public int variants(String command) {
+        List<List<Action>> list = commands.get(command);
+        return list == null ? 0 : list.size();
+    }
+
+    /** True when a variant of the command puts a packet on air, so Bluetooth has to be ready for it. */
+    public boolean usesRadio(String command) {
+        List<List<Action>> variants = commands.get(command);
+        if (variants == null) return false;
+        for (List<Action> variant : variants) {
+            for (Action a : variant) if (a instanceof Packet) return true;
+        }
+        return false;
+    }
+
+    /**
+     * The actions for the next press of a command, done one after another: the variants in turn,
+     * round and round. Empty for a command this light does not know.
+     */
+    public List<Action> actions(String command) {
+        List<List<Action>> variants = commands.get(command);
+        if (variants == null) return Collections.emptyList();
+        int i = next.getOrDefault(command, 0);
+        next.put(command, (i + 1) % variants.size());
+        return variants.get(i);
+    }
+
+    /** Known commands first, in their fixed order, then the others alphabetically. */
+    public List<String> commands() {
+        List<String> out = new ArrayList<>();
+        for (String known : KNOWN_COMMANDS) if (commands.containsKey(known)) out.add(known);
+        List<String> others = new ArrayList<>();
+        for (String name : commands.keySet()) if (!out.contains(name)) others.add(name);
+        Collections.sort(others);
+        out.addAll(others);
+        return out;
+    }
+}

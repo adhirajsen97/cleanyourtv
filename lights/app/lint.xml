@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Lint for Home Lights. CI runs lintRelease; keep it at zero errors. -->
+<lint>
+    <!-- One language for now; a missing translation is not an error. -->
+    <issue id="MissingTranslation" severity="informational" />
+</lint>

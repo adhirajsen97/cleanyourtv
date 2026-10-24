@@ -1,0 +1,929 @@
+{
+  "burst_ms": 800,
+  "connectable": true,
+  "lights": [
+    {
+      "id": "all",
+      "name": "All rows",
+      "commands": {
+        "on": {
+          "variants": [
+            [
+              {
+                "service_data": "08F0",
+                "data": "10006A5925EC68A2B2FAEB7BC22B0F1EDD74C0021A21EA82"
+              }
+            ],
+            [
+              {
+                "service_data": "08F0",
+                "data": "1000FE41AABE93C34B8F1FC81A503E8B9B347661AD16A1B4"
+              }
+            ],
+            [
+              {
+                "service_data": "08F0",
+                "data": "100074C7D2DAA90E4882CDB316060FC7FC9358D530DD6FDB"
+              }
+            ]
+          ]
+        },
+        "off": {
+          "variants": [
+            [
+              {
+                "service_data": "08F0",
+                "data": "10005313DECF798339C95D0C098920C9ED92F2DBF8AA938F"
+              }
+            ],
+            [
+              {
+                "service_data": "08F0",
+                "data": "10005FAB5CCEEE41D54F2830ED78BF7D37E4B1FCCA7AF81B"
+              }
+            ],
+            [
+              {
+                "service_data": "08F0",
+                "data": "100015F1B04967158008A45C6978BB5FBFCA64797C1D4E3E"
+              }
+            ]
+          ]
+        },
+        "brighter": {
+          "variants": [
+            [
+              {
+                "service_data": "08F0",
+                "data": "10001507B04967158008A4746978BB5FBF8EE2797CC67BF3",
+                "burst_ms": 400
+              },
+              {
+                "service_data": "08F0",
+                "data": "1000873EBA775DA8EBA9C256676EB29D676B12A051CB44B0",
+                "burst_ms": 400
+              }
+            ],
+            [
+              {
+                "service_data": "08F0",
+                "data": "1000F23E3098CED8488362BB59D744DB46D66BA3416E81E4",
+                "burst_ms": 400
+              },
+              {
+                "service_data": "08F0",
+                "data": "1000514F0249981F8E8F425881104444C655F0A0B5E299CA",
+                "burst_ms": 400
+              }
+            ],
+            [
+              {
+                "service_data": "08F0",
+                "data": "100073F571F0E63D9881479A439816851A527000805A46D0",
+                "burst_ms": 400
+              },
+              {
+                "service_data": "08F0",
+                "data": "1000555AF0092755C048E42C2938EF1FFDF6A6393C57C61F",
+                "burst_ms": 400
+              }
+            ]
+          ]
+        },
+        "dimmer": {
+          "variants": [
+            [
+              {
+                "service_data": "08F0",
+                "data": "1000DC2349D9260001A04C5179BA5FBE655F83E77D7DB85A",
+                "burst_ms": 400
+              },
+              {
+                "service_data": "08F0",
+                "data": "1000D9F88B5160C1DF4A5AE9AAA347FA3FBBE3DB48F04FDB",
+                "burst_ms": 400
+              }
+            ],
+            [
+              {
+                "service_data": "08F0",
+                "data": "10009194C28958DF4E4F828041D0918404838C6075960216",
+                "burst_ms": 400
+              },
+              {
+                "service_data": "08F0",
+                "data": "1000FDAF7A6F50CBA38F9B79BC5CAF099835958D9FB1D52B",
+                "burst_ms": 400
+              }
+            ],
+            [
+              {
+                "service_data": "08F0",
+                "data": "100053FDDECF798339C95D24098921C9EDDD07DBF8BB9A02",
+                "burst_ms": 400
+              },
+              {
+                "service_data": "08F0",
+                "data": "1000555724C5A11D0F98003487E5C420B74681FA07F4D1C7",
+                "burst_ms": 400
+              }
+            ]
+          ]
+        },
+        "warmer": {
+          "variants": [
+            [
+              {
+                "service_data": "08F0",
+                "data": "10001E4F4A5E7323AB6FFF01FAB0DC6B7B74D8814D053954",
+                "burst_ms": 400
+              },
+              {
+                "service_data": "08F0",
+                "data": "1000D9F28B5160C1DF4A5AE9AAA34BFA3FCE4ADB482F9876",
+                "burst_ms": 400
+              }
+            ],
+            [
+              {
+                "service_data": "08F0",
+                "data": "10006C3336AA00A043428B27D91B533F8A70195BAC60F954",
+                "burst_ms": 400
+              },
+              {
+                "service_data": "08F0",
+                "data": "1000B3103E2F9963D929BDDCE969E4290F3B133B18CC34F9",
+                "burst_ms": 400
+              }
+            ],
+            [
+              {
+                "service_data": "08F0",
+                "data": "1000F1FCA2E938BF2E2FE2E021B0F2E464D6ED0015C0754C",
+                "burst_ms": 400
+              },
+              {
+                "service_data": "08F0",
+                "data": "1000FC0C69F9062021806C69599A5A9E470509C75DBE7B8A",
+                "burst_ms": 400
+              }
+            ]
+          ]
+        },
+        "cooler": {
+          "variants": [
+            [
+              {
+                "service_data": "08F0",
+                "data": "1000C51C41A4FB121D861CB89406676DA163693186AA7D80",
+                "burst_ms": 400
+              },
+              {
+                "service_data": "08F0",
+                "data": "1000A4C4B29739C8AD459B3486199C9101E3BCA483CFCE68",
+                "burst_ms": 400
+              }
+            ],
+            [
+              {
+                "service_data": "08F0",
+                "data": "10004C29168A20806362AB07F93B721FAA62837B8C918358",
+                "burst_ms": 400
+              },
+              {
+                "service_data": "08F0",
+                "data": "1000DDBB5A4F70EB83AFBB599C7CBF29B86386ADBF2845E8",
+                "burst_ms": 400
+              }
+            ],
+            [
+              {
+                "service_data": "08F0",
+                "data": "1000DC9D2F27505920B9FCD168C12B0C1D334BDA19C7ABE7",
+                "burst_ms": 400
+              },
+              {
+                "service_data": "08F0",
+                "data": "10003C2951DEF25F435EC98AA26EE33CFCC0AB6F495CCE2D",
+                "burst_ms": 400
+              }
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "id": "row-1",
+      "name": "Row 1, over the sofas",
+      "commands": {
+        "on": {
+          "variants": [
+            [
+              {
+                "service_data": "08F0",
+                "data": "1000A59921C49B727DE67DF1F466040DC1A64051E68651A9"
+              }
+            ],
+            [
+              {
+                "service_data": "08F0",
+                "data": "10003CF651DEF25F435EC8BBA26EFB3CFE89D16F4931566D"
+              }
+            ]
+          ]
+        },
+        "off": {
+          "variants": [
+            [
+              {
+                "service_data": "08F0",
+                "data": "1000724DB0184E58C803E313D957C45BC6E9F423C1D4A3B6"
+              }
+            ],
+            [
+              {
+                "service_data": "08F0",
+                "data": "10002A1265AC28E2F2BAAA3A826B4F5E9D74CA425A21E205"
+              }
+            ]
+          ]
+        },
+        "brighter": {
+          "variants": [
+            [
+              {
+                "service_data": "08F0",
+                "data": "100053CEDECF798339C95C24098920C9EDB1A8DBF8AA3A1A",
+                "burst_ms": 400
+              },
+              {
+                "service_data": "08F0",
+                "data": "10007296B0184E58C803E323D957D05BC46A5523C17A2D87",
+                "burst_ms": 400
+              }
+            ],
+            [
+              {
+                "service_data": "08F0",
+                "data": "100032D7F0580E188843A37B9917841B862BCF638183DD21",
+                "burst_ms": 400
+              },
+              {
+                "service_data": "08F0",
+                "data": "1000CA24854CC802125A4AEA628BBBBE7FDBB8A2BAD31700",
+                "burst_ms": 400
+              }
+            ],
+            [
+              {
+                "service_data": "08F0",
+                "data": "10002AC565AC28E2F2BAAA12826B4F5E9DEC27425A0C7AC6",
+                "burst_ms": 400
+              },
+              {
+                "service_data": "08F0",
+                "data": "10001521B04967158008A56C6978AF5FBDA81F797CE837D4",
+                "burst_ms": 400
+              }
+            ]
+          ]
+        },
+        "dimmer": {
+          "variants": [
+            [
+              {
+                "service_data": "08F0",
+                "data": "1000754B04E5813D2FB8210CA7C5CD00950635DA27CCEBE5",
+                "burst_ms": 400
+              },
+              {
+                "service_data": "08F0",
+                "data": "100032DCF0580E188843A3639917AC1B8473956381F1F957",
+                "burst_ms": 400
+              }
+            ],
+            [
+              {
+                "service_data": "08F0",
+                "data": "1000E58BE122D78BBFA7AA5A58A03071658D81A594C7DF14",
+                "burst_ms": 400
+              },
+              {
+                "service_data": "08F0",
+                "data": "100044155277D9284DA57AD466F94C71E171B0446300C00E",
+                "burst_ms": 400
+              }
+            ],
+            [
+              {
+                "service_data": "08F0",
+                "data": "100044145277D9284DA57ACC66F96571E3B1DD44636435E9",
+                "burst_ms": 400
+              },
+              {
+                "service_data": "08F0",
+                "data": "100091B0C28958DF4E4F839841D0B8840605F96075442390",
+                "burst_ms": 400
+              }
+            ]
+          ]
+        },
+        "cooler": {
+          "variants": [
+            [
+              {
+                "service_data": "08F0",
+                "data": "1000339431B0A67DD8C106DA03D854C55AF47040C0D603C0",
+                "burst_ms": 400
+              },
+              {
+                "service_data": "08F0",
+                "data": "10005422F2FA892E68A2ECA236260BE7DE07D1F510D43D05",
+                "burst_ms": 400
+              }
+            ],
+            [
+              {
+                "service_data": "08F0",
+                "data": "10005EAE8FEC5AA4B07FB9CB9C293B30F89A8DAA0FB4D7BA",
+                "burst_ms": 400
+              },
+              {
+                "service_data": "08F0",
+                "data": "1000AE80A1671A628D30240DE4DF03B6F4B469CB13EF7D17",
+                "burst_ms": 400
+              }
+            ],
+            [
+              {
+                "service_data": "08F0",
+                "data": "100062A501C3984A109601A6021787E7EE45327005531390",
+                "burst_ms": 400
+              },
+              {
+                "service_data": "08F0",
+                "data": "1000254B6EF0D2F5E68C816DD91EF896FA9CA6546BB5698F",
+                "burst_ms": 400
+              }
+            ]
+          ]
+        },
+        "warmer": {
+          "variants": [
+            [
+              {
+                "service_data": "08F0",
+                "data": "100062A701C3984A109601A6021786E7EED370700528A236",
+                "burst_ms": 400
+              },
+              {
+                "service_data": "08F0",
+                "data": "10009C92F17E52FFE3FE682A02CE439C5CB2F1CFE978644F",
+                "burst_ms": 400
+              }
+            ],
+            [
+              {
+                "service_data": "08F0",
+                "data": "100027AA1AD7FD084B0963EEC7CE053DC538ED00F1773D31",
+                "burst_ms": 400
+              },
+              {
+                "service_data": "08F0",
+                "data": "100007893AF7DD286B2943D6E7EE3E1DE7260520D1C2D7AD",
+                "burst_ms": 400
+              }
+            ],
+            [
+              {
+                "service_data": "08F0",
+                "data": "100045283AD2496A28C420C374E77BE5F0B42209E27B13AB",
+                "burst_ms": 400
+              },
+              {
+                "service_data": "08F0",
+                "data": "1000BCE34F47303940D99DA908A1506C7F9180BA798813E2",
+                "burst_ms": 400
+              }
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "id": "row-2",
+      "name": "Row 2, fan and pendant",
+      "commands": {
+        "on": {
+          "variants": [
+            [
+              {
+                "service_data": "08F0",
+                "data": "1000F44F525A298EC8024F3396868F477C50C155B0CFDF4C"
+              }
+            ],
+            [
+              {
+                "service_data": "08F0",
+                "data": "100036AA44F05F642D1EE1623226A60FE69EEE10D7B0D6E5"
+              }
+            ]
+          ]
+        },
+        "off": {
+          "variants": [
+            [
+              {
+                "service_data": "08F0",
+                "data": "10001BC58CB6F152938F08B24A6E7FBC581DCFED7B075309"
+              }
+            ],
+            [
+              {
+                "service_data": "08F0",
+                "data": "1000CA0E854CC802125A49DA628BAFBE7D92A5A2BA8D8D75"
+              }
+            ]
+          ]
+        },
+        "brighter": {
+          "variants": [
+            [
+              {
+                "service_data": "08F0",
+                "data": "1000C485D2F759A8CD25F94CE679E4F163D83CC4E36DF419",
+                "burst_ms": 400
+              },
+              {
+                "service_data": "08F0",
+                "data": "1000FD857A6F50CBA38F9979BC5C930998581B8D9F524C1F",
+                "burst_ms": 400
+              }
+            ],
+            [
+              {
+                "service_data": "08F0",
+                "data": "10009CBF6F67101960F9BE912881684C5D86A19A590A78E0",
+                "burst_ms": 400
+              },
+              {
+                "service_data": "08F0",
+                "data": "10001E164A5E7323AB6FFD19FAB0CA6B792F50814DAAD656",
+                "burst_ms": 400
+              }
+            ],
+            [
+              {
+                "service_data": "08F0",
+                "data": "10005C7DAFA7D0D9A0397E51E841A88C9D4F725A992C46DD",
+                "burst_ms": 400
+              },
+              {
+                "service_data": "08F0",
+                "data": "100044297B3A91230BEAC9FB19FD09C64A61CCD9DE485258",
+                "burst_ms": 400
+              }
+            ]
+          ]
+        },
+        "dimmer": {
+          "variants": [
+            [
+              {
+                "service_data": "08F0",
+                "data": "1000A214C103588AD056C266C2D744272E2AF0B0C55055DD",
+                "burst_ms": 400
+              },
+              {
+                "service_data": "08F0",
+                "data": "1000828C5CCF122964F939D8B3DD407873FEA27A4EDDAB2C",
+                "burst_ms": 400
+              }
+            ],
+            [
+              {
+                "service_data": "08F0",
+                "data": "1000E5FBAE301235264C42B519DE1D5638CE5494AB8ACB43",
+                "burst_ms": 400
+              },
+              {
+                "service_data": "08F0",
+                "data": "1000051A4ED0F2D5C6ACA24DF93ED4B6DA3DBE744B7291FE",
+                "burst_ms": 400
+              }
+            ],
+            [
+              {
+                "service_data": "08F0",
+                "data": "10006C6136AA00A043428927D91B503F8A09AB5BAC5765EE",
+                "burst_ms": 400
+              },
+              {
+                "service_data": "08F0",
+                "data": "1000752904E5813D2FB82214A7C5E400979A5DDA27F1A866",
+                "burst_ms": 400
+              }
+            ]
+          ]
+        },
+        "cooler": {
+          "variants": [
+            [
+              {
+                "service_data": "08F0",
+                "data": "1000E2E33CAF7249049959A0D3BD0A181123F21A2E0ED0D9",
+                "burst_ms": 400
+              },
+              {
+                "service_data": "08F0",
+                "data": "10000202DC4F92A9E479B958335DCCF8F3A928FACEE4DE70",
+                "burst_ms": 400
+              }
+            ],
+            [
+              {
+                "service_data": "08F0",
+                "data": "1000F5A750A987F560E84694899859BF5F0D0D999C1D93EF",
+                "burst_ms": 400
+              },
+              {
+                "service_data": "08F0",
+                "data": "1000C5CBC102F7AB9F878962788035514729B985B427EFEE",
+                "burst_ms": 400
+              }
+            ],
+            [
+              {
+                "service_data": "08F0",
+                "data": "1000A2A77CEF320944D919E093FD4A585197B95A6E988808",
+                "burst_ms": 400
+              },
+              {
+                "service_data": "08F0",
+                "data": "1000C2C61C8F526924B97998F39D0C38337D0F3A0E9F02AE",
+                "burst_ms": 400
+              }
+            ]
+          ]
+        },
+        "warmer": {
+          "variants": [
+            [
+              {
+                "service_data": "08F0",
+                "data": "10008583FA1289AAE804E303B427BB2530A828C9220210BF",
+                "burst_ms": 400
+              },
+              {
+                "service_data": "08F0",
+                "data": "1000252C6EF0D2F5E68C826DD91EC496FA7B00546BC55DAB",
+                "burst_ms": 400
+              }
+            ],
+            [
+              {
+                "service_data": "08F0",
+                "data": "1000E5EFAE301235264C42B519DE1F5638645294AB243259",
+                "burst_ms": 400
+              },
+              {
+                "service_data": "08F0",
+                "data": "1000C4B9FBBA11A38B6A497B997D8546CAF7F5595E61D71C",
+                "burst_ms": 400
+              }
+            ],
+            [
+              {
+                "service_data": "08F0",
+                "data": "10000A619181FD2B4A9910B81E83950466A96B3684E96AFD",
+                "burst_ms": 400
+              },
+              {
+                "service_data": "08F0",
+                "data": "100099FECB1120819F0A18A9EAE337BA7FFA939B08306327",
+                "burst_ms": 400
+              }
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "id": "row-3",
+      "name": "Row 3, towards the dining table",
+      "commands": {
+        "on": {
+          "variants": [
+            [
+              {
+                "service_data": "08F0",
+                "data": "1000F3487E6FD9239969FEADA92980694D70B57B58EC952C"
+              }
+            ],
+            [
+              {
+                "service_data": "08F0",
+                "data": "1000245F3217B9482DC51885069904118396052403F41E09"
+              }
+            ]
+          ]
+        },
+        "off": {
+          "variants": [
+            [
+              {
+                "service_data": "08F0",
+                "data": "10001504CBA4AE8C04C4F91393D3C747EE4A5032362E8D53"
+              }
+            ],
+            [
+              {
+                "service_data": "08F0",
+                "data": "1000A5FBEE705275660C03DD599E5C1678324ED4EB3A9815"
+              }
+            ]
+          ]
+        },
+        "brighter": {
+          "variants": [
+            [
+              {
+                "service_data": "08F0",
+                "data": "10003C86A939C6E0E140AFB1995ABE5E8591AB079DC76367",
+                "burst_ms": 400
+              },
+              {
+                "service_data": "08F0",
+                "data": "1000EA8D71611DCBAA79F140FE6362E48447B5D664E2BE8F",
+                "burst_ms": 400
+              }
+            ],
+            [
+              {
+                "service_data": "08F0",
+                "data": "10007538ABC4CEEC64A4995BF3B3A7278E43B752561F6AA6",
+                "burst_ms": 400
+              },
+              {
+                "service_data": "08F0",
+                "data": "100064417257F9086D8558F446D95051C118C064430F3D28",
+                "burst_ms": 400
+              }
+            ],
+            [
+              {
+                "service_data": "08F0",
+                "data": "100062CB01C3984A109603A6021785E7EE6A247005C24F64",
+                "burst_ms": 400
+              },
+              {
+                "service_data": "08F0",
+                "data": "10005D46DACFF06B032F38D91CFC33A938CD442D3FE17279",
+                "burst_ms": 400
+              }
+            ]
+          ]
+        },
+        "dimmer": {
+          "variants": [
+            [
+              {
+                "service_data": "08F0",
+                "data": "100086041581F909C2A4173D0DC5FF0697A23543328DB921",
+                "burst_ms": 400
+              },
+              {
+                "service_data": "08F0",
+                "data": "1000F995AB7140E1FF6A79C98A8367DA1F8DC9FB68B40F1E",
+                "burst_ms": 400
+              }
+            ],
+            [
+              {
+                "service_data": "08F0",
+                "data": "1000051901C2376B5F4748BAB840D09185ECFA45741E7AF3",
+                "burst_ms": 400
+              },
+              {
+                "service_data": "08F0",
+                "data": "1000354B90694735A028874C4958B37F9D583D595C636E0C",
+                "burst_ms": 400
+              }
+            ],
+            [
+              {
+                "service_data": "08F0",
+                "data": "1000BE1C6F0CBA44509F5B2B7CC9D8D0182B244AEFAEBCB7",
+                "burst_ms": 400
+              },
+              {
+                "service_data": "08F0",
+                "data": "10005F305CCEEE41D54F2B00ED78977D35D217FCCA66E5D4",
+                "burst_ms": 400
+              }
+            ]
+          ]
+        },
+        "cooler": {
+          "variants": [
+            [
+              {
+                "service_data": "08F0",
+                "data": "1000A590DA32A98AC824C22394079A0510E110E9026E10C1",
+                "burst_ms": 400
+              },
+              {
+                "service_data": "08F0",
+                "data": "1000DC8EB13E12BFA3BE2A6A428E3FDC1CA99D8FA9F14696",
+                "burst_ms": 400
+              }
+            ],
+            [
+              {
+                "service_data": "08F0",
+                "data": "10007F177CEECE61F56F0B38CD589D5D1794D8DCEA361312",
+                "burst_ms": 400
+              },
+              {
+                "service_data": "08F0",
+                "data": "10007EDBAFCC7A84905F9BF3BC093D10DABEF78A2F17B1F7",
+                "burst_ms": 400
+              }
+            ],
+            [
+              {
+                "service_data": "08F0",
+                "data": "1000FF95FC6E4EE175EF8BB84DD81DDD975ED35C6A48DCD7",
+                "burst_ms": 400
+              },
+              {
+                "service_data": "08F0",
+                "data": "1000ECC1B62A8020C3C208BF599BF5BF081C98DB2CB1AF0B",
+                "burst_ms": 400
+              }
+            ]
+          ]
+        },
+        "warmer": {
+          "variants": [
+            [
+              {
+                "service_data": "08F0",
+                "data": "100086301581F909C2A4173D0DC5FD0697CF3243328D6CDF",
+                "burst_ms": 400
+              },
+              {
+                "service_data": "08F0",
+                "data": "1000E4A0DB9A3183AB4A685BB95DA566EACBBA797EEEEB4A",
+                "burst_ms": 400
+              }
+            ],
+            [
+              {
+                "service_data": "08F0",
+                "data": "1000143BB2BAC96E28E2AEFA76666CA79C8CCDB550DE1E14",
+                "burst_ms": 400
+              },
+              {
+                "service_data": "08F0",
+                "data": "10005BE8CCF6B112D3CF49C20A2E27FC1ADA90AD3B6F5DD5",
+                "burst_ms": 400
+              }
+            ],
+            [
+              {
+                "service_data": "08F0",
+                "data": "1000D27D10B8EEF868A3419B79F767FB6675338361BA9AD3",
+                "burst_ms": 400
+              },
+              {
+                "service_data": "08F0",
+                "data": "100025136EF0D2F5E68C836DD91EC496FAAEB1546BB4E1C0",
+                "burst_ms": 400
+              }
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "id": "row-4",
+      "name": "Row 4",
+      "commands": {
+        "on": {
+          "variants": [
+            [
+              {
+                "service_data": "08F0",
+                "data": "1000ECAEB62A8020C3C20F8E599BD1BF0A2493DB2CF43EC7"
+              }
+            ],
+            [
+              {
+                "service_data": "08F0",
+                "data": "1000F3437E6FD9239969F9ADA92980694D41B47B58263184"
+              }
+            ]
+          ]
+        },
+        "off": {
+          "variants": [
+            [
+              {
+                "service_data": "08F0",
+                "data": "1000D21910B8EEF868A346B379F764FB66807D83611A9447"
+              }
+            ],
+            [
+              {
+                "service_data": "08F0",
+                "data": "10006223BC2FF2C98419DF08533D889891D5329AAE61E805"
+              }
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "id": "cove",
+      "name": "Cove, the ambient strip round the ceiling",
+      "in_all": false
+    },
+    {
+      "id": "extras",
+      "name": "Other remote buttons",
+      "commands": {
+        "k": {
+          "variants": [
+            [
+              {
+                "service_data": "08F0",
+                "data": "1000DE1F8A9EB3E36BAF3FD93A705EAB445006418D0B620F"
+              }
+            ],
+            [
+              {
+                "service_data": "08F0",
+                "data": "1000C2B9A16338EAB036A01EA2B765B8B1522CD0A5FB4BC8"
+              }
+            ],
+            [
+              {
+                "service_data": "08F0",
+                "data": "1000AC63F66AC06083824BFF19DBD1004A7E709B6C719801"
+              }
+            ]
+          ]
+        },
+        "moon": {
+          "variants": [
+            [
+              {
+                "service_data": "08F0",
+                "data": "10001C7A8919E6C0C1608C8BB97A9E7EA518C827BDEFBBB4"
+              }
+            ],
+            [
+              {
+                "service_data": "08F0",
+                "data": "1000A56AA16297CBFFE7EB0018E07131250611E5D4F2808E"
+              }
+            ]
+          ]
+        },
+        "rgb": {
+          "variants": [
+            [
+              {
+                "service_data": "08F0",
+                "data": "1000A4079BDA71C3EB0A2B24F91DFD26A84A79393E2BD1C0"
+              }
+            ],
+            [
+              {
+                "service_data": "08F0",
+                "data": "1000B3ABB13026FD5841877C8358D645DA7260C040EBEF92"
+              }
+            ]
+          ]
+        },
+        "aid": {
+          "variants": [
+            [
+              {
+                "service_data": "08F0",
+                "data": "10007C908F87F0F980195C5AC86188ACBD15277AB9D22413"
+              }
+            ],
+            [
+              {
+                "service_data": "08F0",
+                "data": "1000E6A975E19969A2C474776DA59E66F7A6D42352107511"
+              }
+            ]
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-feature android:name="android.software.leanback" android:required="false" />
+    <uses-feature android:name="android.hardware.touchscreen" android:required="false" />
+    <!-- Not required at install: a TV that leaves the feature flag out can still have the radio.
+         The app checks at runtime and says so on its status line. -->
+    <uses-feature android:name="android.hardware.bluetooth_le" android:required="false" />
+
+    <!-- Android 11 and older: granted at install. -->
+    <uses-permission android:name="android.permission.BLUETOOTH" android:maxSdkVersion="30" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" android:maxSdkVersion="30" />
+    <!-- Android 12 and newer: runtime permissions. build-and-install.sh grants ADVERTISE over adb;
+         the app asks on screen if it is missing. CONNECT is only for the "turn Bluetooth on" request. -->
+    <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <!-- Learn remote listens for the light remote's packets. Scanning is a runtime permission too:
+         BLUETOOTH_SCAN from Android 12 (never for location), fine location on Android 11 and older.
+         build-and-install.sh grants whichever applies; the app asks on screen otherwise. -->
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN"
+        android:usesPermissionFlags="neverForLocation"
+        tools:targetApi="s" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"
+        android:maxSdkVersion="30"
+        tools:ignore="CoarseFineLocation" />
+    <!-- Commands to a bridge on the home network (a "url" entry in lights.json), plain http. -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:label="@string/app_name"
+        android:icon="@mipmap/ic_launcher"
+        android:banner="@drawable/banner"
+        android:theme="@style/Theme.HomeLights"
+        android:usesCleartextTraffic="true"
+        android:allowBackup="false">
+
+        <!-- singleTask: a second `am start` with light/state extras reaches onNewIntent instead of
+             stacking another copy of the screen. -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:configChanges="orientation|screenSize|keyboard|keyboardHidden|uiMode"
+            android:screenOrientation="landscape">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+            <!-- A module card for the cleanyourtv launcher (docs/specs/card.md): the launcher offers to
+                 show this app as a card with its own label, caption and glow colour. -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.gathin.tvhome.category.DOCK_CARD" />
+            </intent-filter>
+            <meta-data android:name="com.gathin.tvhome.card" android:resource="@xml/module_card" />
+        </activity>
+
+        <!-- Learn the light remote; also `am start -n tv.homelights/.LearnActivity`. -->
+        <activity
+            android:name=".LearnActivity"
+            android:exported="true"
+            android:configChanges="orientation|screenSize|keyboard|keyboardHidden|uiMode"
+            android:screenOrientation="landscape" />
+    </application>
+</manifest>
