@@ -141,7 +141,8 @@ public final class LightsConfig {
             if (buf.size() > MAX_FILE_BYTES) throw new IOException("larger than " + (MAX_FILE_BYTES / 1024) + " KB");
         }
         String text = new String(buf.toByteArray(), StandardCharsets.UTF_8);
-        if (text.startsWith("﻿")) text = text.substring(1);
+        // Compared by char code: a BOM written into this source would trip lint (ByteOrderMark).
+        if (!text.isEmpty() && text.charAt(0) == 0xFEFF) text = text.substring(1);
         return text;
     }
 }

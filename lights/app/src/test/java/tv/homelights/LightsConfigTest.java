@@ -98,7 +98,7 @@ public class LightsConfigTest {
 
     @Test
     public void readTextDropsTheBomAndCapsTheSize() throws IOException {
-        byte[] withBom = ("﻿{\"a\":1}").getBytes(StandardCharsets.UTF_8);
+        byte[] withBom = ((char) 0xFEFF + "{\"a\":1}").getBytes(StandardCharsets.UTF_8);
         assertEquals("{\"a\":1}", LightsConfig.readText(new ByteArrayInputStream(withBom), withBom.length));
         assertThrows(IOException.class, () -> LightsConfig.readText(new ByteArrayInputStream(new byte[0]), LightsConfig.MAX_FILE_BYTES + 1));
         byte[] big = new byte[(int) LightsConfig.MAX_FILE_BYTES + 1];
