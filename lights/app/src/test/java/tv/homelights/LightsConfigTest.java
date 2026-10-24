@@ -16,6 +16,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.List;
 
 public class LightsConfigTest {
     /** Gradle runs unit tests from the module directory; the shipped file sits in src/main/assets. */
@@ -26,27 +27,60 @@ public class LightsConfigTest {
     }
 
     @Test
-    public void bundledFileHasAllRowsWithOnOffAndThreeRowsWithoutPacketsYet() throws IOException {
+    public void bundledFileHasEveryRowFilledFromTheCapture() throws IOException {
         LightsConfig config = LightsConfig.parse(bundled());
-        assertEquals(1500, config.burstMs);
-        assertEquals(4, config.lights.size());
-        Light all = config.find("all");
-        assertNotNull(all);
-        assertEquals("All rows", all.name);
-        assertEquals(Arrays.asList("on", "off"), all.commands());
-        Packet on = all.packets("on").get(0);
-        assertEquals(Packet.Kind.SERVICE_DATA, on.kind);
-        assertEquals(0x08F0, on.id);
-        assertTrue("format B goes out with the Flags record, as the phone sends it", on.connectable);
-        assertEquals("1000B559C42541FDEF78E0E567050CC0555F4A1AE719D07D", Hex.encode(on.payload));
-        assertEquals("1000EA2D71611DCBAA79F270FE6376E486E88FD664E3AA48", Hex.encode(all.packets("off").get(0).payload));
-        for (String row : new String[] {"row-1", "row-2", "row-3"}) {
-            Light light = config.find(row);
-            assertNotNull(row, light);
-            assertTrue(row + " has no packets yet", light.commands().isEmpty());
-            assertTrue(light.packets("on").isEmpty());
+        assertEquals(800, config.burstMs);
+        assertEquals(6, config.lights.size());
+        List<String> six = Arrays.asList("on", "off", "dimmer", "brighter", "warmer", "cooler");
+        for (String id : new String[] {"all", "row-1", "row-2", "row-3"}) {
+            Light light = config.find(id);
+            assertNotNull(id, light);
+            assertEquals(id, six, light.commands());
+            assertEquals(id + " brighter: three presses recorded", 3, light.variants("brighter"));
+            List<Packet> press = light.packets("brighter");
+            assertEquals("an adjustment is a press and a release", 2, press.size());
+            assertEquals(400, press.get(0).burstMs);
+            Packet on = light.packets("on").get(0);
+            assertEquals(Packet.Kind.SERVICE_DATA, on.kind);
+            assertEquals(0x08F0, on.id);
+            assertEquals(24, on.payload.length);
+            assertTrue("format B goes out with the Flags record, as the remote sends it", on.connectable);
+            assertEquals(0, on.burstMs);
         }
+        assertEquals(Arrays.asList("on", "off"), config.find("row-4").commands());
+        assertEquals(Arrays.asList("aid", "k", "moon", "rgb"), config.find("extras").commands());
+        // The first ALL ON press of the capture comes first (a fresh parse: the loop above already rotated).
+        assertEquals("10006A5925EC68A2B2FAEB7BC22B0F1EDD74C0021A21EA82",
+                Hex.encode(LightsConfig.parse(bundled()).find("all").packets("on").get(0).payload));
         assertNull(config.find("kitchen"));
+    }
+
+    @Test
+    public void variantsAreHandedOutInTurn() {
+        LightsConfig config = LightsConfig.parse("{\"lights\":[{\"id\":\"a\",\"commands\":{\"on\":{\"variants\":["
+                + "[{\"service_data\":\"08F0\",\"data\":\"01\"}],"
+                + "[{\"service_data\":\"08F0\",\"data\":\"02\",\"burst_ms\":300},{\"service_data\":\"08F0\",\"data\":\"03\"}]]}}}]}");
+        Light light = config.lights.get(0);
+        assertEquals(2, light.variants("on"));
+        assertEquals(0, light.variants("off"));
+        assertEquals("01", Hex.encode(light.packets("on").get(0).payload));
+        List<Packet> second = light.packets("on");
+        assertEquals(2, second.size());
+        assertEquals("02", Hex.encode(second.get(0).payload));
+        assertEquals(300, second.get(0).burstMs);
+        assertEquals(0, second.get(1).burstMs);
+        assertEquals("01", Hex.encode(light.packets("on").get(0).payload));
+        assertTrue(light.packets("off").isEmpty());
+    }
+
+    @Test
+    public void variantsAndPerPacketBurstAreChecked() {
+        assertMessage("light \"a\": \"on\" has no \"variants\"",
+                "{\"lights\":[{\"id\":\"a\",\"commands\":{\"on\":{}}}]}");
+        assertMessage("light \"a\": \"on variant 2\" has no packets",
+                "{\"lights\":[{\"id\":\"a\",\"commands\":{\"on\":{\"variants\":[[" + B + "],[]]}}}]}");
+        assertMessage("light \"a\", on[0]: burst_ms must be 100 to 60000",
+                "{\"lights\":[{\"id\":\"a\",\"commands\":{\"on\":[{\"service_data\":\"08F0\",\"data\":\"01\",\"burst_ms\":5}]}}]}");
     }
 
     @Test

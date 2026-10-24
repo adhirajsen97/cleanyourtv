@@ -35,10 +35,11 @@ import java.util.regex.Pattern;
  * }
  * </pre>
  * A command is a name (lower-case letters, digits, hyphens) with one or more packets, advertised one
- * after another. A packet names exactly one of "service_data" (16-bit service UUID, hex) or
+ * after another, or {"variants": [[packets], [packets], ...]}, one list per press recorded from the
+ * remote, used in turn. A packet names exactly one of "service_data" (16-bit service UUID, hex) or
  * "manufacturer_data" (company identifier, hex), and "data", the payload in hex, and may set
- * "connectable" for itself. The first files had "on" and "off" lists directly on the light; those
- * still parse. Parsing is strict: any problem is an {@link IllegalArgumentException} whose message
+ * "connectable" and "burst_ms" for itself. The first files had "on" and "off" lists directly on
+ * the light; those still parse. Parsing is strict: any problem is an {@link IllegalArgumentException} whose message
  * says where, so a bad file shows on the status line instead of sending the wrong bytes.
  */
 public final class LightsConfig {
@@ -96,9 +97,9 @@ public final class LightsConfig {
         return new LightsConfig(burstMs, lights);
     }
 
-    /** "commands": {name: [packets]}, plus the first files' "on" and "off" lists on the light itself. */
-    private static Map<String, List<Packet>> commands(JSONObject light, String id, boolean connectable) {
-        Map<String, List<Packet>> out = new LinkedHashMap<>();
+    /** "commands": {name: [packets] | {"variants": [[packets], ...]}}, plus the first files' "on" and "off". */
+    private static Map<String, List<List<Packet>>> commands(JSONObject light, String id, boolean connectable) {
+        Map<String, List<List<Packet>>> out = new LinkedHashMap<>();
         JSONObject commands = light.optJSONObject("commands");
         if (commands != null) {
             for (Iterator<String> it = commands.keys(); it.hasNext(); ) {
@@ -107,17 +108,34 @@ public final class LightsConfig {
                     throw new IllegalArgumentException("light \"" + id + "\": command name \"" + name
                             + "\" (use lower-case letters, digits and hyphens)");
                 }
-                out.put(name, packets(commands, name, id, connectable));
+                out.put(name, variants(commands, name, id, connectable));
             }
         }
         for (String legacy : new String[] {"on", "off"}) {
-            if (light.has(legacy) && !out.containsKey(legacy)) out.put(legacy, packets(light, legacy, id, connectable));
+            if (light.has(legacy) && !out.containsKey(legacy)) out.put(legacy, variants(light, legacy, id, connectable));
         }
         return out;
     }
 
-    private static List<Packet> packets(JSONObject holder, String key, String id, boolean connectable) {
-        JSONArray array = holder.optJSONArray(key);
+    /** A command's value: one packet list, or {"variants": [list, list, ...]}. */
+    private static List<List<Packet>> variants(JSONObject holder, String key, String id, boolean connectable) {
+        List<List<Packet>> out = new ArrayList<>();
+        JSONObject object = holder.optJSONObject(key);
+        if (object == null) {
+            out.add(packets(holder.optJSONArray(key), key, id, connectable));
+            return out;
+        }
+        JSONArray variants = object.optJSONArray("variants");
+        if (variants == null || variants.length() == 0) {
+            throw new IllegalArgumentException("light \"" + id + "\": \"" + key + "\" has no \"variants\"");
+        }
+        for (int i = 0; i < variants.length(); i++) {
+            out.add(packets(variants.optJSONArray(i), key + " variant " + (i + 1), id, connectable));
+        }
+        return out;
+    }
+
+    private static List<Packet> packets(JSONArray array, String key, String id, boolean connectable) {
         if (array == null || array.length() == 0) {
             throw new IllegalArgumentException("light \"" + id + "\": \"" + key + "\" has no packets");
         }
@@ -149,7 +167,11 @@ public final class LightsConfig {
         }
         int id = ((idBytes[0] & 0xFF) << 8) | (idBytes[1] & 0xFF);
         if (!o.has("data")) throw new IllegalArgumentException("has no \"data\"");
-        return new Packet(kind, id, hex(o, "data"), o.optBoolean("connectable", connectable));
+        int burstMs = o.optInt("burst_ms", 0);
+        if (o.has("burst_ms") && (burstMs < MIN_BURST_MS || burstMs > MAX_BURST_MS)) {
+            throw new IllegalArgumentException("burst_ms must be " + MIN_BURST_MS + " to " + MAX_BURST_MS);
+        }
+        return new Packet(kind, id, hex(o, "data"), o.optBoolean("connectable", connectable), burstMs);
     }
 
     /** The hex value under {@code key}; a problem with it names the key. */

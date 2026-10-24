@@ -49,8 +49,14 @@ public final class Packet {
     public final byte[] payload;
     /** Sent connectable, so Android puts the Flags record in front; false when the payload leaves no room. */
     public final boolean connectable;
+    /** How long this packet stays on air, in ms; 0 means the file's burst_ms. */
+    public final int burstMs;
 
     public Packet(Kind kind, int id, byte[] payload, boolean connectable) {
+        this(kind, id, payload, connectable, 0);
+    }
+
+    public Packet(Kind kind, int id, byte[] payload, boolean connectable, int burstMs) {
         if (kind == null) throw new IllegalArgumentException("no packet kind");
         if (id < 0 || id > 0xFFFF) throw new IllegalArgumentException("identifier is not 16-bit: " + id);
         if (payload == null || payload.length == 0) throw new IllegalArgumentException("empty payload");
@@ -63,6 +69,7 @@ public final class Packet {
         this.id = id;
         this.payload = payload.clone();
         this.connectable = connectable && payload.length <= MAX_CONNECTABLE_PAYLOAD;
+        this.burstMs = Math.max(0, burstMs);
     }
 
     /** Bytes on air: the record, plus the Flags record when connectable. */

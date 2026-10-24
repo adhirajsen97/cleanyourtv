@@ -7,9 +7,9 @@ Connect's Advertiser sends from a phone. No hub, no network, no account.
 The drawing room has three rows of ceiling lights, numbered 1 to 3 as on the light remote, and the
 remote also addresses them all at once. The screen shows a row per group, **All rows** first, with
 a button for every command whose packets are known: **On**, **Off**, **Dimmer**, **Brighter**,
-**Warmer**, **Cooler**. So far only All rows On and Off have packets; **Learn remote**, on the same
-screen, records the rest from the light remote (see below). New lights and new packets go into a
-JSON file that is pushed to the TV without a rebuild.
+**Warmer**, **Cooler**. Every packet came from the light remote itself, recorded by the TV with
+**Learn remote** (see below) and turned into `lights.json` by `capture_to_lights.py`. New lights
+and new packets go into that JSON file, pushed to the TV without a rebuild.
 
 ## How the lights are driven
 
@@ -123,10 +123,14 @@ The built-in list is [`app/src/main/assets/lights.json`](app/src/main/assets/lig
 - `lights`: one entry per light or group, shown as a row in that order. `id` is what the scripted
   check names; `name` is the row's label (defaults to the id).
 - `commands`: the row's buttons. `on`, `off`, `dimmer`, `brighter`, `warmer` and `cooler` have
-  fixed places and labels; any other name (lower-case letters, digits, hyphens, such as `night` or
-  `rgb`) gets a button after them. A row with no `commands` shows none, with a hint instead. Each
-  command is a list of packets, advertised one after another. A packet is an object with `data`
-  (the payload, hex; spaces, colons and a `0x` prefix are fine) and exactly one of:
+  fixed places and labels; any other name (lower-case letters, digits, hyphens, such as `moon` or
+  `rgb`) gets a button after them, alphabetically. A row with no `commands` shows none, with a
+  hint instead. A command is a list of packets, advertised one after another, or
+  `{ "variants": [ [packets], [packets], ... ] }`, one list per press recorded from the remote: each
+  press carries its own counter and the lights ignore a repeat of the counter they just saw, so the
+  app sends the variants in turn. A packet is an object with `data` (the payload, hex; spaces,
+  colons and a `0x` prefix are fine), optionally `burst_ms` and `connectable` of its own, and
+  exactly one of:
   - `"service_data": "08F0"`: the 16-bit service UUID, as in nRF Connect's Service Data record;
   - `"manufacturer_data": "5556"`: the company ID, as in nRF Connect's Manufacturer Data record.
 
@@ -171,11 +175,37 @@ early and keeps what is recorded. The capture is saved after every step as
 TV_HOST=192.168.1.26 lights/pull-capture.sh        # writes lights/capture.json and prints a summary
 ```
 
-Then commit `lights/capture.json` or paste it. For each step it lists every distinct packet, how
-many copies came, when, its signal strength and the sender's address, with the records separated
-(`02 01 02 | 1B 16 F0 08 …`). That is enough to see which bytes name the row and the command, and
-whether the four adjustment sets differ per selected row (the row travels in the packet) or not
-(the lights remember the last row addressed, and the app will send the row's On first).
+Then turn it into the packet list and rebuild (or push the file):
+
+```
+python3 -I lights/capture_to_lights.py lights/capture.json lights/app/src/main/assets/lights.json
+```
+
+For each step the capture lists every distinct packet, how many copies came, when, its signal
+strength and the sender's address, with the records separated (`02 01 02 | 1B 16 F0 08 …`).
+
+### What the capture showed
+
+The remote sends every command twice within a few hundredths of a second, as manufacturer data
+(format A) from one address and as service data under `0x08F0` (format B) from another, both with
+the Flags record `02 01 02` in front. Format B is the one the lights were seen to answer from the
+TV, so `lights.json` uses it; each format B packet takes its meaning from the format A twin nearest
+in time, which reads plainly. Format A, 27 bytes after the company id:
+
+| Byte | Meaning |
+|---|---|
+| 0 to 10 | constant (`18 87 52 B6 5F 2B 5E 00 FC 31 51`), presumably the remote's identity |
+| 11 | command: `D0` on, `50` off, `44` adjustment press, `5C` adjustment release, `1C` moon, `A0`/`20` RGB (alternates), `90`/`10` Aid (alternates) |
+| 13 | group: `9F` all, `1F` row 1, `DF` row 2, `5F` row 3, `BF` row 4 |
+| 17 | counter, different on every press |
+| 18 | in a `44` packet, which adjustment: `FC` brighter, `7C` dimmer, `BC` K+, `3C` K− |
+| 19 to 24 | checksum over the rest |
+| 25, 26 | constant `60 57` |
+
+So the row travels inside every adjustment packet, which is why each row on the screen has its
+own Brighter and Dimmer. An adjustment press is two packets, press then release, kept together in
+`lights.json` (400 ms each). K+ is filed as `cooler` and K− as `warmer`, the Kelvin reading; if
+the lights do the opposite, swap the two names in `capture_to_lights.py` and run it again.
 
 Two checks on the Learn screen: "Heard in this step" must go up when you press the light remote;
 if it stays at 0 while "Other devices ignored" climbs, the remote's packets are in a format the
@@ -213,11 +243,12 @@ each step; the TV route is simply less to keep track of.
 
 ## Next steps
 
-- **Fill the rows.** Run Learn remote, pull `capture.json`, and the captured packets go into
-  `lights.json` under each row's commands; the buttons appear by themselves.
-- **Generate packets on the TV.** The encoder (`encode.py`, `mydecode.py`, `pk.txt` and its README)
-  lives outside this repository for now. Copy those files into `lights/protocol/` and a later round
-  ports the encoder to Java, so every command is built in the app instead of pasted into JSON.
+- **Generate packets on the TV.** Format A is nearly understood (the table above); format B and
+  the checksum are what the encoder on the computer (`encode.py`, `mydecode.py`, `pk.txt`) knows.
+  Copy those files into `lights/protocol/` and a later round ports the encoder to Java, so every
+  command is built in the app with a fresh counter instead of rotating recorded presses.
+- **The extra buttons.** `extras` holds K, moon, RGB and Aid as recorded; what they do is for a
+  test on the lights.
 - **The room.** A drawn plan of the drawing room with each light as a focusable spot. A flat or
   isometric drawing on a Canvas suits a 1 GB TV; a 3D engine does not.
 - **Colour and brightness**, once those packets exist, as extra commands per light.

@@ -91,7 +91,7 @@ public final class Advertiser {
         return b ? "yes" : "no";
     }
 
-    /** Advertises each packet in turn for {@code burstMs}; a command still running is stopped first. */
+    /** Advertises each packet in turn for {@code burstMs} (or the packet's own); a command still running is stopped first. */
     public void send(List<Packet> packets, int burstMs, Listener listener) {
         cancel();
         BluetoothAdapter adapter = adapter();
@@ -169,8 +169,9 @@ public final class Advertiser {
                 return;
             }
             Packet packet = packets.get(index);
+            int burst = packet.burstMs > 0 ? packet.burstMs : burstMs;
             listener.onProgress(index + 1, packets.size());
-            Log.i(TAG, "advertising " + packet.describe() + " for " + burstMs + " ms: "
+            Log.i(TAG, "advertising " + packet.describe() + " for " + burst + " ms: "
                     + (packet.connectable ? "[flags, added by Android] " : "") + Hex.encode(packet.adBytes()));
             // No stack timeout: the burst ends with stop() below. A timeout would also make Android
             // write the Flags as "limited discoverable" (02 01 01) instead of the usual 02 01 02.
@@ -193,7 +194,8 @@ public final class Advertiser {
         @Override
         public void onStartSuccess(AdvertiseSettings settingsInEffect) {
             if (cancelled) return;
-            handler.postDelayed(finishPacket, burstMs);
+            Packet packet = packets.get(index);
+            handler.postDelayed(finishPacket, packet.burstMs > 0 ? packet.burstMs : burstMs);
         }
 
         @Override
