@@ -31,16 +31,19 @@ import java.util.regex.Pattern;
  *         "on":  [ { "service_data": "08F0", "data": "1000B559..." } ],
  *         "off": [ { "service_data": "08F0", "data": "1000EA2D..." } ] } },
  *     { "id": "row-1", "name": "Row 1" },          no packets captured yet: a row without buttons
- *     { "id": "cove", "name": "Cove", "in_all": false }    a remote of its own: All rows does not switch it
+ *     { "id": "cove", "name": "Cove", "in_all": false,            a remote of its own: All rows does not switch it
+ *       "commands": { "on": [ { "url": "http://192.168.1.60/button/cove_on/press" } ] } }   a request to a bridge
  *   ]
  * }
  * </pre>
- * A command is a name (lower-case letters, digits, hyphens) with one or more packets, advertised one
- * after another, or {"variants": [[packets], [packets], ...]}, one list per press recorded from the
- * remote, used in turn. A packet names exactly one of "service_data" (16-bit service UUID, hex) or
- * "manufacturer_data" (company identifier, hex), and "data", the payload in hex, and may set
- * "connectable" and "burst_ms" for itself. The first files had "on" and "off" lists directly on
- * the light; those still parse. Parsing is strict: any problem is an {@link IllegalArgumentException} whose message
+ * A command is a name (lower-case letters, digits, hyphens) with one or more actions, done one
+ * after another, or {"variants": [[actions], [actions], ...]}, one list per press recorded from
+ * the remote, used in turn. An action is a packet, naming exactly one of "service_data" (16-bit
+ * service UUID, hex) or "manufacturer_data" (company identifier, hex) and "data", the payload in
+ * hex, and may set "connectable" and "burst_ms" for itself; or a request to a bridge over the
+ * network, with "url" and optionally "method", "headers", "body" and "timeout_ms"
+ * ({@link Request}). The first files had "on" and "off" lists directly on the light; those still
+ * parse. Parsing is strict: any problem is an {@link IllegalArgumentException} whose message
  * says where, so a bad file shows on the status line instead of sending the wrong bytes.
  */
 public final class LightsConfig {
@@ -98,9 +101,9 @@ public final class LightsConfig {
         return new LightsConfig(burstMs, lights);
     }
 
-    /** "commands": {name: [packets] | {"variants": [[packets], ...]}}, plus the first files' "on" and "off". */
-    private static Map<String, List<List<Packet>>> commands(JSONObject light, String id, boolean connectable) {
-        Map<String, List<List<Packet>>> out = new LinkedHashMap<>();
+    /** "commands": {name: [actions] | {"variants": [[actions], ...]}}, plus the first files' "on" and "off". */
+    private static Map<String, List<List<Action>>> commands(JSONObject light, String id, boolean connectable) {
+        Map<String, List<List<Action>>> out = new LinkedHashMap<>();
         JSONObject commands = light.optJSONObject("commands");
         if (commands != null) {
             for (Iterator<String> it = commands.keys(); it.hasNext(); ) {
@@ -118,12 +121,12 @@ public final class LightsConfig {
         return out;
     }
 
-    /** A command's value: one packet list, or {"variants": [list, list, ...]}. */
-    private static List<List<Packet>> variants(JSONObject holder, String key, String id, boolean connectable) {
-        List<List<Packet>> out = new ArrayList<>();
+    /** A command's value: one action list, or {"variants": [list, list, ...]}. */
+    private static List<List<Action>> variants(JSONObject holder, String key, String id, boolean connectable) {
+        List<List<Action>> out = new ArrayList<>();
         JSONObject object = holder.optJSONObject(key);
         if (object == null) {
-            out.add(packets(holder.optJSONArray(key), key, id, connectable));
+            out.add(actions(holder.optJSONArray(key), key, id, connectable));
             return out;
         }
         JSONArray variants = object.optJSONArray("variants");
@@ -131,22 +134,22 @@ public final class LightsConfig {
             throw new IllegalArgumentException("light \"" + id + "\": \"" + key + "\" has no \"variants\"");
         }
         for (int i = 0; i < variants.length(); i++) {
-            out.add(packets(variants.optJSONArray(i), key + " variant " + (i + 1), id, connectable));
+            out.add(actions(variants.optJSONArray(i), key + " variant " + (i + 1), id, connectable));
         }
         return out;
     }
 
-    private static List<Packet> packets(JSONArray array, String key, String id, boolean connectable) {
+    private static List<Action> actions(JSONArray array, String key, String id, boolean connectable) {
         if (array == null || array.length() == 0) {
             throw new IllegalArgumentException("light \"" + id + "\": \"" + key + "\" has no packets");
         }
-        List<Packet> out = new ArrayList<>();
+        List<Action> out = new ArrayList<>();
         for (int i = 0; i < array.length(); i++) {
             String where = "light \"" + id + "\", " + key + "[" + i + "]";
             JSONObject o = array.optJSONObject(i);
             if (o == null) throw new IllegalArgumentException(where + " is not an object");
             try {
-                out.add(packet(o, connectable));
+                out.add(action(o, connectable));
             } catch (IllegalArgumentException e) {
                 throw new IllegalArgumentException(where + ": " + e.getMessage());
             }
@@ -154,14 +157,18 @@ public final class LightsConfig {
         return out;
     }
 
-    static Packet packet(JSONObject o, boolean connectable) {
+    /** A packet (service_data or manufacturer_data, with data) or a request (url). */
+    static Action action(JSONObject o, boolean connectable) {
+        boolean request = o.has("url");
         Packet.Kind kind = null;
         for (Packet.Kind k : Packet.Kind.values()) {
             if (!o.has(k.key)) continue;
+            if (request) throw new IllegalArgumentException("has both a url and " + k.key);
             if (kind != null) throw new IllegalArgumentException("has both service_data and manufacturer_data");
             kind = k;
         }
-        if (kind == null) throw new IllegalArgumentException("needs service_data or manufacturer_data");
+        if (request) return request(o);
+        if (kind == null) throw new IllegalArgumentException("needs service_data, manufacturer_data or url");
         byte[] idBytes = hex(o, kind.key);
         if (idBytes.length != 2) {
             throw new IllegalArgumentException(kind.key + " must be 2 bytes (4 hex digits), e.g. \"08F0\"");
@@ -173,6 +180,27 @@ public final class LightsConfig {
             throw new IllegalArgumentException("burst_ms must be " + MIN_BURST_MS + " to " + MAX_BURST_MS);
         }
         return new Packet(kind, id, hex(o, "data"), o.optBoolean("connectable", connectable), burstMs);
+    }
+
+    /** {"url": …, "method": …, "headers": {…}, "body": …, "timeout_ms": …}: a request to a bridge. */
+    static Request request(JSONObject o) {
+        Map<String, String> headers = new LinkedHashMap<>();
+        if (o.has("headers")) {
+            JSONObject h = o.optJSONObject("headers");
+            if (h == null) throw new IllegalArgumentException("headers must be an object of names to values");
+            for (Iterator<String> it = h.keys(); it.hasNext(); ) {
+                String name = it.next();
+                Object value = h.opt(name);
+                if (!(value instanceof String)) throw new IllegalArgumentException("header \"" + name + "\" must be a string");
+                headers.put(name, (String) value);
+            }
+        }
+        String body = o.has("body") ? o.optString("body") : null;
+        int timeoutMs = o.optInt("timeout_ms", Request.DEFAULT_TIMEOUT_MS);
+        if (o.has("timeout_ms") && (timeoutMs < Request.MIN_TIMEOUT_MS || timeoutMs > Request.MAX_TIMEOUT_MS)) {
+            throw new IllegalArgumentException("timeout_ms must be " + Request.MIN_TIMEOUT_MS + " to " + Request.MAX_TIMEOUT_MS);
+        }
+        return new Request(o.optString("url", "").trim(), o.optString("method", Request.DEFAULT_METHOD), headers, body, timeoutMs);
     }
 
     /** The hex value under {@code key}; a problem with it names the key. */

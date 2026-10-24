@@ -40,7 +40,7 @@
     <string name="status_no_advertiser">This TV\'s Bluetooth cannot send advertisements, so it cannot reach the lights.</string>
     <string name="status_no_permission">Press On or Off, then allow Nearby devices so the TV can advertise.</string>
     <string name="status_permission_denied">Nearby devices permission refused. Grant it under Settings › Apps › Home Lights › Permissions, or run lights/build-and-install.sh again.</string>
-    <string name="status_sending">Sending %1$s, packet %2$d of %3$d…</string>
+    <string name="status_sending">Sending %1$s, %2$d of %3$d…</string>
     <string name="status_sent">Sent %1$s.</string>
     <string name="status_failed">%1$s failed: %2$s</string>
     <string name="status_bad_state">state must be on or off, not \"%1$s\".</string>

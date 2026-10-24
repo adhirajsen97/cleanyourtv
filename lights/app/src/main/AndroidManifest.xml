@@ -24,12 +24,15 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"
         android:maxSdkVersion="30"
         tools:ignore="CoarseFineLocation" />
+    <!-- Commands to a bridge on the home network (a "url" entry in lights.json), plain http. -->
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:label="@string/app_name"
         android:icon="@mipmap/ic_launcher"
         android:banner="@drawable/banner"
         android:theme="@style/Theme.HomeLights"
+        android:usesCleartextTraffic="true"
         android:allowBackup="false">
 
         <!-- singleTask: a second `am start` with light/state extras reaches onNewIntent instead of

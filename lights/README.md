@@ -85,6 +85,7 @@ same, once its packets are captured. All rows adjusts every row together.
 | Bluetooth is off. Press On or Off to switch it on. | The first press asks Android to turn Bluetooth on. |
 | This TV's Bluetooth cannot send advertisements… | The radio has no advertiser role; see Troubleshooting. |
 | lights.json on the TV ignored (…); using the built-in list. | The pushed file has a mistake; the message says where. |
+| Cove On failed: no answer from http://… (…) | The bridge is off or not on this network. An HTTP status in its place is the bridge's own answer, e.g. 404 for a button it does not have. |
 
 ### Scripted check from the computer
 
@@ -147,6 +148,8 @@ The built-in list is [`app/src/main/assets/lights.json`](app/src/main/assets/lig
 
   The payload may be at most 27 bytes (31 with the record header). Format A as a second packet
   would be `{ "manufacturer_data": "5556", "data": "188752B65F2B5E00FC3151D0699F0824CBA5FC16C46CB22F9F6057" }`.
+  An entry with a `url` instead of a packet is a request to a bridge over Wi-Fi, for a light the
+  TV's radio cannot reach; see [Commands over Wi-Fi](#commands-over-wi-fi-a-bridge-for-what-bluetooth-cannot-reach).
 
 To try new packets without a rebuild, copy the file, edit it, and push it:
 
@@ -159,6 +162,72 @@ The pushed file lives at `/sdcard/Android/data/tv.homelights/files/lights.json`.
 says "Using lights.json pushed to the TV" while it is in use. A file with a mistake is ignored with
 the reason on the status line, and the built-in list stays in force. Once a packet is proven, put it
 in the built-in file and run `build-and-install.sh` again so it survives a reinstall.
+
+## Commands over Wi-Fi: a bridge for what Bluetooth cannot reach
+
+A command's entries need not be packets. An entry with a `url` is an HTTP request, sent by the TV
+over Wi-Fi, for a light behind a bridge: the cove strip's 433 MHz receiver with an ESP32 next to it
+(see [Learning the cove remote](#learning-the-cove-remote)). The Cove row then looks and works
+like any other; only `lights.json` knows the difference.
+
+```json
+{
+  "id": "cove",
+  "name": "Cove, the ambient strip round the ceiling",
+  "in_all": false,
+  "commands": {
+    "on":   [ { "url": "http://192.168.1.60/button/cove_on/press" } ],
+    "off":  [ { "url": "http://192.168.1.60/button/cove_off/press" } ],
+    "warm": [ { "url": "http://192.168.1.60/button/cove_warm/press" } ]
+  }
+}
+```
+
+- `url`: `http://` or `https://`; a plain `http://` address on the home network is fine.
+- `method`: `GET`, `POST` (the default), `PUT`, `PATCH` or `DELETE`.
+- `headers`: an object of header names to values, e.g. `{ "Authorization": "Bearer …" }` for Home
+  Assistant's API.
+- `body`: a string sent as the request body; its `Content-Type` is `application/json` unless the
+  headers say otherwise.
+- `timeout_ms`: how long to wait for the connection and the answer, 100 to 60000; 3000 by default.
+
+Any 2xx answer counts as sent; any other answer shows on the status line with its HTTP status, and
+a bridge that does not answer shows as such. A command may mix packets and requests; they go one
+after another, in order, and as with packets a new button press stops the command still running.
+A command made of requests alone works with Bluetooth off.
+
+With ESPHome on the bridge, each learned code is a `button:` entry, and the `web_server:` component
+answers `POST /button/<id>/press`, where `<id>` is the button's name in lower case with underscores:
+
+```yaml
+web_server:
+  port: 80
+button:
+  - platform: template
+    name: "Cove On"            # POST /button/cove_on/press
+    on_press:
+      - remote_transmitter.transmit_rc_switch_raw:
+          code: '0101...'
+          protocol: 1
+          repeat: 10
+```
+
+### Trying it without the bridge
+
+[`stub-bridge.py`](stub-bridge.py) answers like a bridge, on this computer, and prints every
+request it gets. It also writes a `lights.json` whose Cove commands point at it, with one, **Bad**,
+that it rejects, to show how a failure reads:
+
+```
+python3 -I lights/stub-bridge.py --config /tmp/stub-lights.json      # prints its address; leave it running
+TV_HOST=192.168.1.26 lights/push-config.sh /tmp/stub-lights.json
+TV_HOST=192.168.1.26 tools/venv/bin/python -I tools/tv.py 'am start -n tv.homelights/.MainActivity -e light cove -e command on'
+TV_HOST=192.168.1.26 lights/push-config.sh --reset                    # afterwards
+```
+
+The stub prints `POST /button/cove_on/press from 192.168.1.26 -> 200`, the TV's status line says
+"Sent Cove On.", and **Bad** says "Cove Bad failed: HTTP 404 Not Found from http://…". On a Mac with
+the firewall on, the first run may ask whether Python may accept incoming connections; allow it.
 
 ## Learning the light remote
 
@@ -316,7 +385,7 @@ dumps. The ring most likely sends a different code per position, so a few positi
 neutral, cool) are recorded as presets unless the format is decoded, after which any value can be
 made. A Broadlink RM4 Pro learns 433 MHz codes too, without any code. The TV then drives the
 bridge over Wi-Fi, and the Cove row's buttons become HTTP requests to it instead of Bluetooth
-packets; that extension of `lights.json` is the next step for the app.
+packets; `lights.json` takes those now (see [Commands over Wi-Fi](#commands-over-wi-fi-a-bridge-for-what-bluetooth-cannot-reach)).
 
 ## Troubleshooting
 
@@ -353,8 +422,8 @@ packets; that extension of `lights.json` is the next step for the app.
 - **The extra buttons.** `extras` holds K, moon, RGB and Aid as recorded; what they do is for a
   test on the lights.
 - **The cove strip.** A 433 MHz bridge next to its receiver (an ESP32 with an RXB6 receiver and an
-  STX882 transmitter, running ESPHome), and HTTP commands in `lights.json`, so that the Cove row's
-  buttons call the bridge over Wi-Fi the way the other rows' send Bluetooth packets.
+  STX882 transmitter, running ESPHome). The TV side is ready: the Cove row's commands become `url`
+  entries in `lights.json` once the bridge's buttons exist (see Commands over Wi-Fi).
 - **The room.** A drawn plan of the drawing room with each light as a focusable spot. A flat or
   isometric drawing on a Canvas suits a 1 GB TV; a 3D engine does not.
 - **Colour and brightness**, once those packets exist, as extra commands per light.
@@ -366,7 +435,9 @@ cd lights && ./gradlew testReleaseUnitTest lintRelease assembleRelease
 ```
 
 The JVM tests cover the hex codec, the record layout (format A is exactly 31 bytes, format B 28),
-the `lights.json` parser including the built-in file, the learn-step lists of both remotes, the raw
-advertisement reader and the capture file with its quiet-step baseline. Everything that sends is in `Advertiser.java`, everything that listens
-in `LearnActivity.java`; the main screen is `MainActivity.java`. CI builds this project on every
+the `lights.json` parser including the built-in file and requests to a bridge, the learn-step
+lists of both remotes, the raw advertisement reader, the capture file with its quiet-step baseline,
+and the request sender against a local HTTP server. `Commander.java` runs a command's actions in
+order, `Advertiser.java` puts packets on air and `Http.java` sends requests; everything that
+listens is in `LearnActivity.java`; the main screen is `MainActivity.java`. CI builds this project on every
 pull request.

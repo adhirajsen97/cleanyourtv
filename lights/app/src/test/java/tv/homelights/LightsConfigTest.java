@@ -37,10 +37,11 @@ public class LightsConfigTest {
             assertNotNull(id, light);
             assertEquals(id, six, light.commands());
             assertEquals(id + " brighter: three presses recorded", 3, light.variants("brighter"));
-            List<Packet> press = light.packets("brighter");
+            assertTrue(light.usesRadio("brighter"));
+            List<Action> press = light.actions("brighter");
             assertEquals("an adjustment is a press and a release", 2, press.size());
-            assertEquals(400, press.get(0).burstMs);
-            Packet on = light.packets("on").get(0);
+            assertEquals(400, ((Packet) press.get(0)).burstMs);
+            Packet on = (Packet) light.actions("on").get(0);
             assertEquals(Packet.Kind.SERVICE_DATA, on.kind);
             assertEquals(0x08F0, on.id);
             assertEquals(24, on.payload.length);
@@ -50,13 +51,13 @@ public class LightsConfigTest {
         assertEquals(Arrays.asList("on", "off"), config.find("row-4").commands());
         assertEquals(Arrays.asList("aid", "k", "moon", "rgb"), config.find("extras").commands());
         Light cove = config.find("cove");
-        assertNotNull("the cove row is there for the cove remote's capture to fill", cove);
-        assertTrue("no capture of the cove remote yet", cove.commands().isEmpty());
+        assertNotNull("the cove row is there for its bridge's requests", cove);
+        assertTrue("no bridge for the cove yet", cove.commands().isEmpty());
         assertFalse("a remote of its own: All rows does not switch it", cove.inAll);
         assertTrue(config.find("row-1").inAll);
         // The first ALL ON press of the capture comes first (a fresh parse: the loop above already rotated).
         assertEquals("10006A5925EC68A2B2FAEB7BC22B0F1EDD74C0021A21EA82",
-                Hex.encode(LightsConfig.parse(bundled()).find("all").packets("on").get(0).payload));
+                Hex.encode(((Packet) LightsConfig.parse(bundled()).find("all").actions("on").get(0)).payload));
         assertNull(config.find("kitchen"));
     }
 
@@ -68,14 +69,65 @@ public class LightsConfigTest {
         Light light = config.lights.get(0);
         assertEquals(2, light.variants("on"));
         assertEquals(0, light.variants("off"));
-        assertEquals("01", Hex.encode(light.packets("on").get(0).payload));
-        List<Packet> second = light.packets("on");
+        assertEquals("01", Hex.encode(((Packet) light.actions("on").get(0)).payload));
+        List<Action> second = light.actions("on");
         assertEquals(2, second.size());
-        assertEquals("02", Hex.encode(second.get(0).payload));
-        assertEquals(300, second.get(0).burstMs);
-        assertEquals(0, second.get(1).burstMs);
-        assertEquals("01", Hex.encode(light.packets("on").get(0).payload));
-        assertTrue(light.packets("off").isEmpty());
+        assertEquals("02", Hex.encode(((Packet) second.get(0)).payload));
+        assertEquals(300, ((Packet) second.get(0)).burstMs);
+        assertEquals(0, ((Packet) second.get(1)).burstMs);
+        assertEquals("01", Hex.encode(((Packet) light.actions("on").get(0)).payload));
+        assertTrue(light.actions("off").isEmpty());
+        assertFalse(light.usesRadio("off"));
+    }
+
+    @Test
+    public void requestsToABridgeParseWithTheirDefaults() {
+        LightsConfig config = LightsConfig.parse("{\"lights\":[{\"id\":\"cove\",\"in_all\":false,\"commands\":{"
+                + "\"on\":[{\"url\":\"http://192.168.1.60/button/cove_on/press\"}],"
+                + "\"warm\":[{\"url\":\"https://ha.local:8123/api/services/light/turn_on\",\"method\":\"post\","
+                + "\"headers\":{\"Authorization\":\"Bearer abc\",\"X-Room\":\"drawing\"},"
+                + "\"body\":\"{\\\"entity_id\\\":\\\"light.cove\\\"}\",\"timeout_ms\":5000}],"
+                + "\"both\":[" + B + ",{\"url\":\"http://192.168.1.60/button/x/press\",\"method\":\"GET\"}]}}]}");
+        Light cove = config.find("cove");
+        assertEquals(Arrays.asList("on", "both", "warm"), cove.commands());
+        assertFalse("requests alone need no Bluetooth", cove.usesRadio("on"));
+        assertTrue("a packet in the mix does", cove.usesRadio("both"));
+        Request on = (Request) cove.actions("on").get(0);
+        assertEquals("http://192.168.1.60/button/cove_on/press", on.url);
+        assertEquals("POST", on.method);
+        assertTrue(on.headers.isEmpty());
+        assertNull(on.body);
+        assertEquals(Request.DEFAULT_TIMEOUT_MS, on.timeoutMs);
+        assertEquals("POST http://192.168.1.60/button/cove_on/press", on.describe());
+        Request warm = (Request) cove.actions("warm").get(0);
+        assertEquals("the method is upper-cased", "POST", warm.method);
+        assertEquals("Bearer abc", warm.headers.get("Authorization"));
+        assertEquals(Arrays.asList("Authorization", "X-Room"), new java.util.ArrayList<>(warm.headers.keySet()));
+        assertEquals("{\"entity_id\":\"light.cove\"}", warm.body);
+        assertEquals(5000, warm.timeoutMs);
+        List<Action> both = cove.actions("both");
+        assertTrue(both.get(0) instanceof Packet);
+        assertEquals("GET", ((Request) both.get(1)).method);
+    }
+
+    @Test
+    public void requestsAreChecked() {
+        assertMessage("light \"a\", on[0]: url must start with http:// or https://",
+                "{\"lights\":[{\"id\":\"a\",\"commands\":{\"on\":[{\"url\":\"192.168.1.60/x\"}]}}]}");
+        assertMessage("light \"a\", on[0]: url has no host",
+                "{\"lights\":[{\"id\":\"a\",\"commands\":{\"on\":[{\"url\":\"http://\"}]}}]}");
+        assertMessage("light \"a\", on[0]: url has no host",
+                "{\"lights\":[{\"id\":\"a\",\"commands\":{\"on\":[{\"url\":\"http:///button/x/press\"}]}}]}");
+        assertMessage("light \"a\", on[0]: method must be one of [GET, POST, PUT, PATCH, DELETE]",
+                "{\"lights\":[{\"id\":\"a\",\"commands\":{\"on\":[{\"url\":\"http://x/\",\"method\":\"FETCH\"}]}}]}");
+        assertMessage("light \"a\", on[0]: has both a url and service_data",
+                "{\"lights\":[{\"id\":\"a\",\"commands\":{\"on\":[{\"url\":\"http://x/\",\"service_data\":\"08F0\",\"data\":\"10\"}]}}]}");
+        assertMessage("light \"a\", on[0]: headers must be an object of names to values",
+                "{\"lights\":[{\"id\":\"a\",\"commands\":{\"on\":[{\"url\":\"http://x/\",\"headers\":\"nope\"}]}}]}");
+        assertMessage("light \"a\", on[0]: header \"Retries\" must be a string",
+                "{\"lights\":[{\"id\":\"a\",\"commands\":{\"on\":[{\"url\":\"http://x/\",\"headers\":{\"Retries\":3}}]}}]}");
+        assertMessage("light \"a\", on[0]: timeout_ms must be 100 to 60000",
+                "{\"lights\":[{\"id\":\"a\",\"commands\":{\"on\":[{\"url\":\"http://x/\",\"timeout_ms\":99}]}}]}");
     }
 
     @Test
@@ -100,18 +152,30 @@ public class LightsConfigTest {
         Light light = config.lights.get(0);
         assertEquals("all", light.name);   // name falls back to the id
         assertEquals(Arrays.asList("on", "off", "brighter", "night"), light.commands());
-        assertEquals(2, light.packets("on").size());
-        Packet a = light.packets("on").get(1);
+        assertEquals(2, light.actions("on").size());
+        Packet a = (Packet) light.actions("on").get(1);
         assertEquals(Packet.Kind.MANUFACTURER_DATA, a.kind);
         assertEquals(0x5556, a.id);
         assertEquals(27, a.payload.length);
         assertFalse("27 bytes leave no room for Flags", a.connectable);
-        assertTrue(light.packets("on").get(0).connectable);
-        assertTrue(light.packets("off").get(0).connectable);
-        assertEquals(4, light.packets("off").get(0).payload.length);
+        assertTrue(((Packet) light.actions("on").get(0)).connectable);
+        assertTrue(((Packet) light.actions("off").get(0)).connectable);
+        assertEquals(4, ((Packet) light.actions("off").get(0)).payload.length);
 
         LightsConfig legacy = LightsConfig.parse("{\"lights\":[" + light("a") + "]}");
         assertEquals(Arrays.asList("on", "off"), legacy.lights.get(0).commands());
+    }
+
+    @Test
+    public void connectableCanBeSwitchedOffForAllOrPerPacket() {
+        LightsConfig all = LightsConfig.parse("{\"connectable\":false,\"lights\":[" + light("a") + "]}");
+        assertFalse(((Packet) all.lights.get(0).actions("on").get(0)).connectable);
+        assertFalse(((Packet) all.lights.get(0).actions("off").get(0)).connectable);
+        LightsConfig one = LightsConfig.parse("{\"connectable\":false,\"lights\":[{\"id\":\"a\","
+                + "\"on\":[{\"service_data\":\"08F0\",\"data\":\"1000EA2D\",\"connectable\":true}],"
+                + "\"off\":[" + B + "]}]}");
+        assertTrue(((Packet) one.lights.get(0).actions("on").get(0)).connectable);
+        assertFalse(((Packet) one.lights.get(0).actions("off").get(0)).connectable);
     }
 
     @Test
@@ -120,18 +184,6 @@ public class LightsConfigTest {
                 + ",{\"id\":\"b\",\"in_all\":false,\"on\":[" + B + "],\"off\":[" + B + "]}]}");
         assertTrue(config.find("a").inAll);
         assertFalse(config.find("b").inAll);
-    }
-
-    @Test
-    public void connectableCanBeSwitchedOffForAllOrPerPacket() {
-        LightsConfig all = LightsConfig.parse("{\"connectable\":false,\"lights\":[" + light("a") + "]}");
-        assertFalse(all.lights.get(0).packets("on").get(0).connectable);
-        assertFalse(all.lights.get(0).packets("off").get(0).connectable);
-        LightsConfig one = LightsConfig.parse("{\"connectable\":false,\"lights\":[{\"id\":\"a\","
-                + "\"on\":[{\"service_data\":\"08F0\",\"data\":\"1000EA2D\",\"connectable\":true}],"
-                + "\"off\":[" + B + "]}]}");
-        assertTrue(one.lights.get(0).packets("on").get(0).connectable);
-        assertFalse(one.lights.get(0).packets("off").get(0).connectable);
     }
 
     @Test
@@ -157,7 +209,7 @@ public class LightsConfigTest {
         assertMessage("lights[0] has no \"id\"", "{\"lights\":[{\"name\":\"x\"}]}");
         assertMessage("two lights have the id \"a\"", "{\"lights\":[" + light("a") + "," + light("a") + "]}");
         assertMessage("light \"a\": \"off\" has no packets", "{\"lights\":[{\"id\":\"a\",\"on\":[" + B + "],\"off\":[]}]}");
-        assertMessage("light \"a\", on[0]: needs service_data or manufacturer_data",
+        assertMessage("light \"a\", on[0]: needs service_data, manufacturer_data or url",
                 "{\"lights\":[{\"id\":\"a\",\"on\":[{\"data\":\"10\"}],\"off\":[" + B + "]}]}");
         assertMessage("light \"a\", on[0]: has both service_data and manufacturer_data",
                 "{\"lights\":[{\"id\":\"a\",\"on\":[{\"service_data\":\"08F0\",\"manufacturer_data\":\"5556\",\"data\":\"10\"}],\"off\":[" + B + "]}]}");

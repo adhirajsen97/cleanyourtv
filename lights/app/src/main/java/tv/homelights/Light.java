@@ -9,12 +9,14 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * A light, or a row of lights that answer the same packets, with the packets of each command it
- * knows. Commands are named in lights.json ("on", "off", "brighter", …); a row shows a button for
- * every command that has packets, so a row whose packets are not captured yet shows none.
+ * A light, or a row of lights that answer the same packets, with what each command it knows does.
+ * Commands are named in lights.json ("on", "off", "brighter", …); a row shows a button for every
+ * command that has actions, so a row whose packets are not captured yet shows none. An action is
+ * a {@link Packet} to put on air, or a {@link Request} to a bridge over the network for a light
+ * the TV's radio cannot reach.
  *
  * A command can have several variants, one per press recorded from the remote. Each carries its
- * own counter, and the lights ignore a packet whose counter they just saw, so {@link #packets}
+ * own counter, and the lights ignore a packet whose counter they just saw, so {@link #actions}
  * hands out the variants in turn: two presses in a row never send the same bytes.
  *
  * A light with a remote of its own, such as the cove strip, is not switched by All rows
@@ -29,21 +31,21 @@ public final class Light {
     public final String name;
     /** Whether All rows switches this light too; true unless lights.json says "in_all": false. */
     public final boolean inAll;
-    private final Map<String, List<List<Packet>>> commands;
+    private final Map<String, List<List<Action>>> commands;
     private final Map<String, Integer> next = new HashMap<>();
 
-    public Light(String id, String name, Map<String, List<List<Packet>>> commands) {
+    public Light(String id, String name, Map<String, List<List<Action>>> commands) {
         this(id, name, commands, true);
     }
 
-    public Light(String id, String name, Map<String, List<List<Packet>>> commands, boolean inAll) {
+    public Light(String id, String name, Map<String, List<List<Action>>> commands, boolean inAll) {
         this.id = id;
         this.name = name;
         this.inAll = inAll;
-        Map<String, List<List<Packet>>> copy = new LinkedHashMap<>();
-        for (Map.Entry<String, List<List<Packet>>> e : commands.entrySet()) {
-            List<List<Packet>> variants = new ArrayList<>();
-            for (List<Packet> v : e.getValue()) variants.add(Collections.unmodifiableList(new ArrayList<>(v)));
+        Map<String, List<List<Action>>> copy = new LinkedHashMap<>();
+        for (Map.Entry<String, List<List<Action>>> e : commands.entrySet()) {
+            List<List<Action>> variants = new ArrayList<>();
+            for (List<Action> v : e.getValue()) variants.add(Collections.unmodifiableList(new ArrayList<>(v)));
             copy.put(e.getKey(), Collections.unmodifiableList(variants));
         }
         this.commands = Collections.unmodifiableMap(copy);
@@ -55,16 +57,26 @@ public final class Light {
 
     /** How many recorded presses a command has to rotate through; 0 for a command it lacks. */
     public int variants(String command) {
-        List<List<Packet>> list = commands.get(command);
+        List<List<Action>> list = commands.get(command);
         return list == null ? 0 : list.size();
     }
 
+    /** True when a variant of the command puts a packet on air, so Bluetooth has to be ready for it. */
+    public boolean usesRadio(String command) {
+        List<List<Action>> variants = commands.get(command);
+        if (variants == null) return false;
+        for (List<Action> variant : variants) {
+            for (Action a : variant) if (a instanceof Packet) return true;
+        }
+        return false;
+    }
+
     /**
-     * The packets to advertise, one after another, for the next press of a command: the variants
-     * in turn, round and round. Empty for a command this light does not know.
+     * The actions for the next press of a command, done one after another: the variants in turn,
+     * round and round. Empty for a command this light does not know.
      */
-    public List<Packet> packets(String command) {
-        List<List<Packet>> variants = commands.get(command);
+    public List<Action> actions(String command) {
+        List<List<Action>> variants = commands.get(command);
         if (variants == null) return Collections.emptyList();
         int i = next.getOrDefault(command, 0);
         next.put(command, (i + 1) % variants.size());

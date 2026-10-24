@@ -16,7 +16,7 @@ import java.util.Locale;
  * in front, which leaves 24 bytes of payload. Format B is exactly that size, so it is sent with
  * Flags; format A (27 bytes) has no room for them and goes out non-connectable, without.
  */
-public final class Packet {
+public final class Packet implements Action {
 
     public enum Kind {
         SERVICE_DATA(0x16, "service_data", "service data"),
@@ -93,6 +93,7 @@ public final class Packet {
         return out;
     }
 
+    @Override
     public String describe() {
         return String.format(Locale.ROOT, "%s %04X, %d bytes, %s", kind.label, id, payload.length,
                 connectable ? "with flags" : "no flags");

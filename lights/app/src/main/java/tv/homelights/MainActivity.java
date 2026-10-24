@@ -21,8 +21,8 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * The screen: one row per light from lights.json, a button for every command that has packets,
- * and a status line underneath. Also takes a scripted command from adb, for testing without the
+ * The screen: one row per light from lights.json, a button for every command that has actions
+ * (packets on air, or requests to a bridge over the network), and a status line underneath. Also takes a scripted command from adb, for testing without the
  * remote:
  * <pre>
  *   am start -n tv.homelights/.MainActivity -e light all -e command off
@@ -38,6 +38,7 @@ public final class MainActivity extends Activity {
     private static final int REQUEST_ENABLE_BLUETOOTH = 2;
 
     private Advertiser advertiser;
+    private Commander commander;
     private LightsConfig config;
     private TextView status;
     private final Map<String, View> rows = new HashMap<>();
@@ -55,6 +56,7 @@ public final class MainActivity extends Activity {
         findViewById(R.id.learn_cove).setOnClickListener(v -> startActivity(
                 new Intent(this, LearnActivity.class).putExtra(LearnActivity.EXTRA_STEPS, LearnSteps.COVE_REMOTE.id)));
         advertiser = new Advertiser(this);
+        commander = new Commander(advertiser, new Http());
         String note = loadConfig();
         buildRows();
         showReadiness(note);
@@ -70,7 +72,7 @@ public final class MainActivity extends Activity {
 
     @Override
     protected void onDestroy() {
-        advertiser.cancel();
+        commander.cancel();
         super.onDestroy();
     }
 
@@ -168,18 +170,23 @@ public final class MainActivity extends Activity {
         send(light, command.toLowerCase(Locale.ROOT), true);
     }
 
-    /** Sends a command; with {@code mayPrompt}, asks for Bluetooth or the permission when missing. */
+    /**
+     * Sends a command; with {@code mayPrompt}, asks for Bluetooth or the permission when missing.
+     * A command made of requests to a bridge alone needs neither.
+     */
     private void send(Light light, String command, boolean mayPrompt) {
         pendingLight = null;
-        Advertiser.Blocker blocker = advertiser.blocker();
-        if (blocker != null) {
-            unblock(blocker, light, command, mayPrompt);
-            return;
+        if (light.usesRadio(command)) {
+            Advertiser.Blocker blocker = advertiser.blocker();
+            if (blocker != null) {
+                unblock(blocker, light, command, mayPrompt);
+                return;
+            }
         }
         String what = light.name + " " + label(command);
         markState(light, command);
         Log.i(Advertiser.TAG, "sending " + what);
-        advertiser.send(light.packets(command), config.burstMs, new Advertiser.Listener() {
+        commander.run(light.actions(command), config.burstMs, new Commander.Listener() {
             @Override
             public void onProgress(int index, int count) {
                 report(getString(R.string.status_sending, what, index, count));
