@@ -10,7 +10,7 @@ import org.junit.Test;
 
 public class CaptureTest {
     @Test
-    public void countsCopiesPerStepAndWritesThemOut() {
+    public void countsCopiesPerStepAndWritesThemOut() throws Exception {   // org.json in android.jar throws a checked JSONException
         Capture c = new Capture("2026-10-24T15:00:00+05:30", "test tv", 1000);
         byte[] a = Hex.decode("0201021B16F0081000EA2D71611DCBAA79F270FE6376E486E88FD664E3AA48");
         byte[] b = Hex.decode("0201021B16F0081000B559C42541FDEF78E0E567050CC0555F4A1AE719D07D");
