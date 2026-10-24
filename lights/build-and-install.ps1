@@ -59,6 +59,12 @@ if ($out -notmatch 'Success') { throw 'pm install failed (see above)' }
 $start = & $py -I ..\tools\tv.py "am start -W -n $pkg/.MainActivity"
 Write-Host $start
 if ($start -notmatch 'Status: ok' -or $start -match '(?m)^Error') { throw 'Home Lights did not start (see above)' }
+# A lights.json pushed with push-config.sh stays in force across reinstalls and hides the built-in list.
+$override = (& $py -I ..\tools\tv.py "[ -f /sdcard/Android/data/$pkg/files/lights.json ] && echo yes || echo no" | Select-Object -Last 1)
+if ("$override".Trim() -eq 'yes') {
+    Write-Host 'NOTE: a lights.json pushed earlier is still on the TV and is used instead of the built-in one.'
+    Write-Host "      Drop it with: lights\push-config.sh --reset (or tools\venv\Scripts\python.exe -I tools\tv.py 'rm /sdcard/Android/data/$pkg/files/lights.json; am force-stop $pkg')"
+}
 Write-Host 'Installed. Home Lights is on screen: read the status line, then press On or Off on the remote.'
 Write-Host "Scripted check:  `$env:TV_HOST='$TvHost'; tools\venv\Scripts\python.exe -I tools\tv.py 'am start -n $pkg/.MainActivity -e light all -e command on'"
 Write-Host "Log:             tools\venv\Scripts\python.exe -I tools\tv.py 'logcat -d -s HomeLights'"

@@ -94,6 +94,12 @@ if ! printf '%s' "$START_OUT" | grep -qF 'Status: ok' || printf '%s' "$START_OUT
   echo "ERROR: Home Lights did not start (see above)." >&2
   exit 1
 fi
+# A lights.json pushed with push-config.sh stays in force across reinstalls and hides the built-in list.
+OVERRIDE=$("$PY" -I ../tools/tv.py "[ -f /sdcard/Android/data/$PKG/files/lights.json ] && echo yes || echo no" | tr -d '\r' | tail -n 1)
+if [ "$OVERRIDE" = yes ]; then
+  echo "NOTE: a lights.json pushed earlier is still on the TV and is used instead of the built-in one."
+  echo "      Drop it with: TV_HOST=$TV_HOST lights/push-config.sh --reset"
+fi
 echo "Installed. Home Lights is on screen: read the status line, then press On or Off on the remote."
 echo "Scripted check:  TV_HOST=$TV_HOST tools/venv/bin/python -I tools/tv.py 'am start -n $PKG/.MainActivity -e light all -e command on'"
 echo "Log:             TV_HOST=$TV_HOST tools/venv/bin/python -I tools/tv.py 'logcat -d -s HomeLights'"
