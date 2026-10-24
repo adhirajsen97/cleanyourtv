@@ -13,9 +13,10 @@ lights and new packets go into that JSON file, pushed to the TV without a rebuil
 
 Round the ceiling runs an ambient strip, the cove, with a remote of its own: the "TC" touch
 remote, with O and I at the top, a ring from white to yellow for the colour temperature and two
-bulbs for the brightness. It has its own row, **Cove**, filled the same way by **Learn cove
-remote**; until that capture is made the row shows no buttons. Whether the TV can hear this remote
-at all is the first thing the capture tells (see [Learning the cove remote](#learning-the-cove-remote)).
+bulbs for the brightness. It has its own row, **Cove**, meant to be filled the same way by **Learn
+cove remote**; that remote turned out to be 433 MHz radio, which the TV cannot hear, so the row
+stays without buttons until a bridge next to the strip takes the TV's commands over Wi-Fi (see
+[Learning the cove remote](#learning-the-cove-remote)).
 
 ## How the lights are driven
 
@@ -240,9 +241,9 @@ each step; the TV route is simply less to keep track of.
 
 The ambient strip round the ceiling has a remote of its own, the "TC" touch remote: O and I at the
 top, a ring from white (left) to yellow (right) that sets the colour temperature, two bulbs for the
-brightness. Nothing is known about its packets yet, not even whether they are Bluetooth LE at all:
-remotes of this shape are often plain 2.4 GHz radio, which the TV cannot hear. **Learn cove
-remote** on the main screen finds out, and records what there is:
+brightness. **Learn cove remote** on the main screen was written to find out what it sends; the
+answer, below, is that it is a 433 MHz remote, which no Bluetooth scan can hear. The steps stay,
+for a remote that does speak Bluetooth LE, and as the record of how that was found out:
 
 | Step | On the cove remote | Presses | Why |
 |---|---|---|---|
@@ -294,23 +295,28 @@ remote's red light, in the slot at its end, came on with every press, so it was 
 something; the TV's Bluetooth scan does not hear it. That scan covered legacy advertisements only,
 as Android's default does; since then it also takes Bluetooth 5 extended advertisements and the
 long-range PHY where the radio can (the status line says "Listening, for Bluetooth 5 extended
-advertisements too"), which is the one way a Bluetooth LE remote could have hidden from it. A
-short re-run, `-e steps cove-quiet,cove-on,cove-off`, settles that.
+advertisements too"), which was the one way a Bluetooth LE remote could have hidden from it.
 
-Failing that, this remote is not Bluetooth LE at all. Remotes of this shape are usually 2.4 GHz
-proprietary radio on an nRF24-style chip (the Mi-Light family and many generic LED-strip remotes),
-sometimes infrared through that slot at the end. Two checks tell which, at no cost:
+The remote itself explains it. Opened up, its board has no radio chip: an unmarked controller
+reading the ring and the six touch pads (the board says "6KEY"), a three-pin regulator by the
+battery clips, and at the bottom a transistor oscillator (N1, N2) locked to a resonator can marked
+**R433**, with the antenna a wide trace round the board's edge. That is a 433.92 MHz ASK
+transmitter, the kind that sends a fixed code per button, and the TV has no radio for that band.
+Nothing on the TV can learn or replay it; the Learn cove remote steps stay for a remote that does
+speak Bluetooth LE.
 
-- Cover the slot at the end of the remote with a hand and press I or O. If the strip still
-  answers, it is radio; if it stops answering, it is infrared.
-- The receiver in the cove, where the strip's power supply is, has a label: "2.4G" or "RF" against
-  "IR", and often a model number to look up.
-
-Either way the TV's own radio cannot reach the strip, and the way forward is a small bridge next to
-the receiver (an ESP32 with an nRF24L01+ module for 2.4 GHz, or with an infrared LED for IR), driven
-by the TV over Wi-Fi: the same bridge Troubleshooting describes for a TV whose Bluetooth cannot
-advertise. Replacing the receiver with a Bluetooth LE one is the other route; then Learn cove remote
-records its remote as it did the light remote's.
+The way forward is a bridge next to the strip's receiver: an ESP32 with a 433 MHz receiver (an
+RXB6, superheterodyne, powered from 3.3 V so its data line suits the ESP32) and a transmitter
+(STX882 or FS1000A), each with 17.3 cm of wire on its antenna pad as a quarter-wave antenna,
+running ESPHome. Its `remote_receiver` with `dump: [rc_switch, raw]` prints the code of every
+button as it is pressed, and `remote_transmitter` sends a code again; if the dump shows
+`RCSwitch Raw: protocol=1 data='...'`, replaying is one `remote_transmitter.transmit_rc_switch_raw`
+action per button, and if only raw timings appear the packet format is worked out from a few
+dumps. The ring most likely sends a different code per position, so a few positions (warm,
+neutral, cool) are recorded as presets unless the format is decoded, after which any value can be
+made. A Broadlink RM4 Pro learns 433 MHz codes too, without any code. The TV then drives the
+bridge over Wi-Fi, and the Cove row's buttons become HTTP requests to it instead of Bluetooth
+packets; that extension of `lights.json` is the next step for the app.
 
 ## Troubleshooting
 
@@ -346,9 +352,9 @@ records its remote as it did the light remote's.
   command is built in the app with a fresh counter instead of rotating recorded presses.
 - **The extra buttons.** `extras` holds K, moon, RGB and Aid as recorded; what they do is for a
   test on the lights.
-- **The cove remote.** Once its capture is in and the buttons work, decode it the way the light
-  remote's was: a counter, a command byte, and whether the ring sends an absolute colour
-  temperature, which would give the Cove row a Warmer and a Cooler as well.
+- **The cove strip.** A 433 MHz bridge next to its receiver (an ESP32 with an RXB6 receiver and an
+  STX882 transmitter, running ESPHome), and HTTP commands in `lights.json`, so that the Cove row's
+  buttons call the bridge over Wi-Fi the way the other rows' send Bluetooth packets.
 - **The room.** A drawn plan of the drawing room with each light as a focusable spot. A flat or
   isometric drawing on a Canvas suits a 1 GB TV; a 3D engine does not.
 - **Colour and brightness**, once those packets exist, as extra commands per light.
