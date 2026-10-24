@@ -16,7 +16,17 @@ PY=$TOOLS/venv/bin/python
 [ -x "$PY" ] || PY=$TOOLS/venv/Scripts/python.exe
 [ -x "$PY" ] || { echo "run: python3 -m venv tools/venv && tools/venv/bin/pip install -r tools/requirements.txt" >&2; exit 1; }
 export MSYS_NO_PATHCONV=1
-"$PY" -I "$TOOLS/tv.py" --pull "/sdcard/Android/data/tv.homelights/files/$NAME" "$OUT"
+REMOTE=/sdcard/Android/data/tv.homelights/files/$NAME
+if [ "$NAME" = capture-cove.json ]; then SCREEN="Learn cove remote"; else SCREEN="Learn light remote"; fi
+# A missing file is the usual mistake (the screen not run, or Back before its first step), so say so plainly.
+EXISTS=$("$PY" -I "$TOOLS/tv.py" "[ -f $REMOTE ] && echo yes || echo no" | tr -d '\r' | tail -n 1)
+if [ "$EXISTS" != yes ]; then
+  echo "No $NAME on the TV. $SCREEN writes it after its first step (Next step), so open $SCREEN on the TV," >&2
+  echo "go through the steps, press Finish, then run this again. Files there now:" >&2
+  "$PY" -I "$TOOLS/tv.py" "ls /sdcard/Android/data/tv.homelights/files/ 2>/dev/null || echo '(none)'" >&2
+  exit 1
+fi
+"$PY" -I "$TOOLS/tv.py" --pull "$REMOTE" "$OUT"
 "$PY" -I - "$OUT" <<'PY'
 import json, sys
 d = json.load(open(sys.argv[1], encoding="utf-8"))

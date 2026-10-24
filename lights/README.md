@@ -285,6 +285,33 @@ TV_HOST=192.168.1.26 tools/venv/bin/python -I tools/tv.py 'am start -n tv.homeli
 A re-run should include `cove-quiet`, so the room's own packets are known; without it every packet
 heard counts as the remote's, and the converter says so.
 
+### What the capture of 2026-10-24 showed
+
+Nothing from the remote. [`capture-cove.json`](capture-cove.json) has the quiet step hearing 21
+distinct packets from 19 senders in 18 seconds, which shows the scanner working, and then every
+button step hearing nothing new while 100 to 200 background packets per step were set aside. The
+remote's red light, in the slot at its end, came on with every press, so it was transmitting
+something; the TV's Bluetooth scan does not hear it. That scan covered legacy advertisements only,
+as Android's default does; since then it also takes Bluetooth 5 extended advertisements and the
+long-range PHY where the radio can (the status line says "Listening, for Bluetooth 5 extended
+advertisements too"), which is the one way a Bluetooth LE remote could have hidden from it. A
+short re-run, `-e steps cove-quiet,cove-on,cove-off`, settles that.
+
+Failing that, this remote is not Bluetooth LE at all. Remotes of this shape are usually 2.4 GHz
+proprietary radio on an nRF24-style chip (the Mi-Light family and many generic LED-strip remotes),
+sometimes infrared through that slot at the end. Two checks tell which, at no cost:
+
+- Cover the slot at the end of the remote with a hand and press I or O. If the strip still
+  answers, it is radio; if it stops answering, it is infrared.
+- The receiver in the cove, where the strip's power supply is, has a label: "2.4G" or "RF" against
+  "IR", and often a model number to look up.
+
+Either way the TV's own radio cannot reach the strip, and the way forward is a small bridge next to
+the receiver (an ESP32 with an nRF24L01+ module for 2.4 GHz, or with an infrared LED for IR), driven
+by the TV over Wi-Fi: the same bridge Troubleshooting describes for a TV whose Bluetooth cannot
+advertise. Replacing the receiver with a Bluetooth LE one is the other route; then Learn cove remote
+records its remote as it did the light remote's.
+
 ## Troubleshooting
 
 - **"This TV's Bluetooth cannot send advertisements"**, or the log says `FEATURE_UNSUPPORTED`: the

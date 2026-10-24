@@ -138,9 +138,20 @@ public final class LearnActivity extends Activity {
             status.setText(R.string.learn_no_scanner);
             return;
         }
-        ScanSettings settings = new ScanSettings.Builder()
-                .setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY)
-                .build();
+        startScan(adapter.isLeExtendedAdvertisingSupported(), adapter.isLeCodedPhySupported());
+    }
+
+    /**
+     * The default scan returns legacy advertisements only, so a remote on Bluetooth 5 extended
+     * advertising, or on the long-range (coded) PHY, would be invisible to it. Where the radio can,
+     * this hears those too; a radio that refuses the wider scan gets the legacy one.
+     */
+    private void startScan(boolean extended, boolean coded) {
+        ScanSettings.Builder builder = new ScanSettings.Builder().setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY);
+        if (extended) {
+            builder.setLegacy(false);
+            if (coded) builder.setPhy(ScanSettings.PHY_LE_ALL_SUPPORTED);
+        }
         callback = new ScanCallback() {
             @Override
             public void onScanResult(int callbackType, ScanResult result) {
@@ -155,14 +166,26 @@ public final class LearnActivity extends Activity {
             @Override
             public void onScanFailed(int errorCode) {
                 scanning = false;
+                if (extended && errorCode == SCAN_FAILED_FEATURE_UNSUPPORTED) {
+                    Log.w(Advertiser.TAG, "the radio refuses an extended scan; legacy advertisements only");
+                    startScan(false, false);
+                    return;
+                }
                 status.setText(getString(R.string.learn_scan_failed, "code " + errorCode));
             }
         };
         try {
-            scanner.startScan(null, settings, callback);
+            scanner.startScan(null, builder.build(), callback);
             scanning = true;
-            status.setText(R.string.learn_listening);
-        } catch (SecurityException | IllegalStateException e) {
+            status.setText(extended ? R.string.learn_listening_extended : R.string.learn_listening);
+            Log.i(Advertiser.TAG, "scanning " + (extended ? "legacy and extended advertisements" + (coded ? " on every PHY" : "")
+                    : "legacy advertisements"));
+        } catch (SecurityException | IllegalStateException | IllegalArgumentException e) {
+            if (extended) {
+                Log.w(Advertiser.TAG, "extended scan refused (" + e.getMessage() + "); legacy advertisements only");
+                startScan(false, false);
+                return;
+            }
             status.setText(getString(R.string.learn_scan_failed, String.valueOf(e.getMessage())));
         }
     }

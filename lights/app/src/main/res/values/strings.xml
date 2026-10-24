@@ -23,6 +23,7 @@
     <string name="learn_finish">Finish</string>
     <string name="learn_close">Close</string>
     <string name="learn_listening">Listening.</string>
+    <string name="learn_listening_extended">Listening, for Bluetooth 5 extended advertisements too.</string>
     <string name="learn_bluetooth_off">Bluetooth is off. Switch it on in the TV\'s settings and open Learn remote again.</string>
     <string name="learn_no_scanner">This TV\'s Bluetooth cannot scan, so it cannot hear the remote.</string>
     <string name="learn_scan_failed">Scanning failed: %1$s</string>
